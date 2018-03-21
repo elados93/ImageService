@@ -40,12 +40,13 @@ namespace ImageService
     public partial class ImageService : ServiceBase
     {
         private int eventId = 1;
+        private ILoggingService logger;
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
 
-            public ImageService(string[] args)
-            {
+        public ImageService(string[] args)
+        {
             InitializeComponent();
             string eventSourceName = "MySource";
             string logName = "MyNewLog";
@@ -64,22 +65,9 @@ namespace ImageService
             }
             eventLog1.Source = eventSourceName;
             eventLog1.Log = logName;
-        }
 
-        /*
-             public ImageService()
-        {
-        InitializeComponent();
-        eventLog1 = new System.Diagnostics.EventLog();
-        if (!System.Diagnostics.EventLog.SourceExists("MySource"))
-        {
-            System.Diagnostics.EventLog.CreateEventSource(
-                "MySource", "MyNewLog");
+            logger = new LoggingService();
         }
-        eventLog1.Source = "MySource";
-        eventLog1.Log = "MyNewLog";
-        }
-        */
 
     protected override void OnStart(string[] args)
         {
