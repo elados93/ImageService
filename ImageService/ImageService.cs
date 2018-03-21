@@ -67,9 +67,15 @@ namespace ImageService
             eventLog1.Log = logName;
 
             logger = new LoggingService();
+            logger.MessageRecieved += onMessage;
         }
 
-    protected override void OnStart(string[] args)
+        public void onMessage(object sender, String message)
+        {
+            eventLog1.WriteEntry(message);
+        }
+
+        protected override void OnStart(string[] args)
         {
             eventLog1.WriteEntry("In OnStart");
 
