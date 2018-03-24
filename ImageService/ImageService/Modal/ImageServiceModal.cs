@@ -11,12 +11,10 @@ namespace ImageService.Modal
     {
         private string outputFolder;
 
-
         public string AddFile(string path, out bool result)
         {
             try
             {
-
                 string month = string.Empty;
                 string year = string.Empty;
                 if (File.Exists(path))
