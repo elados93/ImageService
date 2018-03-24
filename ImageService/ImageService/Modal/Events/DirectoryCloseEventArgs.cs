@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ImageService
 {
-    class DirectoryCloseEventArgs:EventArgs
+    public class DirectoryCloseEventArgs:EventArgs
     {
         public string DirectoryPath { get; set; }
 
