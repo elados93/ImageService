@@ -25,10 +25,12 @@ namespace ImageService.Controller.Handlers
 
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;              // The Event That Notifies that the Directory is being closed
 
-        public DirectoyHandler(string path, IImageController controller)
+        public DirectoyHandler(string path, IImageController controller, ILoggingService logging)
         {
+            m_logging = logging;
             m_controller = controller;
             m_path = path;
+            m_dirWatcher = new FileSystemWatcher(path);
         }
 
         // TODO implement that!
@@ -39,7 +41,9 @@ namespace ImageService.Controller.Handlers
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
-            throw new NotImplementedException();
+            bool result;
+            m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
+
         }
     }
 }

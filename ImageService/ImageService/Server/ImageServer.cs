@@ -33,11 +33,14 @@ namespace ImageService.Server
 
         public void sendCommand(string message)
         {
+
         }
 
         public void onCloseServer(object sender, DirectoryCloseEventArgs args)
         {
             m_logging.Log(args.Message, Logging.Modal.MessageTypeEnum.INFO);
+            IDirectoryHandler handler = (IDirectoryHandler)sender;
+            CommandRecieved -= handler.OnCommandRecieved;
         }
 
     }

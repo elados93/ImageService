@@ -18,7 +18,6 @@ using ImageService.Infrastructure;
 
 namespace ImageService
 {
-
     public enum ServiceState
     {
         SERVICE_STOPPED = 0x00000001,
@@ -41,7 +40,6 @@ namespace ImageService
         public int dwCheckPoint;
         public int dwWaitHint;
     };
-
 
     public partial class ImageService : ServiceBase
     {
@@ -76,9 +74,9 @@ namespace ImageService
             logger.MessageRecieved += onMessage;
         }
 
-        public void onMessage(object sender, String message)
+        public void onMessage(object sender, MessageRecievedEventArgs args)
         {
-            eventLog1.WriteEntry(message);
+            eventLog1.WriteEntry(args.Message);
         }
 
         protected override void OnStart(string[] args)
@@ -105,7 +103,6 @@ namespace ImageService
         protected override void OnStop()
         {
             eventLog1.WriteEntry("In onStop.");
-
 
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
