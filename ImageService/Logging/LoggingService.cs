@@ -1,6 +1,7 @@
 ﻿using System;
+using ImageService.Logging.Modal;
 
-namespace ImageService
+namespace ImageService.Logging
 {
     public class LoggingService : ILoggingService
     {
