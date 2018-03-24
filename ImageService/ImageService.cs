@@ -70,9 +70,9 @@ namespace ImageService
             logger.MessageRecieved += onMessage;
         }
 
-        public void onMessage(object sender, MessageRecievedEventArgs args)
+        public void onMessage(object sender, String message)
         {
-            eventLog1.WriteEntry(args.Message);
+            eventLog1.WriteEntry(message);
         }
 
         protected override void OnStart(string[] args)
