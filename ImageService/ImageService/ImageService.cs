@@ -98,6 +98,8 @@ namespace ImageService
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+
+            //TODO create server & logging modal (?)
         }
 
         protected override void OnStop()
