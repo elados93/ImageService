@@ -4,21 +4,23 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace ImageService.Modal
 {
     class ImageServiceModal : IImageServiceModal
     {
-        private string outputFolder;
+        private string outputFolder; // TODO adding from appconfig.
+        private int thumbnailSize; // TODO adding from appconfig.
 
         public string AddFile(string path, out bool result)
         {
+
             try
             {
-                Image
-
                 string month = string.Empty;
                 string year = string.Empty;
+                string thumbnailsPath = outputFolder + "\\Thumbnails";
                 if (File.Exists(path))
                 {
                     DateTime date = File.GetCreationTime(path);
@@ -26,14 +28,21 @@ namespace ImageService.Modal
                     year = date.Year.ToString();
                     // create the directory that the photo will be in it.
                     Directory.CreateDirectory(outputFolder);
+                    Directory.CreateDirectory(thumbnailsPath);
                     Directory.CreateDirectory(outputFolder + "\\" + year);
                     //create folders for each month.
-                    for (int i = 1; i <= 12; i++)
-                    {
-                        Directory.CreateDirectory(outputFolder + "\\" + year + "\\" + i.ToString());
-                    }
-                    string outputFolderPath = outputFolder + "\\" + year + "\\" + month + "\\" + Path.GetFileName(path);
+                    Directory.CreateDirectory(outputFolder + "\\" + year + "\\" + month);
+                    Directory.CreateDirectory(thumbnailsPath + "\\" + year + "\\" + month);
+
+                    string outputFolderPath = outputFolder + "\\" + year + "\\" + month;
+                    string outputFolderPathThumbnails = thumbnailsPath + "\\" + year + "\\" + month;
+
                     File.Copy(path, outputFolderPath);
+
+                    Image image = Image.FromFile(path);
+                    image = resizeImage(image, new Size(thumbnailSize, thumbnailSize));
+                    image.Save(outputFolderPathThumbnails + "\\" + Path.GetFileName(path));
+
                     result = true;
                     return "Added file successfuly at: " + outputFolderPath;
                 }
@@ -49,6 +58,11 @@ namespace ImageService.Modal
                 throw new Exception("file does not exists");
             }
 
+        }
+
+        private static Image resizeImage(Image imgToResize, Size size)
+        {
+            return (Image)(new Bitmap(imgToResize, size));
         }
     }
 }
