@@ -15,6 +15,8 @@ namespace ImageService.Modal
         {
             try
             {
+                Image
+
                 string month = string.Empty;
                 string year = string.Empty;
                 if (File.Exists(path))
@@ -30,10 +32,10 @@ namespace ImageService.Modal
                     {
                         Directory.CreateDirectory(outputFolder + "\\" + year + "\\" + i.ToString());
                     }
-                    string folderOfImage = outputFolder + "\\" + year + "\\" + month + "\\";
-                    File.Copy(path, folderOfImage + Path.GetFileName(path));
+                    string outputFolderPath = outputFolder + "\\" + year + "\\" + month + "\\" + Path.GetFileName(path);
+                    File.Copy(path, outputFolderPath);
                     result = true;
-                    return string.Empty;
+                    return "Added file successfuly at: " + outputFolderPath;
                 }
                 else
                 {

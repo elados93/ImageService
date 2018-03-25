@@ -21,6 +21,7 @@ namespace ImageService.Controller.Handlers
         private ILoggingService m_logging;
         private FileSystemWatcher m_dirWatcher;             // The Watcher of the Dir
         private string m_path;                              // The Path of directory
+        static readonly string[] extentions = { "jpg", "png", "gif", "bmp" };                // Will hold the extentions of all the files we will be monitoring.
         #endregion
 
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;              // The Event That Notifies that the Directory is being closed
@@ -34,15 +35,35 @@ namespace ImageService.Controller.Handlers
         }
 
         // TODO implement that!
-        public void StartHandleDirectory(string dirPath)
+        public void StartHandleDirectory()
         {
-            throw new NotImplementedException();
+            m_dirWatcher.EnableRaisingEvents = true;
+            m_logging.Log("Start to handle directory: " + m_path, MessageTypeEnum.INFO);
+            m_dirWatcher.Created += new FileSystemEventHandler(newFileCreation);
+        }
+
+        private void newFileCreation(object sender, FileSystemEventArgs e)
+        {
+            string fileExtention = Path.GetExtension(e.FullPath);
+            bool isMatchExtention = false;
+            foreach (string extention in extentions)
+            {
+                if (fileExtention.Equals(extention))
+                    isMatchExtention = true;
+            }
+            if (isMatchExtention)
+                OnCommandRecieved(this, new CommandRecievedEventArgs(1, null, m_path));
+            
         }
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
             bool result;
-            m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
+            string messageFromExecution = m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
+            if (result)
+                m_logging.Log(messageFromExecution, MessageTypeEnum.INFO);
+            else
+                m_logging.Log(messageFromExecution, MessageTypeEnum.FAIL);
 
         }
     }
