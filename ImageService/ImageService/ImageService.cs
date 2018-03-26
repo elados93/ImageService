@@ -15,6 +15,7 @@ using ImageService.Logging;
 using ImageService.Logging.Modal;
 using System.Configuration;
 using ImageService.Infrastructure;
+using ImageService.Infrastructure.AppConfig;
 
 namespace ImageService
 {
@@ -75,11 +76,27 @@ namespace ImageService
 
             logger = new LoggingService();
             logger.MessageRecieved += onMessage;
+            // initiating the objects
+            createObjects();
+
         }
 
         public void onMessage(object sender, MessageRecievedEventArgs args)
         {
             eventLog1.WriteEntry(args.Message);
+        }
+
+        private void createObjects()
+        {
+            AppConfigParser appConfigParser = new AppConfigParser();
+            modal = new ImageServiceModal(appConfigParser.outputDir, appConfigParser.thumbNailsSize);
+            controller = new ImageController(modal);
+            m_imageServer = new ImageServer(controller, logger);
+            string[] handlesPaths = appConfigParser.handler.Split(';'); 
+            foreach (string path in handlesPaths)
+                m_imageServer.createHandler(path);
+
+
         }
 
         protected override void OnStart(string[] args)
