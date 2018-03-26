@@ -11,6 +11,7 @@ using ImageService.Logging;
 using ImageService.Logging.Modal;
 using System.Text.RegularExpressions;
 using ImageService.Modal.Events;
+using ImageService.Server;
 
 namespace ImageService.Controller.Handlers
 {
@@ -53,17 +54,37 @@ namespace ImageService.Controller.Handlers
             }
             if (isMatchExtention)
                 OnCommandRecieved(this, new CommandRecievedEventArgs(1, null, m_path));
-            
+
         }
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
             bool result;
             string messageFromExecution = m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
+
+            // Write the execution in the log.
             if (result)
                 m_logging.Log(messageFromExecution, MessageTypeEnum.INFO);
             else
                 m_logging.Log(messageFromExecution, MessageTypeEnum.FAIL);
+        }
+
+        public void OnCloseService(object sender, CommandRecievedEventArgs e)
+        {
+            ImageServer imageServer = (ImageServer)sender;
+            try
+            {
+                m_dirWatcher.EnableRaisingEvents = false;
+                m_logging.Log("Handler was closed", MessageTypeEnum.INFO);
+            }
+            catch
+            {
+                m_logging.Log("Handler wasn't closed", MessageTypeEnum.WARNING);
+            }
+            finally
+            {
+                imageServer.CommandRecieved -= this.OnCommandRecieved;
+            }
 
         }
     }

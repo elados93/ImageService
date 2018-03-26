@@ -10,8 +10,16 @@ namespace ImageService.Modal
 {
     class ImageServiceModal : IImageServiceModal
     {
-        private string outputFolder; // TODO adding from appconfig.
-        private int thumbnailSize; // TODO adding from appconfig.
+        #region Members
+        private string outputFolder; 
+        private int thumbnailSize; 
+        #endregion 
+
+        public ImageServiceModal(string outputFolderArg, int thumbnailSizeArg)
+        {
+            outputFolder = outputFolderArg;
+            thumbnailSize = thumbnailSizeArg;
+        }
 
         public string AddFile(string path, out bool result)
         {

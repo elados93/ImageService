@@ -17,18 +17,26 @@ namespace ImageService.Server
         #region Members
         private IImageController m_controller;
         private ILoggingService m_logging;
-        
         #endregion
 
         #region Properties
-        public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
+        public event EventHandler<CommandRecievedEventArgs> CommandRecieved;            // The event that notifies about a new Command being recieved
+        public event EventHandler<CommandRecievedEventArgs> CloseService;               // The event that notifies the handlers about closing service.             
         #endregion
+
+        public ImageServer(IImageController controller, ILoggingService logging)
+        {
+            m_controller = controller;
+            m_logging = logging;
+        }
 
         public void createHandler(string path)
         {
             IDirectoryHandler handler = new DirectoyHandler(path, m_controller, m_logging);
             CommandRecieved += handler.OnCommandRecieved;
+            CloseService += handler.OnCloseService;
             handler.DirectoryClose += onCloseServer;
+            handler.StartHandleDirectory(); // Enable events of the handler watcher
         }
 
         public void sendCommand(CommandRecievedEventArgs args)
@@ -41,6 +49,11 @@ namespace ImageService.Server
             m_logging.Log(args.Message, Logging.Modal.MessageTypeEnum.INFO);
             IDirectoryHandler handler = (IDirectoryHandler)sender;
             CommandRecieved -= handler.OnCommandRecieved;
+        }
+
+        public void onCloseService()
+        {
+            CommandRecieved?.Invoke(this, null);
         }
 
     }

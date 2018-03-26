@@ -45,6 +45,9 @@ namespace ImageService
     {
         private int eventId = 1;
         private ILoggingService logger;
+        private ImageServer m_imageServer;          // The Image Server
+        private IImageServiceModal modal;
+        private IImageController controller;
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
@@ -106,15 +109,18 @@ namespace ImageService
         {
             eventLog1.WriteEntry("In onStop.");
 
-            // Update the service state to Start Pending.  
+            // Update the service state to Stop Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_STOP_PENDING;
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            // Update the service state to Running.  
+            // Update the service state to Stopping.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_STOP_PENDING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+
+            // Close all the handlers from server.
+            m_imageServer.onCloseService(); 
         }
 
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
