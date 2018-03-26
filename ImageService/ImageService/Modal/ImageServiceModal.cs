@@ -23,7 +23,6 @@ namespace ImageService.Modal
 
         public string AddFile(string path, out bool result)
         {
-
             try
             {
                 string month = string.Empty;
@@ -71,6 +70,11 @@ namespace ImageService.Modal
         private static Image resizeImage(Image imgToResize, Size size)
         {
             return (Image)(new Bitmap(imgToResize, size));
+        }
+
+        public string AddDirectory(string path, out bool result)
+        {
+
         }
     }
 }

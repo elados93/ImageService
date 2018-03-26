@@ -41,20 +41,33 @@ namespace ImageService.Controller.Handlers
             m_dirWatcher.EnableRaisingEvents = true;
             m_logging.Log("Start to handle directory: " + m_path, MessageTypeEnum.INFO);
             m_dirWatcher.Created += new FileSystemEventHandler(newFileCreation);
+            m_dirWatcher.Changed += new FileSystemEventHandler(newFileCreation);
+
+            // Scan the given path and handle each relavant file.
+            string[] files = Directory.GetFiles(m_path);
+            foreach (string filePath in files)
+            {
+                if (checkFileExtention(filePath))
+                    OnCommandRecieved(this, new CommandRecievedEventArgs(1, null, filePath));
+            }
         }
 
         private void newFileCreation(object sender, FileSystemEventArgs e)
         {
-            string fileExtention = Path.GetExtension(e.FullPath);
+            if (checkFileExtention(e.FullPath))
+                OnCommandRecieved(this, new CommandRecievedEventArgs(1, null, m_path));
+        }
+
+        private bool checkFileExtention(string filePath)
+        {
+            string fileExtention = Path.GetExtension(filePath);
             bool isMatchExtention = false;
             foreach (string extention in extentions)
             {
                 if (fileExtention.Equals(extention))
                     isMatchExtention = true;
             }
-            if (isMatchExtention)
-                OnCommandRecieved(this, new CommandRecievedEventArgs(1, null, m_path));
-
+            return isMatchExtention;
         }
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)

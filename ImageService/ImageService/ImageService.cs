@@ -78,7 +78,6 @@ namespace ImageService
             logger.MessageRecieved += onMessage;
             // initiating the objects
             createObjects();
-
         }
 
         public void onMessage(object sender, MessageRecievedEventArgs args)
@@ -95,8 +94,6 @@ namespace ImageService
             string[] handlesPaths = appConfigParser.handler.Split(';'); 
             foreach (string path in handlesPaths)
                 m_imageServer.createHandler(path);
-
-
         }
 
         protected override void OnStart(string[] args)

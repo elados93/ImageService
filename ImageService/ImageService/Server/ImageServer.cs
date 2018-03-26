@@ -36,7 +36,8 @@ namespace ImageService.Server
             CommandRecieved += handler.OnCommandRecieved;
             CloseService += handler.OnCloseService;
             handler.DirectoryClose += onCloseServer;
-            handler.StartHandleDirectory(); // Enable events of the handler watcher
+            handler.StartHandleDirectory(); // Start listening to events.
+            m_logging.Log("Created Handler for path: " + path + "Yu-Pi-Do!", Logging.Modal.MessageTypeEnum.INFO);
         }
 
         public void sendCommand(CommandRecievedEventArgs args)
@@ -53,7 +54,7 @@ namespace ImageService.Server
 
         public void onCloseService()
         {
-            CommandRecieved?.Invoke(this, null);
+            CloseService?.Invoke(this, null);
         }
 
     }
