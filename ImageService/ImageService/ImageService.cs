@@ -14,7 +14,6 @@ using ImageService.Modal;
 using ImageService.Logging;
 using ImageService.Logging.Modal;
 using System.Configuration;
-using ImageService.Infrastructure;
 using ImageService.Infrastructure.AppConfig;
 
 namespace ImageService
@@ -75,16 +74,18 @@ namespace ImageService
             eventLog1.Log = logName;
 
             logger = new LoggingService();
-            logger.MessageRecieved += onMessage;
-            // initiating the objects
-            createObjects();
+            logger.MessageRecieved += onMessage;          
         }
 
         public void onMessage(object sender, MessageRecievedEventArgs args)
         {
-            eventLog1.WriteEntry(args.Message);
+            eventLog1.WriteEntry(args.Status + ": " + args.Message);
         }
 
+        
+        /// <summary>
+        /// Function that reads from Appconfiguration file. Creates Server, Logging, Controller and Modal.
+        /// </summary>
         private void createObjects()
         {
             AppConfigParser appConfigParser = new AppConfigParser();
@@ -116,7 +117,8 @@ namespace ImageService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            //TODO create server & logging modal (?)
+            // initiating the objects
+            createObjects();
         }
 
         protected override void OnStop()

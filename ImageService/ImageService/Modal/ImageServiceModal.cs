@@ -72,9 +72,5 @@ namespace ImageService.Modal
             return (Image)(new Bitmap(imgToResize, size));
         }
 
-        public string AddDirectory(string path, out bool result)
-        {
-
-        }
     }
 }

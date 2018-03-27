@@ -9,13 +9,11 @@ namespace ImageService.Infrastructure.AppConfig
 {
     class AppConfigParser
     {
-
         public string handler;
         public string outputDir;
         public string sourceName;
         public string logName;
         public int thumbNailsSize;
-
 
         public AppConfigParser()
         {
