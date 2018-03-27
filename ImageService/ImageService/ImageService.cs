@@ -94,7 +94,7 @@ namespace ImageService
             string[] handlesPaths = appConfigParser.handler.Split(';'); 
             foreach (string path in handlesPaths)
                 m_imageServer.createHandler(path);
-        }
+        } 
 
         protected override void OnStart(string[] args)
         {
