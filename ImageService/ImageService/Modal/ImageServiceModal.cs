@@ -41,10 +41,10 @@ namespace ImageService.Modal
                     Directory.CreateDirectory(outputFolder + "\\" + year + "\\" + month);
                     Directory.CreateDirectory(thumbnailsPath + "\\" + year + "\\" + month);
 
-                    string outputFolderPath = outputFolder + "\\" + year + "\\" + month;
+                    string outputFolderPath = outputFolder + "\\" + year + "\\" + month + "\\" + Path.GetFileName(path);
                     string outputFolderPathThumbnails = thumbnailsPath + "\\" + year + "\\" + month;
 
-                    File.Copy(path, outputFolderPath);
+                    File.Copy(path, outputFolderPath, true);
 
                     Image image = Image.FromFile(path);
                     image = resizeImage(image, new Size(thumbnailSize, thumbnailSize));

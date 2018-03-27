@@ -15,6 +15,7 @@ namespace ImageService.Controller.Handlers
         private FileSystemWatcher m_dirWatcher;             // The Watcher of the Dir
         private string m_path;                              // The Path of directory
         static readonly string[] extentions = { ".jpg", ".png", ".gif", ".bmp" };                // Will hold the extentions of all the files we will be monitoring.
+        private DateTime lastRead;
         #endregion
 
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;              // The Event That Notifies that the Directory is being closed
@@ -27,21 +28,22 @@ namespace ImageService.Controller.Handlers
             m_dirWatcher = new FileSystemWatcher(path);
         }
 
-        // TODO implement that!
         public void StartHandleDirectory()
         {
-            m_dirWatcher.EnableRaisingEvents = true;
-            m_logging.Log("Start to handle directory: " + m_path, MessageTypeEnum.INFO);
-            m_dirWatcher.Created += new FileSystemEventHandler(newFileCreation);
-            m_dirWatcher.Changed += new FileSystemEventHandler(newFileCreation);
-
             // Scan the given path and handle each relavant file.
             string[] files = Directory.GetFiles(m_path);
-            foreach (string filePath in files)
+            foreach (string filepath in files)
             {
-                if (checkFileExtention(filePath))
-                    OnCommandRecieved(this, new CommandRecievedEventArgs(1, null, filePath));
+                string[] args = { filepath };
+                if (checkFileExtention(filepath))
+                    OnCommandRecieved(this, new CommandRecievedEventArgs(1, args, filepath));
             }
+
+            m_logging.Log("Start to handle directory: " + m_path, MessageTypeEnum.INFO);
+            //m_dirWatcher.Created += new FileSystemEventHandler(newFileCreation);
+            lastRead = DateTime.MinValue;
+            m_dirWatcher.Changed += new FileSystemEventHandler(newFileCreation);
+            m_dirWatcher.EnableRaisingEvents = true;
         }
 
 
@@ -53,8 +55,14 @@ namespace ImageService.Controller.Handlers
         /// <param name="e"></param>
         private void newFileCreation(object sender, FileSystemEventArgs e)
         {
-            if (checkFileExtention(e.FullPath))
-                OnCommandRecieved(this, new CommandRecievedEventArgs(1, null, m_path));
+            DateTime lastWriteTime = File.GetLastWriteTime(e.FullPath);
+            if (lastWriteTime != lastRead)
+            {
+                string[] args = { e.FullPath };
+                if (checkFileExtention(e.FullPath))
+                    OnCommandRecieved(this, new CommandRecievedEventArgs(1, args, m_path));
+                lastRead = lastWriteTime;
+            }
         }
 
         private bool checkFileExtention(string filePath)

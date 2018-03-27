@@ -123,7 +123,7 @@ namespace ImageService
 
         protected override void OnStop()
         {
-            eventLog1.WriteEntry("In onStop.");
+            eventLog1.WriteEntry("In OnStop.");
 
             // Update the service state to Stop Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
@@ -136,7 +136,9 @@ namespace ImageService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
             // Close all the handlers from server.
-            m_imageServer.onCloseService(); 
+            m_imageServer.onCloseService();
+
+            eventLog1.WriteEntry("Image Service stopped.");
         }
 
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
