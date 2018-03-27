@@ -52,6 +52,13 @@ namespace ImageService.Controller.Handlers
             }
         }
 
+
+        /// <summary>
+        ///  When the watcher recognize a new image in the directory it sends the path to the handler
+        ///  so it would be transported to the right output folder.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void newFileCreation(object sender, FileSystemEventArgs e)
         {
             if (checkFileExtention(e.FullPath))
@@ -82,17 +89,24 @@ namespace ImageService.Controller.Handlers
                 m_logging.Log(messageFromExecution, MessageTypeEnum.FAIL);
         }
 
+
+        /// <summary>
+        /// when the service is closed it sends a massage to all the handler that are signed and 
+        /// tries to close each handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnCloseService(object sender, CommandRecievedEventArgs e)
         {
             ImageServer imageServer = (ImageServer)sender;
             try
             {
                 m_dirWatcher.EnableRaisingEvents = false;
-                m_logging.Log("Handler was closed", MessageTypeEnum.INFO);
+                m_logging.Log("Handler for path: " + m_path + " was closed", MessageTypeEnum.INFO);
             }
             catch
             {
-                m_logging.Log("Handler wasn't closed", MessageTypeEnum.WARNING);
+                m_logging.Log("Handler for path: " + m_path + " wasn't closed", MessageTypeEnum.WARNING);
             }
             finally
             {
