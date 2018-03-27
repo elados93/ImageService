@@ -79,7 +79,7 @@ namespace ImageService
 
         public void onMessage(object sender, MessageRecievedEventArgs args)
         {
-            eventLog1.WriteEntry("Message Type: " + args.Status + ": " + args.Message);
+            eventLog1.WriteEntry(args.Status + ": " + args.Message);
         }
 
         

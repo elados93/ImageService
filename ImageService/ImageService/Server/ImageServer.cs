@@ -37,7 +37,7 @@ namespace ImageService.Server
             CloseService += handler.OnCloseService;
             handler.DirectoryClose += onCloseServer;
             handler.StartHandleDirectory(); // Start listening to events.
-            m_logging.Log("Created Handler for path: " + path + "Yu-Pi-Do!", Logging.Modal.MessageTypeEnum.INFO);
+            m_logging.Log("Created Handler for path: " + path + " Yu-Pi-Do!", Logging.Modal.MessageTypeEnum.INFO);
         }
 
         public void sendCommand(CommandRecievedEventArgs args)
