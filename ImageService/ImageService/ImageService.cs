@@ -86,22 +86,24 @@ namespace ImageService
         /// <summary>
         /// Function that reads from Appconfiguration file. Creates Server, Logging, Controller and Modal.
         /// </summary>
-        private void createObjects()
+        private void createObjects(AppConfigParser appConfigParser)
         {
-            AppConfigParser appConfigParser = new AppConfigParser();
-            eventLog1.Log = appConfigParser.logName;
-            eventLog1.Source = appConfigParser.sourceName;
             modal = new ImageServiceModal(appConfigParser.outputDir, appConfigParser.thumbNailsSize);
             controller = new ImageController(modal);
             m_imageServer = new ImageServer(controller, logger);
             string[] handlesPaths = appConfigParser.handler.Split(';');
             foreach (string path in handlesPaths)
                 m_imageServer.createHandler(path);
-
         }
 
         protected override void OnStart(string[] args)
         {
+            AppConfigParser appConfigParser = new AppConfigParser();
+            eventLog1.Log = appConfigParser.logName;
+            eventLog1.Source = appConfigParser.sourceName;
+            // Create server, handlers, controller and modal.
+            createObjects(appConfigParser);
+
             eventLog1.WriteEntry("In OnStart");
 
             // Set up a timer to trigger every minute.  
@@ -119,9 +121,6 @@ namespace ImageService
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-
-            // initiating the objects
-            createObjects();
         }
 
         protected override void OnStop()
