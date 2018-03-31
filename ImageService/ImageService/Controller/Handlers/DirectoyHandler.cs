@@ -28,6 +28,10 @@ namespace ImageService.Controller.Handlers
             m_dirWatcher = new FileSystemWatcher(path);
         }
 
+        /// <summary>
+        /// this function works on the existing files of the directory, and checks if
+        /// there extentions are properly.
+        /// </summary>
         public void StartHandleDirectory()
         {
             // Scan the given path and handle each relavant file.
@@ -39,9 +43,10 @@ namespace ImageService.Controller.Handlers
                     OnCommandRecieved(this, new CommandRecievedEventArgs(1, args, filepath));
             }
 
+            // sending a amessage to the event logger through the logging.
             m_logging.Log("Start to handle directory: " + m_path, MessageTypeEnum.INFO);
-            //m_dirWatcher.Created += new FileSystemEventHandler(newFileCreation);
             lastRead = DateTime.MinValue;
+            // making sure the filesystem watcher litens to the specific directory if changes happens
             m_dirWatcher.Changed += new FileSystemEventHandler(newFileCreation);
             m_dirWatcher.EnableRaisingEvents = true;
         }
@@ -55,6 +60,7 @@ namespace ImageService.Controller.Handlers
         /// <param name="e"></param>
         private void newFileCreation(object sender, FileSystemEventArgs e)
         {
+            // making sure that the new file creation will happen only once and not twice.
             DateTime lastWriteTime = File.GetLastWriteTime(e.FullPath);
             if (lastWriteTime != lastRead)
             {
@@ -65,6 +71,11 @@ namespace ImageService.Controller.Handlers
             }
         }
 
+        /// <summary>
+        /// check if the extention is a proper extention to handle the specifc path.
+        /// </summary>
+        /// <param name="filePath"> is the path to check</param>
+        /// <returns></returns>
         private bool checkFileExtention(string filePath)
         {
             string fileExtention = Path.GetExtension(filePath);
@@ -77,6 +88,13 @@ namespace ImageService.Controller.Handlers
             return isMatchExtention;
         }
 
+
+        /// <summary>
+        /// the event method that activates the controller by the right key
+        /// and also sends aproper message to the logging if the treatment was successful or not.
+        /// </summary>
+        /// <param name="sender"> is the object that activates the events method.</param>
+        /// <param name="e"> are the arguments needed to the action.</param>
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
             bool result;
@@ -101,6 +119,7 @@ namespace ImageService.Controller.Handlers
             ImageServer imageServer = (ImageServer)sender;
             try
             {
+                // making sure that when the service is closed the watcher will not listen anymore.
                 m_dirWatcher.EnableRaisingEvents = false;
                 m_logging.Log("Handler for path: " + m_path + " was closed", MessageTypeEnum.INFO);
             }

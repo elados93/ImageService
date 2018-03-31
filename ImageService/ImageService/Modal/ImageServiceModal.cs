@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
+using System.IO;
 
 namespace ImageService.Modal
 {
@@ -21,6 +17,16 @@ namespace ImageService.Modal
             thumbnailSize = thumbnailSizeArg;
         }
 
+        /// <summary>
+        /// this function handels the path of the picture and translate the specific date time of the 
+        /// creation of the picture.
+        /// it creates a proper hidden folder that is orgenized by the years and month of the current
+        /// pictures and the future pictures to be.
+        /// it states if the action was successful or not and sends a proper massage to the logging.
+        /// </summary>
+        /// <param name="path"> is the path to handle.</param>
+        /// <param name="result"> is the result</param>
+        /// <returns></returns>
         public string AddFile(string path, out bool result)
         {
             try
@@ -44,9 +50,10 @@ namespace ImageService.Modal
 
                     string outputFolderPath = outputFolder + "\\" + year + "\\" + month + "\\" + Path.GetFileName(path);
                     string outputFolderPathThumbnails = thumbnailsPath + "\\" + year + "\\" + month;
-
+                    // copy the original photo to the hidden directory.
                     File.Copy(path, outputFolderPath, true);
 
+                    // thumblizing the picture.
                     Image image = Image.FromFile(path);
                     image = resizeImage(image, new Size(thumbnailSize, thumbnailSize));
                     image.Save(outputFolderPathThumbnails + "\\" + Path.GetFileName(path));
@@ -68,6 +75,12 @@ namespace ImageService.Modal
 
         }
 
+        /// <summary>
+        /// this function thumblizes the picture.
+        /// </summary>
+        /// <param name="imgToResize"> is the image to resize </param>
+        /// <param name="size"> is the wanted size to resize</param>
+        /// <returns></returns>
         private static Image resizeImage(Image imgToResize, Size size)
         {
             return (Image)(new Bitmap(imgToResize, size));

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImageService.Modal.Events
 {
+    /// <summary>
+    /// the arguments for the DirectoryCloseEventArgs.
+    /// </summary>
     public class DirectoryCloseEventArgs:EventArgs
     {
         public string DirectoryPath { get; set; }
