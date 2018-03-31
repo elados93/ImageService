@@ -1,10 +1,4 @@
-﻿using ImageService.Infrastructure;
-using ImageService.Modal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ImageService.Modal;
 
 namespace ImageService.Commands
 {
@@ -16,7 +10,12 @@ namespace ImageService.Commands
         {
             m_modal = modal;            // Storing the Modal
         }
-
+        /// <summary>
+        /// this function execute the relevent command by the right key of the controller dictionary.
+        /// </summary>
+        /// <param name="args"> is the path to the photo that we should deal with </param>
+        /// <param name="result"> if the operation was successful or not </param>
+        /// <returns></returns>
         public string Execute(string[] args, out bool result)
         {
             // The String Will Return the New Path if result = true, and will return the error message
