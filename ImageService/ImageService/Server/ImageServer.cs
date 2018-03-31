@@ -24,22 +24,34 @@ namespace ImageService.Server
             m_logging = logging;
         }
 
+        /// <summary>
+        /// Create a wanted handler using the given path.
+        /// </summary>
+        /// <param name="path">The string to the directory to handle.</param>
         public void createHandler(string path)
         {
             IDirectoryHandler handler = new DirectoyHandler(path, m_controller, m_logging);
             CommandRecieved += handler.OnCommandRecieved;
             CloseService += handler.OnCloseService;
             handler.DirectoryClose += onCloseServer;
-            handler.StartHandleDirectory(); // Start listening to events.
+            
+            // Start listening to events.
+            handler.StartHandleDirectory(); 
             m_logging.Log("Created Handler for path: " + path + " Yu-Pi-Do!", Logging.Modal.MessageTypeEnum.INFO);
         }
 
-        // has no use currently
+        // Has no use currently.
         public void sendCommand(CommandRecievedEventArgs args)
         {
             CommandRecieved?.Invoke(this, args);
         }
 
+        /// <summary>
+        /// The function update the server that a handler is done handle the dir and
+        /// server don't need to consider it anymore.
+        /// </summary>
+        /// <param name="sender">Some handler as object type.</param>
+        /// <param name="args">Information about the closing dir.</param>
         public void onCloseServer(object sender, DirectoryCloseEventArgs args)
         {
             m_logging.Log(args.Message, Logging.Modal.MessageTypeEnum.INFO);
@@ -47,6 +59,10 @@ namespace ImageService.Server
             CommandRecieved -= handler.OnCommandRecieved;
         }
 
+        /// <summary>
+        /// The function is called when the service is about to be closed so 
+        /// the server close all his handlers using CloseService event.
+        /// </summary>
         public void onCloseService()
         {
             CloseService?.Invoke(this, null);

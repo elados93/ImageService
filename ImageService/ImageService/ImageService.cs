@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using ImageService.Server;
 using ImageService.Controller;
 using ImageService.Modal;
 using ImageService.Logging;
 using ImageService.Logging.Modal;
-using System.Configuration;
 using ImageService.Infrastructure.AppConfig;
 
 namespace ImageService
@@ -43,11 +37,13 @@ namespace ImageService
 
     public partial class ImageService : ServiceBase
     {
+        #region Members
         private int eventId = 1;
         private ILoggingService logger;
         private ImageServer m_imageServer;          // The Image Server
         private IImageServiceModal modal;
         private IImageController controller;
+        #endregion
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
@@ -77,21 +73,27 @@ namespace ImageService
             logger.MessageRecieved += onMessage;
         }
 
+        /// <summary>
+        /// Write the given message in event logger.
+        /// </summary>
+        /// <param name="sender">The object who called that function.</param>
+        /// <param name="args">The message to be wrriten.</param>
         public void onMessage(object sender, MessageRecievedEventArgs args)
         {
             eventLog1.WriteEntry(args.Status + ": " + args.Message);
         }
 
-
         /// <summary>
-        /// Function that reads from Appconfiguration file. Creates Server, Logging, Controller and Modal.
+        /// The function parse AppConfig using AppConfigParser.
         /// </summary>
+        /// <param name="appConfigParser">The AppConfigParser to work with, created before.</param>
         private void createObjects(AppConfigParser appConfigParser)
         {
             modal = new ImageServiceModal(appConfigParser.outputDir, appConfigParser.thumbNailsSize);
             controller = new ImageController(modal);
             m_imageServer = new ImageServer(controller, logger);
             string[] handlesPaths = appConfigParser.handler.Split(';');
+            // Create all the handlers.
             foreach (string path in handlesPaths)
                 m_imageServer.createHandler(path);
         }
@@ -143,9 +145,14 @@ namespace ImageService
             eventLog1.WriteEntry("Image Service stopped.");
         }
 
+        /// <summary>
+        /// The function is called when a period of time is done at the service for monitoring
+        /// the service.
+        /// </summary>
+        /// <param name="sender">The object called the function.</param>
+        /// <param name="args">The information about the monitoring.</param>
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
-            // TODO: Insert monitoring activities here.  
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
         }
 

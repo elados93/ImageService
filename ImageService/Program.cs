@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ServiceProcess;
 
 namespace ImageService
 {
     static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// The application start ImageService in order to backup wanted files from output
+        /// folder as given in AppConfig.
         /// </summary>
         static void Main(string[] args)
         {
