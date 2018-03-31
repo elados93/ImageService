@@ -55,8 +55,8 @@ namespace ImageService
         public ImageService(string[] args)
         {
             InitializeComponent();
-            string eventSourceName = "MySource";
-            string logName = "MyNewLog";
+            string eventSourceName = "ImageServiceSource";
+            string logName = "ImageServiceLog";
             if (args.Count() > 0)
             {
                 eventSourceName = args[0];
@@ -74,7 +74,7 @@ namespace ImageService
             eventLog1.Log = logName;
 
             logger = new LoggingService();
-            logger.MessageRecieved += onMessage;          
+            logger.MessageRecieved += onMessage;
         }
 
         public void onMessage(object sender, MessageRecievedEventArgs args)
@@ -82,20 +82,23 @@ namespace ImageService
             eventLog1.WriteEntry(args.Status + ": " + args.Message);
         }
 
-        
+
         /// <summary>
         /// Function that reads from Appconfiguration file. Creates Server, Logging, Controller and Modal.
         /// </summary>
         private void createObjects()
         {
             AppConfigParser appConfigParser = new AppConfigParser();
+            eventLog1.Log = appConfigParser.logName;
+            eventLog1.Source = appConfigParser.sourceName;
             modal = new ImageServiceModal(appConfigParser.outputDir, appConfigParser.thumbNailsSize);
             controller = new ImageController(modal);
             m_imageServer = new ImageServer(controller, logger);
-            string[] handlesPaths = appConfigParser.handler.Split(';'); 
+            string[] handlesPaths = appConfigParser.handler.Split(';');
             foreach (string path in handlesPaths)
                 m_imageServer.createHandler(path);
-        } 
+
+        }
 
         protected override void OnStart(string[] args)
         {

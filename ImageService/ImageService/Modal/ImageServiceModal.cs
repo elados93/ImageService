@@ -33,8 +33,9 @@ namespace ImageService.Modal
                     DateTime date = File.GetCreationTime(path);
                     month = date.Month.ToString();
                     year = date.Year.ToString();
-                    // create the directory that the photo will be in it.
-                    Directory.CreateDirectory(outputFolder);
+                    // create the directory that the photo will be in it, so it would be a hidden directory.
+                    Directory.CreateDirectory(outputFolder).Attributes |= FileAttributes.Hidden;
+                    
                     Directory.CreateDirectory(thumbnailsPath);
                     Directory.CreateDirectory(outputFolder + "\\" + year);
                     //create folders for each month.

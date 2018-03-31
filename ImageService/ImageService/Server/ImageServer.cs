@@ -40,6 +40,7 @@ namespace ImageService.Server
             m_logging.Log("Created Handler for path: " + path + " Yu-Pi-Do!", Logging.Modal.MessageTypeEnum.INFO);
         }
 
+        // has no use currently
         public void sendCommand(CommandRecievedEventArgs args)
         {
             CommandRecieved?.Invoke(this, args);
