@@ -7,9 +7,9 @@ namespace ImageService.Modal
     class ImageServiceModal : IImageServiceModal
     {
         #region Members
-        private string outputFolder; 
-        private int thumbnailSize; 
-        #endregion 
+        private string outputFolder;
+        private int thumbnailSize;
+        #endregion
 
         public ImageServiceModal(string outputFolderArg, int thumbnailSizeArg)
         {
@@ -41,36 +41,53 @@ namespace ImageService.Modal
                     year = date.Year.ToString();
                     // create the directory that the photo will be in it, so it would be a hidden directory.
                     Directory.CreateDirectory(outputFolder).Attributes |= FileAttributes.Hidden;
-                    
+
                     Directory.CreateDirectory(thumbnailsPath);
                     Directory.CreateDirectory(outputFolder + "\\" + year);
+
                     //create folders for each month.
                     Directory.CreateDirectory(outputFolder + "\\" + year + "\\" + month);
                     Directory.CreateDirectory(thumbnailsPath + "\\" + year + "\\" + month);
 
                     string outputFolderPath = outputFolder + "\\" + year + "\\" + month + "\\" + Path.GetFileName(path);
-                    string outputFolderPathThumbnails = thumbnailsPath + "\\" + year + "\\" + month;
-                    // copy the original photo to the hidden directory.
+                    string outputFolderPathThumbnails = thumbnailsPath + "\\" + year + "\\" + month + "\\" + Path.GetFileName(path);
+
+                    // Check for existence of the file already in the output folder.
+                    int i = 1;
+                    if (File.Exists(outputFolderPath))
+                    {
+                        do
+                        {
+                            outputFolderPath = outputFolder + "\\" + year + "\\" + month + "\\" + Path.GetFileNameWithoutExtension(path) + "(" + i + ")" + Path.GetExtension(path);
+                            outputFolderPathThumbnails = thumbnailsPath + "\\" + year + "\\" + month + "\\" + Path.GetFileNameWithoutExtension(path) + "(" + i + ")" + Path.GetExtension(path);
+                            ++i;
+                        } while (File.Exists(outputFolderPath));
+                    }
+
+                    // Copy the original photo to the hidden directory.
                     File.Copy(path, outputFolderPath, true);
 
-                    // thumblizing the picture.
-                    Image image = Image.FromFile(path);
+                    // Thumblizing the picture.
+                    Image image = Image.FromStream(new MemoryStream(File.ReadAllBytes(path)));
                     image = resizeImage(image, new Size(thumbnailSize, thumbnailSize));
-                    image.Save(outputFolderPathThumbnails + "\\" + Path.GetFileName(path));
+                    image.Save(outputFolderPathThumbnails);
+                    image.Dispose();
 
                     result = true;
                     return "Added file successfuly at: " + outputFolderPath;
                 }
                 else
                 {
+                    // If there is no image return false and an appropriate message.
                     result = false;
                     string noSuchPath = "Not A Valid Image";
                     return noSuchPath;
                 }
             }
-            catch
+            catch (Exception e)
             {
-                throw new Exception("file does not exists");
+                result = false;
+                return e.Message;
             }
 
         }

@@ -119,8 +119,9 @@ namespace ImageService.Controller.Handlers
             ImageServer imageServer = (ImageServer)sender;
             try
             {
-                // making sure that when the service is closed the watcher will not listen anymore.
+                // Making sure that when the service is closed the watcher will not listen anymore.
                 m_dirWatcher.EnableRaisingEvents = false;
+                m_dirWatcher.Dispose();
                 m_logging.Log("Handler for path: " + m_path + " was closed", MessageTypeEnum.INFO);
             }
             catch
