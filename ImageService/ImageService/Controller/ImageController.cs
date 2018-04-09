@@ -1,14 +1,17 @@
 ﻿using ImageService.Commands;
 using ImageService.Modal;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ImageService.Controller
 {
     public class ImageController : IImageController
     {
-        //members
+        #region Members
         private IImageServiceModal m_modal;                      // The Modal Object
         private Dictionary<int, ICommand> commands;
+        #endregion
 
         public ImageController(IImageServiceModal modal)
         {
@@ -35,7 +38,16 @@ namespace ImageService.Controller
                 resultSuccesful = false;
                 return "Command not found!";
             }
-            return commands[commandID].Execute(args, out resultSuccesful);
+            Task<Tuple<string, bool>> task = new Task<Tuple<string, bool>>(() =>
+            {
+                bool result;
+                string msg = commands[commandID].Execute(args, out result);
+                return Tuple.Create(msg, result);
+            });
+            task.Start();
+            Tuple<string, bool> taskArgs = task.Result;
+            resultSuccesful = taskArgs.Item2;
+            return taskArgs.Item1;
         }
     }
 }

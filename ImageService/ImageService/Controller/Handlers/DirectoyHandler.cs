@@ -34,6 +34,7 @@ namespace ImageService.Controller.Handlers
         /// </summary>
         public void StartHandleDirectory()
         {
+            /**  OPTIONAL - READ FROM DIR AND HANDLE THE FILES FROM THE DIR
             // Scan the given path and handle each relavant file.
             string[] files = Directory.GetFiles(m_path);
             foreach (string filepath in files)
@@ -42,15 +43,15 @@ namespace ImageService.Controller.Handlers
                 if (checkFileExtention(filepath))
                     OnCommandRecieved(this, new CommandRecievedEventArgs(1, args, filepath));
             }
+            */
 
             // sending a amessage to the event logger through the logging.
             m_logging.Log("Start to handle directory: " + m_path, MessageTypeEnum.INFO);
             lastRead = DateTime.MinValue;
             // making sure the filesystem watcher litens to the specific directory if changes happens
-            m_dirWatcher.Changed += new FileSystemEventHandler(newFileCreation);
+            m_dirWatcher.Created += newFileCreation;
             m_dirWatcher.EnableRaisingEvents = true;
         }
-
 
         /// <summary>
         ///  When the watcher recognize a new image in the directory it sends the path to the handler
@@ -87,7 +88,6 @@ namespace ImageService.Controller.Handlers
             }
             return isMatchExtention;
         }
-
 
         /// <summary>
         /// the event method that activates the controller by the right key
