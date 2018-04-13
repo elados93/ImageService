@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 
 namespace ImageService.Modal
 {
@@ -29,6 +30,7 @@ namespace ImageService.Modal
         /// <returns></returns>
         public string AddFile(string path, out bool result)
         {
+            Thread.Sleep(100);
             try
             {
                 string month = string.Empty;
@@ -58,20 +60,33 @@ namespace ImageService.Modal
                     {
                         do
                         {
-                            outputFolderPath = outputFolder + "\\" + year + "\\" + month + "\\" + Path.GetFileNameWithoutExtension(path) + "(" + i + ")" + Path.GetExtension(path);
-                            outputFolderPathThumbnails = thumbnailsPath + "\\" + year + "\\" + month + "\\" + Path.GetFileNameWithoutExtension(path) + "(" + i + ")" + Path.GetExtension(path);
+                            outputFolderPath = outputFolder + "\\" + year + "\\" + month + "\\" 
+                                + Path.GetFileNameWithoutExtension(path) + "(" + i + ")" + Path.GetExtension(path);
+                            outputFolderPathThumbnails = thumbnailsPath + "\\" + year + "\\" + month + 
+                                "\\" + Path.GetFileNameWithoutExtension(path) + "(" + i + ")" + Path.GetExtension(path);
                             ++i;
                         } while (File.Exists(outputFolderPath));
                     }
 
                     // Copy the original photo to the hidden directory.
-                    File.Copy(path, outputFolderPath, true);
+                    File.Move(path, outputFolderPath);
 
                     // Thumblizing the picture.
-                    Image image = Image.FromStream(new MemoryStream(File.ReadAllBytes(path)));
-                    image = resizeImage(image, new Size(thumbnailSize, thumbnailSize));
-                    image.Save(outputFolderPathThumbnails);
-                    image.Dispose();
+                    Image image = null;
+                    try
+                    {
+                        image = Image.FromStream(new MemoryStream(File.ReadAllBytes(outputFolderPath)));
+                        image = resizeImage(image, new Size(thumbnailSize, thumbnailSize));
+                        image.Save(outputFolderPathThumbnails);
+                    } catch
+                    {
+                        result = false;
+                        return "Couldn't create thumbnail image!";
+                    }
+                    finally
+                    {
+                        image.Dispose();
+                    }
 
                     result = true;
                     return "Added file successfuly at: " + outputFolderPath;
