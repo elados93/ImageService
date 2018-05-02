@@ -12,7 +12,9 @@
             <TabItem x:Name="SettingsTab" Header="Settings">
                 <views:SettingsView/>
             </TabItem>
-            <TabItem x:Name="Logs" Header="Logs" />
+            <TabItem x:Name="Logs" Header="Logs" >
+            <views:LogView/>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
