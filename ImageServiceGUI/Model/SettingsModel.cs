@@ -19,54 +19,52 @@ namespace ImageServiceGUI.Model
         protected void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)
-            {
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
         }
 
-        public int ThumbNailsSize
-        {
-            get => m_thumbNailsSize; set
+
+        public int ThumbNailsSize { get { return m_thumbNailsSize; }
+            set
             {
                 m_thumbNailsSize = value;
                 OnPropertyChanged("ThumbNailsSize");
             }
         }
-        public string LogName
-        {
-            get => m_logName;
+        public string LogName { get {return m_logName; }
             set
             {
                 m_logName = value;
                 OnPropertyChanged("LogName");
             }
-            }
+        }
         public string SourceName
         {
-            get => m_sourceName; set
+            get { return m_sourceName; } set
             {
                 m_sourceName = value;
                 OnPropertyChanged("SourceName");
 
             }
-            }
+        }
         public string OutputDir
         {
-            get => m_outputDir; set
+            get {return m_outputDir;} set
             {
                 m_outputDir = value;
                 OnPropertyChanged("OutputDir");
 
             }
-            }
+        }
         public string Handler
         {
-            get => m_handler; set
+            get { return m_handler; } set
             {
                 m_handler = value;
                 OnPropertyChanged("Handler");
 
             }
-            }
         }
+
+      
     }
+}
