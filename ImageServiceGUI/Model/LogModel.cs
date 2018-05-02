@@ -14,7 +14,7 @@ namespace ImageServiceGUI.Model
 
         public List<Tuple<string, string>> LogMessages1
         {
-            get => m_LogMessages; set
+            get { return m_LogMessages; } set
             {
                 m_LogMessages = value;
                 OnPropertyChanged("LogMessages1");

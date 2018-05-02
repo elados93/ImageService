@@ -23,14 +23,14 @@ namespace ImageServiceGUI.Model
         }
 
 
-        public int ThumbNailsSize { get => m_thumbNailsSize;
+        public int ThumbNailsSize { get { return m_thumbNailsSize; }
             set
             {
                 m_thumbNailsSize = value;
                 OnPropertyChanged("ThumbNailsSize");
             }
         }
-        public string LogName { get => m_logName;
+        public string LogName { get {return m_logName; }
             set
             {
                 m_logName = value;
@@ -39,7 +39,7 @@ namespace ImageServiceGUI.Model
         }
         public string SourceName
         {
-            get => m_sourceName; set
+            get { return m_sourceName; } set
             {
                 m_sourceName = value;
                 OnPropertyChanged("SourceName");
@@ -48,7 +48,7 @@ namespace ImageServiceGUI.Model
         }
         public string OutputDir
         {
-            get => m_outputDir; set
+            get {return m_outputDir;} set
             {
                 m_outputDir = value;
                 OnPropertyChanged("OutputDir");
@@ -57,7 +57,7 @@ namespace ImageServiceGUI.Model
         }
         public string Handler
         {
-            get => m_handler; set
+            get { return m_handler; } set
             {
                 m_handler = value;
                 OnPropertyChanged("Handler");
