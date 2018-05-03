@@ -12,7 +12,6 @@ namespace ImageServiceGUI.ViewModel
     class LogViewModel : INotifyPropertyChanged
     {
         private LogModel vm_logModel;
-        
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void NotifyPropertyChanged(string name)
@@ -20,5 +19,6 @@ namespace ImageServiceGUI.ViewModel
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
+
     }
 }
