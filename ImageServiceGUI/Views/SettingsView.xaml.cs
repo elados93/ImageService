@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using ImageServiceGUI.ViewModel;
+using ImageServiceGUI.Model;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ImageServiceGUI.Views
 {
@@ -20,9 +9,13 @@ namespace ImageServiceGUI.Views
     /// </summary>
     public partial class SettingsView : UserControl
     {
+        SettingViewModel settingsVm;
         public SettingsView()
         {
             InitializeComponent();
+            settingsVm = new SettingViewModel(new SettingsModel());
+            this.DataContext = settingsVm;
+            handlersListBox.ItemsSource = settingsVm.vm_Handlers;
         }
     }
 }

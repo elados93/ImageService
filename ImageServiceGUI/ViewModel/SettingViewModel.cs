@@ -1,17 +1,24 @@
 ﻿using ImageServiceGUI.Model;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImageServiceGUI.ViewModel
 {
     class SettingViewModel : INotifyPropertyChanged
     {
-        private SettingsModel settingModel;
+        private ISettingsModel settingModel;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public SettingViewModel(ISettingsModel model)
+        {
+            this.settingModel = model;
+            settingModel.PropertyChanged +=
+            delegate (Object sender, PropertyChangedEventArgs e)
+            {
+                NotifyPropertyChanged("VM_" + e.PropertyName);
+            };
+        }
 
         protected void NotifyPropertyChanged(string name)
         {
@@ -19,15 +26,7 @@ namespace ImageServiceGUI.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
-        public SettingViewModel()
-        {
-            this.settingModel = new SettingsModel();
-            settingModel.PropertyChanged +=
-            delegate (Object sender, PropertyChangedEventArgs e)
-            {
-                NotifyPropertyChanged("VM_" + e.PropertyName);
-            };
-        }
+        public ObservableCollection<string> vm_Handlers { get { return settingModel.Handlers; } }
 
         public string vm_OutputDir
         {

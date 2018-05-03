@@ -80,7 +80,12 @@ namespace ImageService
         /// <param name="args">The message to be wrriten.</param>
         public void onMessage(object sender, MessageRecievedEventArgs args)
         {
-            eventLog1.WriteEntry(args.Status + ": " + args.Message);
+            EventLogEntryType type = EventLogEntryType.Information;
+            if (args.Status == MessageTypeEnum.FAIL)
+                type = EventLogEntryType.Error;
+            else if (args.Status == MessageTypeEnum.WARNING)
+                type = EventLogEntryType.Warning;
+            eventLog1.WriteEntry(args.Message, type);
         }
 
         /// <summary>
