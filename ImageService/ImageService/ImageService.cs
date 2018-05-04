@@ -113,12 +113,6 @@ namespace ImageService
 
             eventLog1.WriteEntry("In OnStart");
 
-            // Set up a timer to trigger every minute.  
-            System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Interval = 60000; // 60 seconds  
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
-            timer.Start();
-
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
@@ -148,17 +142,6 @@ namespace ImageService
             m_imageServer.onCloseService();
 
             eventLog1.WriteEntry("Image Service stopped.");
-        }
-
-        /// <summary>
-        /// The function is called when a period of time is done at the service for monitoring
-        /// the service.
-        /// </summary>
-        /// <param name="sender">The object called the function.</param>
-        /// <param name="args">The information about the monitoring.</param>
-        public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
-        {
-            eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
         }
 
         protected override void OnContinue()

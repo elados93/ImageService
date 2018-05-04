@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel Orientation="Vertical">
         <Label Content="Logs" FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Blue" RenderTransformOrigin="2.634,0.921" FontFamily="Narkisim"/>
-        <DataGrid ItemsSource="{Binding VM_LogMessages}" AutoGenerateColumns="False" CanUserAddRows="False">
+        <DataGrid ItemsSource="{Binding vm_LogMessages}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Type}" >
                     <DataGridTextColumn.ElementStyle>
@@ -17,7 +17,7 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Message" Width="*" IsReadOnly="True" Binding="{Binding Message}" />
+                <DataGridTextColumn Header="Message" Width="*" IsReadOnly="True" Binding="{Binding Path=Message}" />
             </DataGrid.Columns>
 
         </DataGrid>

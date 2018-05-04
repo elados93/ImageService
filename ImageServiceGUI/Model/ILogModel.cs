@@ -6,6 +6,6 @@ namespace ImageServiceGUI.Model
 {
     interface ILogModel : INotifyPropertyChanged
     {
-        ObservableCollection<EventLogEntry> LogMessages { get; set; }
+        ObservableCollection<Entry> LogMessages { get; set; }
     }
 }
