@@ -89,14 +89,17 @@ namespace ImageService.Controller.Handlers
         /// <param name="e"> are the arguments needed to the action.</param>
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
-            bool result;
-            string messageFromExecution = m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
+            if (e.RequestDirPath.Equals(m_path))
+            {
+                bool result;
+                string messageFromExecution = m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
 
-            // Write the execution in the log.
-            if (result)
-                m_logging.Log(messageFromExecution, MessageTypeEnum.INFO);
-            else
-                m_logging.Log(messageFromExecution, MessageTypeEnum.FAIL);
+                // Write the execution in the log.
+                if (result)
+                    m_logging.Log(messageFromExecution, MessageTypeEnum.INFO);
+                else
+                    m_logging.Log(messageFromExecution, MessageTypeEnum.FAIL);
+            }
         }
 
 

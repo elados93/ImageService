@@ -49,7 +49,6 @@ namespace ImageService.Server
             }
         }
 
-        // Has no use currently.
         public void sendCommand(CommandRecievedEventArgs args)
         {
             CommandRecieved?.Invoke(this, args);
