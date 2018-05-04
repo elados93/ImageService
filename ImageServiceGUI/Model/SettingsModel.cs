@@ -18,6 +18,9 @@ namespace ImageServiceGUI.Model
         public SettingsModel()
         {
             Handlers = new ObservableCollection<string>();
+            Handlers.Add("dafsdf");
+            Handlers.Add("HYHYHY");
+            Handlers.Add("shafar");
         }
 
         protected void OnPropertyChanged(string name)
