@@ -1,11 +1,9 @@
 ﻿using ImageServiceGUI.Model;
-using ImageServiceGUI.Views;
 using Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Windows;
 using System.Windows.Input;
 namespace ImageServiceGUI.ViewModel
 {
