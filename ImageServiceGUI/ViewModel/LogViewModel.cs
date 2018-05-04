@@ -1,37 +1,24 @@
 ﻿using ImageServiceGUI.Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ImageServiceGUI.ViewModel
 {
     class LogViewModel : INotifyPropertyChanged
     {
-        private ILogModel logModel;
+        private LogModel vm_logModel;
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public LogViewModel(ILogModel model)
-        {
-            this.logModel = model;
-
-            logModel.PropertyChanged +=
-            delegate (Object sender, PropertyChangedEventArgs e)
-            {
-                NotifyPropertyChanged("VM_" + e.PropertyName);
-            };
-        }
-
-        public ObservableCollection<EventLogEntry> vm_LogMessages {
-            get { return logModel.LogMessages; }
-        }
-
         protected void NotifyPropertyChanged(string name)
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
-
     }
 }
