@@ -21,10 +21,9 @@ namespace ImageServiceGUI.ViewModel
             {
                 NotifyPropertyChanged("VM_" + e.PropertyName);
             };
-
         }
 
-        public ObservableCollection<Entry> vm_LogMessages {
+        public ObservableCollection<EventLogEntry> vm_LogMessages {
             get { return logModel.LogMessages; }
         }
 

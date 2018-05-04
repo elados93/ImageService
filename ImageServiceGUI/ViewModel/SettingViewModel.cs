@@ -1,19 +1,13 @@
 ﻿using ImageServiceGUI.Model;
-using ImageServiceGUI.Views;
-using Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Input;
+
 namespace ImageServiceGUI.ViewModel
 {
     class SettingViewModel : INotifyPropertyChanged
     {
         private ISettingsModel settingModel;
-        private string selectedItem;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingViewModel(ISettingsModel model)
@@ -22,51 +16,17 @@ namespace ImageServiceGUI.ViewModel
             settingModel.PropertyChanged +=
             delegate (Object sender, PropertyChangedEventArgs e)
             {
-                NotifyPropertyChanged("vm_" + e.PropertyName);
+                NotifyPropertyChanged("VM_" + e.PropertyName);
             };
-
-            this.RemoveHandlerCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
-            PropertyChanged += RemoveSelectedHandlerCommand;
-        }
-
-        private void RemoveSelectedHandlerCommand(object sender, PropertyChangedEventArgs e)
-        {
-            var command = this.RemoveHandlerCommand as DelegateCommand<object>;
-            command?.RaiseCanExecuteChanged();
-        }
-
-        private void OnRemove(object obj)
-        {
-            settingModel.Handlers.Remove(SelectedItem);
-            SelectedItem = null;
-            Debug.WriteLine("In On Remove" + vm_Handlers.ToString());
-        }
-
-        private bool CanRemove(object obj)
-        {
-            return SelectedItem != null;
         }
 
         protected void NotifyPropertyChanged(string name)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
         public ObservableCollection<string> vm_Handlers { get { return settingModel.Handlers; } }
-
-        public ICommand RemoveHandlerCommand { get; private set; }
-
-        public string SelectedItem
-        {
-            get { return selectedItem; }
-            set
-            {
-                selectedItem = value;
-                NotifyPropertyChanged("SelectedItem");
-            }
-        }
-
-
 
         public string vm_OutputDir
         {

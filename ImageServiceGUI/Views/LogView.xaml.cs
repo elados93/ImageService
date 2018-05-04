@@ -11,7 +11,6 @@ namespace ImageServiceGUI.Views
         {
             InitializeComponent();
             logVm = new LogViewModel(new LogModel());
-            this.DataContext = logVm;
         }
     }
 }
