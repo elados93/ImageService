@@ -97,17 +97,16 @@ namespace ImageService.Controller.Handlers
                     ImageServer server = (ImageServer)sender;
                     closeHandler(server);
                 }
-                else
-                {
-                    bool result;
-                    string messageFromExecution = m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
 
-                    // Write the execution in the log.
-                    if (result)
-                        m_logging.Log(messageFromExecution, MessageTypeEnum.INFO);
-                    else
-                        m_logging.Log(messageFromExecution, MessageTypeEnum.FAIL);
-                }
+                bool result;
+                string messageFromExecution = m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
+
+                // Write the execution in the log.
+                if (result)
+                    m_logging.Log(messageFromExecution, MessageTypeEnum.INFO);
+                else
+                    m_logging.Log(messageFromExecution, MessageTypeEnum.FAIL);
+
             }
         }
 
@@ -120,7 +119,7 @@ namespace ImageService.Controller.Handlers
         public void OnCloseService(object sender, CommandRecievedEventArgs e)
         {
             ImageServer imageServer = (ImageServer)sender;
-            closeHandler(imageServer);   
+            closeHandler(imageServer);
         }
 
         public void closeHandler(ImageServer imageServer)

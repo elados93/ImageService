@@ -5,6 +5,7 @@ using ImageService.Modal;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Net.Sockets;
 
 namespace ImageService.Controller
 {
@@ -21,7 +22,8 @@ namespace ImageService.Controller
             //initializing the dictionary that state what kind of execution we can do.
             commands = new Dictionary<CommandEnum, ICommand>()
             {
-                { CommandEnum.NewFileCommand, new NewFileCommand(m_modal)}
+                { CommandEnum.NewFileCommand, new NewFileCommand(m_modal)},
+                { CommandEnum.CloseCommand, new DeleteHandlerFromAppConfigCommand()}
 
             };
         }
@@ -34,7 +36,7 @@ namespace ImageService.Controller
         /// <param name="args"> arguments </param>
         /// <param name="resultSuccesful"> is the result of the execution.</param>
         /// <returns></returns>
-        public string ExecuteCommand(int commandID, string[] args, out bool resultSuccesful)
+        public string ExecuteCommand(CommandEnum commandID, string[] args, out bool resultSuccesful)
         {
             if (!commands.ContainsKey(commandID))
             {
