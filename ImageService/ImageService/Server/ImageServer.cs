@@ -15,7 +15,7 @@ namespace ImageService.Server
         private ILoggingService m_logging;
         #endregion
 
-        #region Properties
+        #region Events
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;            // The event that notifies about a new Command being recieved
         public event EventHandler<CommandRecievedEventArgs> CloseService;               // The event that notifies the handlers about closing service.             
         #endregion
@@ -37,7 +37,7 @@ namespace ImageService.Server
                 IDirectoryHandler handler = new DirectoyHandler(path, m_controller, m_logging);
                 CommandRecieved += handler.OnCommandRecieved;
                 CloseService += handler.OnCloseService;
-                handler.DirectoryClose += onCloseServer;
+                handler.DirectoryClose += deleteHandlerFromServer;
 
                 // Start listening to events.
                 handler.StartHandleDirectory();
@@ -60,11 +60,26 @@ namespace ImageService.Server
         /// </summary>
         /// <param name="sender">Some handler as object type.</param>
         /// <param name="args">Information about the closing dir.</param>
-        public void onCloseServer(object sender, DirectoryCloseEventArgs args)
+        public void deleteHandlerFromServer(object sender, DirectoryCloseEventArgs args)
         {
-            m_logging.Log(args.Message, Logging.Modal.MessageTypeEnum.INFO);
+            String message = null;
+            MessageTypeEnum type = MessageTypeEnum.INFO;
             IDirectoryHandler handler = (IDirectoryHandler)sender;
-            CommandRecieved -= handler.OnCommandRecieved;
+            try
+            {
+                CommandRecieved -= handler.OnCommandRecieved;
+                CloseService -= handler.OnCloseService;
+                message = "Handler for path: " + args.DirectoryPath + " was deleted from server";
+            } catch
+            {
+                type = MessageTypeEnum.FAIL;
+                message = "Handler for path: " + args.DirectoryPath + " was NOT deleted from server";
+            }
+            finally
+            {
+                m_logging.Log(message, type);
+            }
+
         }
 
         /// <summary>

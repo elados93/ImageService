@@ -94,21 +94,22 @@ namespace ImageService.Controller.Handlers
             {
                 if (e.CommandID == CommandEnum.CloseCommand)
                 {
-
+                    ImageServer server = (ImageServer)sender;
+                    closeHandler(server);
                 }
-                bool result;
-                string messageFromExecution = m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
-
-                // Write the execution in the log.
-                if (result)
-                    m_logging.Log(messageFromExecution, MessageTypeEnum.INFO);
                 else
-                    m_logging.Log(messageFromExecution, MessageTypeEnum.FAIL);
+                {
+                    bool result;
+                    string messageFromExecution = m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
+
+                    // Write the execution in the log.
+                    if (result)
+                        m_logging.Log(messageFromExecution, MessageTypeEnum.INFO);
+                    else
+                        m_logging.Log(messageFromExecution, MessageTypeEnum.FAIL);
+                }
             }
         }
-
-
-
 
         /// <summary>
         /// when the service is closed it sends a massage to all the handler that are signed and 
@@ -137,7 +138,7 @@ namespace ImageService.Controller.Handlers
             }
             finally
             {
-                imageServer.CommandRecieved -= this.OnCommandRecieved;
+                DirectoryClose?.Invoke(this, new DirectoryCloseEventArgs(m_path, "The handler"));
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageService.Infrastructure.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,6 @@ namespace ImageService.Controller
     public interface IImageController
     {
         // Executing the Command Requet
-        string ExecuteCommand(int commandID, string[] args, out bool result);
+        string ExecuteCommand(CommandEnum commandID, string[] args, out bool result);
     }
 }
