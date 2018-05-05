@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
 using ImageService.Logging.Modal;
 using ImageService.Modal.Events;
@@ -91,6 +92,10 @@ namespace ImageService.Controller.Handlers
         {
             if (e.RequestDirPath.Equals(m_path))
             {
+                if (e.CommandID == CommandEnum.CloseCommand)
+                {
+
+                }
                 bool result;
                 string messageFromExecution = m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
 
@@ -103,6 +108,8 @@ namespace ImageService.Controller.Handlers
         }
 
 
+
+
         /// <summary>
         /// when the service is closed it sends a massage to all the handler that are signed and 
         /// tries to close each handler.
@@ -112,6 +119,11 @@ namespace ImageService.Controller.Handlers
         public void OnCloseService(object sender, CommandRecievedEventArgs e)
         {
             ImageServer imageServer = (ImageServer)sender;
+            closeHandler(imageServer);   
+        }
+
+        public void closeHandler(ImageServer imageServer)
+        {
             try
             {
                 // Making sure that when the service is closed the watcher will not listen anymore.
@@ -127,7 +139,8 @@ namespace ImageService.Controller.Handlers
             {
                 imageServer.CommandRecieved -= this.OnCommandRecieved;
             }
-
         }
+
     }
 }
+

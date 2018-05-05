@@ -1,4 +1,6 @@
 ﻿using ImageService.Commands;
+using ImageService.ImageService.Commands;
+using ImageService.Infrastructure.Enums;
 using ImageService.Modal;
 using System;
 using System.Collections.Generic;
@@ -10,16 +12,17 @@ namespace ImageService.Controller
     {
         #region Members
         private IImageServiceModal m_modal;                      // The Modal Object
-        private Dictionary<int, ICommand> commands;
+        private Dictionary<CommandEnum, ICommand> commands;
         #endregion
 
         public ImageController(IImageServiceModal modal)
         {
             m_modal = modal;                    // Storing the Modal Of The System
             //initializing the dictionary that state what kind of execution we can do.
-            commands = new Dictionary<int, ICommand>()
+            commands = new Dictionary<CommandEnum, ICommand>()
             {
-                { 1, new NewFileCommand(m_modal)}
+                { CommandEnum.NewFileCommand, new NewFileCommand(m_modal)}
+
             };
         }
 

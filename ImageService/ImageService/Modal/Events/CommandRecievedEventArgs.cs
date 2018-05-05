@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageService.Infrastructure.Enums;
+using System;
 
 namespace ImageService.Modal.Events
 {
@@ -7,11 +8,11 @@ namespace ImageService.Modal.Events
     /// </summary>
     public class CommandRecievedEventArgs : EventArgs
     {
-        public int CommandID { get; set; }      // The Command ID
+        public CommandEnum CommandID { get; set; }      // The Command ID
         public string[] Args { get; set; }
         public string RequestDirPath { get; set; }  // The Request Directory
 
-        public CommandRecievedEventArgs(int id, string[] args, string path)
+        public CommandRecievedEventArgs(CommandEnum id, string[] args, string path)
         {
             CommandID = id;
             Args = args;
