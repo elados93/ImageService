@@ -14,7 +14,6 @@ namespace ImageService.Server
         #region Members
         private IImageController m_controller;
         private ILoggingService m_logging;
-        private IServer singeltonServer;
         #endregion
 
         #region Events
@@ -26,8 +25,6 @@ namespace ImageService.Server
         {
             m_controller = controller;
             m_logging = logging;
-            singeltonServer = SingltonServer.Instance(new ClientHandler(controller, logging));
-            singeltonServer.Start();
         }
 
         /// <summary>
