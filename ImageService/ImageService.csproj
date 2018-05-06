@@ -55,10 +55,17 @@
     <Compile Include="Communication\IClientHandler.cs" />
     <Compile Include="Communication\IServer.cs" />
     <Compile Include="Communication\SingeltonServer.cs" />
+    <Compile Include="IImageService.cs" />
     <Compile Include="ImageService\Commands\DeleteHandlerFromAppConfigCommand.cs" />
     <Compile Include="ImageService\Commands\LogCommand.cs" />
     <Compile Include="ImageService\Controller\Handlers\DirectoyHandler.cs" />
     <Compile Include="ImageService\Controller\Handlers\IIDirectoryHandler.cs" />
+    <Compile Include="ImageService\ImageService1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ImageService\ImageService1.Designer.cs">
+      <DependentUpon>ImageService1.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImageService\Modal\Events\CommandRecievedEventArgs.cs" />
     <Compile Include="ImageService\Commands\ICommand.cs" />
     <Compile Include="ImageService\Commands\NewFileCommand.cs" />
@@ -73,12 +80,6 @@
     <Compile Include="Logging\LoggingService.cs" />
     <Compile Include="Logging\Modal\MessageTypeEnum.cs" />
     <Compile Include="Logging\Modal\MessageRecievedEventArgs.cs" />
-    <Compile Include="ImageService\ImageService.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ImageService\ImageService.Designer.cs">
-      <DependentUpon>ImageService.cs</DependentUpon>
-    </Compile>
     <Compile Include="Logging\ILoggingService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
@@ -90,12 +91,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="ImageService\App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ImageService\ImageService.resx">
-      <DependentUpon>ImageService.cs</DependentUpon>
+    <EmbeddedResource Include="ImageService\ImageService1.resx">
+      <DependentUpon>ImageService1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>

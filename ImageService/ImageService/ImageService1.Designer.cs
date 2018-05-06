@@ -1,6 +1,6 @@
 ﻿namespace ImageService
 {
-    partial class ImageService
+    partial class ImageService1
     {
         /// <summary> 
         /// Required designer variable.

@@ -35,7 +35,7 @@ namespace ImageService
         public int dwWaitHint;
     };
 
-    public partial class ImageService : ServiceBase
+    public partial class ImageService1 : ServiceBase
     {
         #region Members
         private int eventId = 1;
@@ -48,7 +48,7 @@ namespace ImageService
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
 
-        public ImageService(string[] args)
+        public ImageService1(string[] args)
         {
             InitializeComponent();
             string eventSourceName = "ImageServiceSource";
