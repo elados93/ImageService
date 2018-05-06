@@ -56,6 +56,7 @@
     <Compile Include="Communication\IServer.cs" />
     <Compile Include="Communication\SingeltonServer.cs" />
     <Compile Include="ImageService\Commands\DeleteHandlerFromAppConfigCommand.cs" />
+    <Compile Include="ImageService\Commands\LogCommand.cs" />
     <Compile Include="ImageService\Controller\Handlers\DirectoyHandler.cs" />
     <Compile Include="ImageService\Controller\Handlers\IIDirectoryHandler.cs" />
     <Compile Include="ImageService\Modal\Events\CommandRecievedEventArgs.cs" />
