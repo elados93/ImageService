@@ -97,7 +97,6 @@ namespace ImageService.Controller.Handlers
                     ImageServer server = (ImageServer)sender;
                     closeHandler(server);
                 }
-
                 bool result;
                 string messageFromExecution = m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
 
@@ -106,7 +105,6 @@ namespace ImageService.Controller.Handlers
                     m_logging.Log(messageFromExecution, MessageTypeEnum.INFO);
                 else
                     m_logging.Log(messageFromExecution, MessageTypeEnum.FAIL);
-
             }
         }
 

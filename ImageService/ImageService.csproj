@@ -53,10 +53,14 @@
   <ItemGroup>
     <Compile Include="Communication\ClientHandler.cs" />
     <Compile Include="Communication\IClientHandler.cs" />
+    <Compile Include="Communication\IImageServerClient.cs" />
     <Compile Include="Communication\IServer.cs" />
-    <Compile Include="Communication\SingeltonServer.cs" />
+    <Compile Include="Communication\ImageServiceClient.cs" />
+    <Compile Include="Communication\MessageCommand.cs" />
+    <Compile Include="Communication\TcpServer.cs" />
     <Compile Include="IImageService.cs" />
     <Compile Include="ImageService\Commands\DeleteHandlerFromAppConfigCommand.cs" />
+    <Compile Include="ImageService\Commands\GetConfigCommand.cs" />
     <Compile Include="ImageService\Commands\LogCommand.cs" />
     <Compile Include="ImageService\Controller\Handlers\DirectoyHandler.cs" />
     <Compile Include="ImageService\Controller\Handlers\IIDirectoryHandler.cs" />

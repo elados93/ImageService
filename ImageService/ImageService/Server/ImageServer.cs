@@ -6,6 +6,8 @@ using ImageService.Modal.Events;
 using System.IO;
 using ImageService.Logging.Modal;
 using ImageService.Communication;
+using ImageService.Infrastructure.Enums;
+using static ImageService.ImageService1;
 
 namespace ImageService.Server
 {
@@ -14,17 +16,25 @@ namespace ImageService.Server
         #region Members
         private IImageController m_controller;
         private ILoggingService m_logging;
+        private IServer tcpServer;
         #endregion
 
         #region Events
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;            // The event that notifies about a new Command being recieved
         public event EventHandler<CommandRecievedEventArgs> CloseService;               // The event that notifies the handlers about closing service.             
+        public event UpdateResponseArrived UpdateResponse;                              // The event that notifies the Tcp Server about removing handler.
+
         #endregion
 
         public ImageServer(IImageController controller, ILoggingService logging)
         {
             m_controller = controller;
             m_logging = logging;
+            IClientHandler clientHandler = new ClientHandler(controller, logging);
+            clientHandler.CommandRecieved += sendCommand;
+            this.tcpServer = new TcpServer(clientHandler);
+            this.UpdateResponse += tcpServer.notifyAllClients;
+            this.tcpServer.Start();
         }
 
         /// <summary>
@@ -50,7 +60,7 @@ namespace ImageService.Server
             }
         }
 
-        public void sendCommand(CommandRecievedEventArgs args)
+        public void sendCommand(object sender, CommandRecievedEventArgs args)
         {
             CommandRecieved?.Invoke(this, args);
         }
@@ -71,7 +81,11 @@ namespace ImageService.Server
                 CommandRecieved -= handler.OnCommandRecieved;
                 CloseService -= handler.OnCloseService;
                 message = "Handler for path: " + args.DirectoryPath + " was deleted from server";
-            } catch
+
+                MessageCommand msg = new MessageCommand((int)CommandEnum.CloseCommand, null, args.DirectoryPath);
+                UpdateResponse?.Invoke(msg);
+            }
+            catch
             {
                 type = MessageTypeEnum.FAIL;
                 message = "Handler for path: " + args.DirectoryPath + " was NOT deleted from server";
@@ -90,8 +104,12 @@ namespace ImageService.Server
         public void onCloseService()
         {
             CloseService?.Invoke(this, null);
-            singeltonServer.Stop();
+            tcpServer.Stop();
         }
 
+        public void notifyTcpServer(MessageCommand msg)
+        {
+            tcpServer.notifyAllClients(msg);
+        }
     }
 }

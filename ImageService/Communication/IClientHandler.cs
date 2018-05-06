@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageService.Modal.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -7,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Communication
 {
-    public interface IClientHandler
+    interface IClientHandler
     {
         void HandleClient(TcpClient client);
+        event EventHandler<CommandRecievedEventArgs> CommandRecieved;
     }
 }

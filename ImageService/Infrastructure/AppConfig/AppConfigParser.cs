@@ -26,7 +26,7 @@ namespace ImageService.Infrastructure.AppConfig
 
         public static bool getPort(out int port)
         {
-            return Int32.TryParse(ConfigurationManager.AppSettings["Port"], out port);
+            return Int32.TryParse(ConfigurationManager.AppSettings["ServerPort"], out port);
         }
 
         public static bool removeHandler(string path)

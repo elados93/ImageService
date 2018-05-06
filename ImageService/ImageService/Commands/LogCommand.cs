@@ -18,10 +18,12 @@ namespace ImageService.ImageService.Commands
             EventLog log = new EventLog(appConfig.logName, ".");
             EventLogEntryCollection entries = log.Entries;
             List<string> logEntries = new List<string>();
-            for (int i = 0; i < entries.Count; i++)
+         
+            foreach (EventLogEntry entry in entries)
             {
-                logEntries.Add(entries[i].Message.ToString());
+                logEntries.Add(entry.Message.ToString());
             }
+
             string convertEachString;
             if((convertEachString = JsonConvert.SerializeObject(logEntries)) == null)
             {

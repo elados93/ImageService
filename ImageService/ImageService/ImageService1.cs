@@ -9,6 +9,8 @@ using ImageService.Modal;
 using ImageService.Logging;
 using ImageService.Logging.Modal;
 using ImageService.Infrastructure.AppConfig;
+using ImageService.Communication;
+using ImageService.Infrastructure.Enums;
 
 namespace ImageService
 {
@@ -45,6 +47,11 @@ namespace ImageService
         private IImageController controller;
         #endregion
 
+        #region Events
+        public delegate void UpdateResponseArrived(MessageCommand responseObj);
+        public event UpdateResponseArrived UpdateLogMessage;
+        #endregion
+
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
 
@@ -71,6 +78,8 @@ namespace ImageService
 
             logger = new LoggingService();
             logger.MessageRecieved += onMessage;
+
+            UpdateLogMessage += m_imageServer.notifyTcpServer;
         }
 
         /// <summary>
@@ -85,7 +94,13 @@ namespace ImageService
                 type = EventLogEntryType.Error;
             else if (args.Status == MessageTypeEnum.WARNING)
                 type = EventLogEntryType.Warning;
-            eventLog1.WriteEntry(args.Message, type);
+            eventLog1.WriteEntry(args.Message, type); // Write in the log of the service
+
+            string []logArr = new string[2]; // Create array of strings represents the Log message
+            logArr[0] = args.Status.ToString();
+            logArr[1] = args.Message;
+            MessageCommand msg = new MessageCommand((int)CommandEnum.LogCommand, logArr, null);
+            UpdateLogMessage?.Invoke(msg); // Notify the Tcp Server about the log command
         }
 
         /// <summary>

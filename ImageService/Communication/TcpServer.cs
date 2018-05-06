@@ -1,36 +1,33 @@
-﻿using System;
+﻿using ImageService.Infrastructure.AppConfig;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.IO;
+using ImageService.Modal.Events;
 
 namespace ImageService.Communication
 {
-    class SingeltonServer : IServer
+    class TcpServer : IServer
     {
-        private static SingeltonServer instace;
         private int port;
         private TcpListener listener;
         private IClientHandler ch;
+        private List<TcpClient> clientsList;
 
-        private SingeltonServer(IClientHandler ch)
+        public TcpServer(IClientHandler ch)
         {
             int tempPort;
-            bool result = Infrastructure.AppConfig.AppConfigParser.getPort(out tempPort);
+            bool result = AppConfigParser.getPort(out tempPort);
             if (result)
                 this.port = tempPort;
             else
                 throw new Exception("Can't parse port!");
 
             this.ch = ch;
-        }
-
-        public static SingeltonServer Instance(IClientHandler ch)
-        {
-            // TODO maybe get here...
-            if (instace == null)
-                instace = new SingeltonServer(ch);
-            return instace;
+            clientsList = new List<TcpClient>();
         }
 
         public void Start()
@@ -46,12 +43,13 @@ namespace ImageService.Communication
                     try
                     {
                         TcpClient client = listener.AcceptTcpClient();
-                        Debug.WriteLine("Singelton server got new connection");
+                        Debug.WriteLine("Tcp server got new connection");
+                        clientsList.Add(client);
                         ch.HandleClient(client);
                     }
                     catch (SocketException e)
                     {
-                        Debug.WriteLine("Singelton server was stopped Error: " + e.Message);
+                        Debug.WriteLine("Tcp server was stopped Error: " + e.Message);
                         break;
                     }
                 }
@@ -62,8 +60,24 @@ namespace ImageService.Communication
         public void Stop()
         {
             listener.Stop();
-            Debug.WriteLine("Singelton server was stopped");
+            clientsList.Clear();
+            Debug.WriteLine("Tcp server was stopped");
         }
 
+        public void notifyAllClients(MessageCommand message)
+        {
+            new Task(() =>
+            {
+                foreach (TcpClient client in clientsList)
+                {
+                    using (NetworkStream stream = client.GetStream())
+                    using (StreamWriter writer = new StreamWriter(stream))
+                    {
+                        writer.Write(message);
+                    }
+                }
+
+            }).Start();
+        }
     }
 }

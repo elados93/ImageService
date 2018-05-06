@@ -23,7 +23,9 @@ namespace ImageService.Controller
             commands = new Dictionary<CommandEnum, ICommand>()
             {
                 { CommandEnum.NewFileCommand, new NewFileCommand(m_modal)},
-                { CommandEnum.CloseCommand, new DeleteHandlerFromAppConfigCommand()}
+                { CommandEnum.CloseCommand, new DeleteHandlerFromAppConfigCommand()},
+                { CommandEnum.LogCommand, new LogCommand() },
+                {CommandEnum.GetConfigCommand, new GetConfigCommand() }
 
             };
         }

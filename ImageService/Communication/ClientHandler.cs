@@ -2,6 +2,7 @@
 using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
 using ImageService.Logging.Modal;
+using ImageService.Modal.Events;
 using System;
 using System.IO;
 using System.Net.Sockets;
@@ -11,6 +12,8 @@ namespace ImageService.Communication
 {
     class ClientHandler : IClientHandler
     {
+        public event EventHandler<CommandRecievedEventArgs> CommandRecieved;
+
         private IImageController c_controller;
         private ILoggingService c_logging;
 
@@ -30,22 +33,38 @@ namespace ImageService.Communication
                 {
                     try
                     {
-                        string requset = reader.ReadString();
-                        string[] requestArray = requset.Split(' ');
-                        int commandID;
-                        bool parseResult = int.TryParse(requestArray[0], out commandID);
-                        if (parseResult)
+                        string requset = reader.ReadString(); // Wait for command
+                        MessageCommand msg = MessageCommand.ParseJSON(requset);
+                        if (msg != null)
                         {
-                            bool result;
-                            string executionResult = c_controller.ExecuteCommand((CommandEnum)commandID, requestArray, out result);
-                            c_logging.Log("Command " + commandID + " was execute", MessageTypeEnum.INFO);
-                            writer.Write(executionResult);
+                            CommandEnum command = (CommandEnum)msg.CommandID;
+                            if (msg.RequestedDirPath != null) // If the command related to handler
+                            {
+                                string[] commandArgs = msg.CommandArgs;
+                                string path = msg.RequestedDirPath;
+                                CommandRecievedEventArgs c = new CommandRecievedEventArgs(command, commandArgs, path);
+
+                                bool result;
+                                string executionResult = c_controller.ExecuteCommand((CommandEnum)msg.CommandID, msg.CommandArgs, out result);
+                                c_logging.Log("Command " + (CommandEnum)msg.CommandID + " was execute", MessageTypeEnum.INFO);
+                                writer.Write(executionResult);
+
+                                CommandRecieved?.Invoke(this, c);
+                            }
+                            else
+                            {
+                                bool result;
+                                string executionResult = c_controller.ExecuteCommand((CommandEnum)msg.CommandID, msg.CommandArgs, out result);
+                                c_logging.Log("Command " + (CommandEnum)msg.CommandID + " was execute", MessageTypeEnum.INFO);
+                                writer.Write(executionResult);
+                            }
                         }
                         else
                         {
-                            writer.Write("CommandID validation failed");
-                            c_logging.Log("CommandID validation failed", MessageTypeEnum.FAIL);
+                            writer.Write("Message validation failed");
+                            c_logging.Log("Message validation failed", MessageTypeEnum.FAIL);
                         }
+
                     }
                     catch (Exception e)
                     {
