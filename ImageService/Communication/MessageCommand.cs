@@ -30,12 +30,14 @@ namespace ImageService.Communication
         
         public static MessageCommand ParseJSON(string str)
         {
-            MessageCommand msg = new MessageCommand();
+            
             JObject cmdObj = JObject.Parse(str);
-            msg.CommandID = (int)cmdObj["CommandID"];
-            msg.RequestedDirPath = (string)cmdObj["RequestedDirPath"];
+            int CommandID = (int)cmdObj["CommandID"];
+            string RequestedDirPath = (string)cmdObj["RequestedDirPath"];
             JArray arr = (JArray)cmdObj["CommandArgs"];
-            msg.CommandArgs = arr.Select(c => (string)c).ToArray();
+            string [] array = arr.Select(c => (string)c).ToArray();
+            MessageCommand msg = new MessageCommand(CommandID, array, RequestedDirPath);
+
 
             return msg;
         }
