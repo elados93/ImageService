@@ -38,33 +38,33 @@ namespace ImageService.Communication
                         if (msg != null)
                         {
                             CommandEnum command = (CommandEnum)msg.CommandID;
+
+
                             if (msg.RequestedDirPath != null) // If the command related to handler
                             {
                                 string[] commandArgs = msg.CommandArgs;
                                 string path = msg.RequestedDirPath;
                                 CommandRecievedEventArgs c = new CommandRecievedEventArgs(command, commandArgs, path);
-
-                                bool result;
-                                string executionResult = c_controller.ExecuteCommand((CommandEnum)msg.CommandID, msg.CommandArgs, out result);
-                                c_logging.Log("Command " + (CommandEnum)msg.CommandID + " was execute", MessageTypeEnum.INFO);
-                                writer.Write(executionResult);
-
-                                CommandRecieved?.Invoke(this, c);
+                                CommandRecieved?.Invoke(this, c); // Invoke ImageServer to deal with handler command
                             }
+
+                            // Not handler command
+                            bool result;
+                            string executionResult = c_controller.ExecuteCommand((CommandEnum)msg.CommandID, msg.CommandArgs, out result);
+
+                            if (result)
+                                c_logging.Log($"Command: {command}" + " success", MessageTypeEnum.INFO);
                             else
-                            {
-                                bool result;
-                                string executionResult = c_controller.ExecuteCommand((CommandEnum)msg.CommandID, msg.CommandArgs, out result);
-                                c_logging.Log("Command " + (CommandEnum)msg.CommandID + " was execute", MessageTypeEnum.INFO);
-                                writer.Write(executionResult);
-                            }
+                                c_logging.Log($"Command: {command}" + " failed", MessageTypeEnum.FAIL);
+
+                            writer.Write(executionResult);
                         }
                         else
                         {
-                            writer.Write("Message validation failed");
+                            // When the server got null message
+                            writer.Write("Message validation failed"); // TODO create jason for error message
                             c_logging.Log("Message validation failed", MessageTypeEnum.FAIL);
                         }
-
                     }
                     catch (Exception e)
                     {

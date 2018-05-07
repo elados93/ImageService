@@ -89,6 +89,7 @@ namespace ImageService
         /// <param name="args">The message to be wrriten.</param>
         public void onMessage(object sender, MessageRecievedEventArgs args)
         {
+            // TODO move Entry to a comman space
             EventLogEntryType type = EventLogEntryType.Information;
             if (args.Status == MessageTypeEnum.FAIL)
                 type = EventLogEntryType.Error;
@@ -97,9 +98,9 @@ namespace ImageService
             eventLog1.WriteEntry(args.Message, type); // Write in the log of the service
 
             string []logArr = new string[2]; // Create array of strings represents the Log message
-            logArr[0] = args.Status.ToString();
+            logArr[0] = ((int)args.Status).ToString();
             logArr[1] = args.Message;
-            MessageCommand msg = new MessageCommand((int)CommandEnum.LogCommand, logArr, null);
+            MessageCommand msg = new MessageCommand((int)CommandEnum.UpdateNewLog, logArr, null);
             UpdateLogMessage?.Invoke(msg); // Notify the Tcp Server about the log command
         }
 
@@ -157,6 +158,7 @@ namespace ImageService
             m_imageServer.onCloseService();
 
             eventLog1.WriteEntry("Image Service stopped.");
+            eventLog1.Clear();
         }
 
         protected override void OnContinue()

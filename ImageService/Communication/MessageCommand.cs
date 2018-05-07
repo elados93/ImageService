@@ -9,7 +9,11 @@ namespace ImageService.Communication
         {
             CommandID = commandID;
             CommandArgs = args;
-            RequestedDirPath = path;                
+            RequestedDirPath = path;
+        }
+
+        public MessageCommand()
+        {
         }
 
         public int CommandID { get; set; }
@@ -25,17 +29,17 @@ namespace ImageService.Communication
             cmdObj["RequestedDirPath"] = RequestedDirPath;
             JArray args = new JArray(CommandArgs);
             cmdObj["CommandArgs"] = args;
-            return cmdObj.ToString(); 
+            return cmdObj.ToString();
         }
-        
+
         public static MessageCommand ParseJSON(string str)
         {
-            
+
             JObject cmdObj = JObject.Parse(str);
             int CommandID = (int)cmdObj["CommandID"];
             string RequestedDirPath = (string)cmdObj["RequestedDirPath"];
             JArray arr = (JArray)cmdObj["CommandArgs"];
-            string [] array = arr.Select(c => (string)c).ToArray();
+            string[] array = arr.Select(c => (string)c).ToArray();
             MessageCommand msg = new MessageCommand(CommandID, array, RequestedDirPath);
 
 

@@ -14,25 +14,39 @@ namespace ImageService.ImageService.Commands
     {
         public string Execute(string[] args, out bool result)
         {
-            AppConfigParser appConfig = new AppConfigParser();
-            EventLog log = new EventLog(appConfig.logName, ".");
-            EventLogEntryCollection entries = log.Entries;
+            try
+            {
+                AppConfigParser appConfig = new AppConfigParser();
+                EventLog log = new EventLog(appConfig.logName, ".");
+                EventLogEntryCollection entries = log.Entries;
+
+
+                string convertEachString;
+                if ((convertEachString = JsonConvert.SerializeObject(entries)) == null)
+                {
+                    result = false;
+                    return null;
+                }
+
+                result = true;
+                return convertEachString;
+            }
+            catch (Exception e)
+            {
+                result = false;
+                Debug.WriteLine(e.Message);
+                return null;
+            }
+
+            //TODO maybe..
+            /* 
             List<string> logEntries = new List<string>();
          
             foreach (EventLogEntry entry in entries)
             {
                 logEntries.Add(entry.Message.ToString());
             }
-
-            string convertEachString;
-            if((convertEachString = JsonConvert.SerializeObject(logEntries)) == null)
-            {
-                result = false;
-                return "convertion to string failed";
-            }
-
-            result = true;
-            return convertEachString;
+            */
         }
     }
 }
