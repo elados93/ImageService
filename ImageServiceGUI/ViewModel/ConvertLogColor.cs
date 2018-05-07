@@ -14,6 +14,7 @@ namespace ImageServiceGUI.ViewModel
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+
             if(targetType.Name != "Brush")
             {
                 throw new Exception("Converting only Brush!");
