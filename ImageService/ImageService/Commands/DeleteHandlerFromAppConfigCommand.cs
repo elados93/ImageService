@@ -2,7 +2,7 @@
 using ImageService.Commands;
 using ImageService.Infrastructure.AppConfig;
 
-namespace ImageService.ImageService.Commands
+namespace ImageService.Commands
 {
     class DeleteHandlerFromAppConfigCommand : ICommand
     {

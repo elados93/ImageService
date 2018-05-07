@@ -7,7 +7,6 @@ using System.IO;
 using ImageService.Logging.Modal;
 using ImageService.Communication;
 using ImageService.Infrastructure.Enums;
-using static ImageService.ImageService1;
 
 namespace ImageService.Server
 {

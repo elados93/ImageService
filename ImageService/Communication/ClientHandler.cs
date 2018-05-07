@@ -6,6 +6,7 @@ using ImageService.Modal.Events;
 using System;
 using System.IO;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageService.Communication
@@ -16,6 +17,7 @@ namespace ImageService.Communication
 
         private IImageController c_controller;
         private ILoggingService c_logging;
+        public Mutex Mutex { get; set; }
 
         public ClientHandler(IImageController controller, ILoggingService logger)
         {
@@ -39,7 +41,6 @@ namespace ImageService.Communication
                         {
                             CommandEnum command = (CommandEnum)msg.CommandID;
 
-
                             if (msg.RequestedDirPath != null) // If the command related to handler
                             {
                                 string[] commandArgs = msg.CommandArgs;
@@ -56,8 +57,9 @@ namespace ImageService.Communication
                                 c_logging.Log($"Command: {command}" + " success", MessageTypeEnum.INFO);
                             else
                                 c_logging.Log($"Command: {command}" + " failed", MessageTypeEnum.FAIL);
-
+                            Mutex.WaitOne();
                             writer.Write(executionResult);
+                            Mutex.ReleaseMutex();
                         }
                         else
                         {

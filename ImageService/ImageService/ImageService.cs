@@ -14,6 +14,8 @@ using ImageService.Infrastructure.Enums;
 
 namespace ImageService
 {
+    public delegate void UpdateResponseArrived(MessageCommand responseObj);
+
     public enum ServiceState
     {
         SERVICE_STOPPED = 0x00000001,
@@ -37,7 +39,7 @@ namespace ImageService
         public int dwWaitHint;
     };
 
-    public partial class ImageService1 : ServiceBase
+    public partial class ImageService : ServiceBase
     {
         #region Members
         private int eventId = 1;
@@ -48,38 +50,44 @@ namespace ImageService
         #endregion
 
         #region Events
-        public delegate void UpdateResponseArrived(MessageCommand responseObj);
         public event UpdateResponseArrived UpdateLogMessage;
         #endregion
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
 
-        public ImageService1(string[] args)
+        public ImageService(string[] args)
         {
-            InitializeComponent();
-            string eventSourceName = "ImageServiceSource";
-            string logName = "ImageServiceLog";
-            if (args.Count() > 0)
+            try
             {
-                eventSourceName = args[0];
-            }
-            if (args.Count() > 1)
-            {
-                logName = args[1];
-            }
-            eventLog1 = new System.Diagnostics.EventLog();
-            if (!System.Diagnostics.EventLog.SourceExists(eventSourceName))
-            {
-                System.Diagnostics.EventLog.CreateEventSource(eventSourceName, logName);
-            }
-            eventLog1.Source = eventSourceName;
-            eventLog1.Log = logName;
+                InitializeComponent();
+                AppConfigParser appConfigParser = new AppConfigParser();
+                string logName = appConfigParser.logName;
+                string eventSourceName = appConfigParser.sourceName;
+                if (args.Count() > 0)
+                {
+                    eventSourceName = args[0];
+                }
+                if (args.Count() > 1)
+                {
+                    logName = args[1];
+                }
+                eventLog1 = new System.Diagnostics.EventLog();
+                if (!System.Diagnostics.EventLog.SourceExists(eventSourceName))
+                {
+                    System.Diagnostics.EventLog.CreateEventSource(eventSourceName, logName);
+                }
+                eventLog1.Source = eventSourceName;
+                eventLog1.Log = logName;
 
-            logger = new LoggingService();
-            logger.MessageRecieved += onMessage;
+                logger = new LoggingService();
+                logger.MessageRecieved += onMessage;
 
-            UpdateLogMessage += m_imageServer.notifyTcpServer;
+                UpdateLogMessage += m_imageServer.notifyTcpServer;
+            } catch (Exception e)
+            {
+                eventLog1.WriteEntry(e.Message);
+            }
         }
 
         /// <summary>
@@ -122,8 +130,7 @@ namespace ImageService
         protected override void OnStart(string[] args)
         {
             AppConfigParser appConfigParser = new AppConfigParser();
-            eventLog1.Log = appConfigParser.logName;
-            eventLog1.Source = appConfigParser.sourceName;
+
             // Create server, handlers, controller and modal.
             createObjects(appConfigParser);
 
@@ -135,6 +142,11 @@ namespace ImageService
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
+            System.Timers.Timer timer = new System.Timers.Timer();
+            timer.Interval = 60000; // 60 seconds  
+            timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
+            timer.Start();
+
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
@@ -142,7 +154,7 @@ namespace ImageService
 
         protected override void OnStop()
         {
-            eventLog1.WriteEntry("In OnStop.");
+            eventLog1.WriteEntry("In OnStop");
 
             // Update the service state to Stop Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
@@ -163,7 +175,13 @@ namespace ImageService
 
         protected override void OnContinue()
         {
-            eventLog1.WriteEntry("In OnContinue.");
+            eventLog1.WriteEntry("In OnContinue");
+        }
+
+        public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
+        {
+            // TODO: Monitoring
+            eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
         }
     }
 }

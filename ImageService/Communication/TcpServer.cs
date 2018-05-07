@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
 using ImageService.Modal.Events;
+using System.Threading;
 
 namespace ImageService.Communication
 {
@@ -16,6 +17,7 @@ namespace ImageService.Communication
         private TcpListener listener;
         private IClientHandler ch;
         private List<TcpClient> clientsList;
+        private static Mutex mutex = new Mutex();
 
         public TcpServer(IClientHandler ch)
         {
@@ -27,6 +29,7 @@ namespace ImageService.Communication
                 throw new Exception("Can't parse port!");
 
             this.ch = ch;
+            this.ch.Mutex = mutex;
             clientsList = new List<TcpClient>();
         }
 
@@ -73,7 +76,9 @@ namespace ImageService.Communication
                     using (NetworkStream stream = client.GetStream())
                     using (StreamWriter writer = new StreamWriter(stream))
                     {
+                        mutex.WaitOne();
                         writer.Write(message);
+                        mutex.ReleaseMutex();
                     }
                 }
 

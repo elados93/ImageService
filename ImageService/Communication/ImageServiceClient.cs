@@ -5,8 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
-using static ImageService.ImageService1;
 
 namespace ImageService.Communication
 {
@@ -18,6 +18,9 @@ namespace ImageService.Communication
 
         public event UpdateResponseArrived UpdateAllClients;
 
+        private static Mutex mutex = new Mutex();
+        
+    
         private ImageServiceClient() { }
 
         public static ImageServiceClient Instance
@@ -59,7 +62,9 @@ namespace ImageService.Communication
                 string jsonCommand = JsonConvert.SerializeObject(msg);
                 NetworkStream stream = client.GetStream();
                 BinaryWriter writer = new BinaryWriter(stream);
+                mutex.WaitOne();
                 writer.Write(jsonCommand);
+                mutex.ReleaseMutex();
                 Debug.WriteLine($"Send command: {msg.CommandID}" + $" args: {msg.CommandArgs.ToString()} to Server");
             }).Start();
         }

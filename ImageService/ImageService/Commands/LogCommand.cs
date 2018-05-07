@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService.ImageService.Commands
+namespace ImageService.Commands
 {
     class LogCommand : ICommand
     {

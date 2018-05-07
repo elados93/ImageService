@@ -62,7 +62,7 @@ namespace ImageService.Controller.Handlers
         {
             string[] args = { e.FullPath };
             if (checkFileExtention(e.FullPath))
-                OnCommandRecieved(this, new CommandRecievedEventArgs(1, args, m_path));
+                OnCommandRecieved(this, new CommandRecievedEventArgs(CommandEnum.NewFileCommand, args, m_path));
         }
 
         /// <summary>

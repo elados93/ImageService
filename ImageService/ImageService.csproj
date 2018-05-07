@@ -64,11 +64,11 @@
     <Compile Include="ImageService\Commands\LogCommand.cs" />
     <Compile Include="ImageService\Controller\Handlers\DirectoyHandler.cs" />
     <Compile Include="ImageService\Controller\Handlers\IIDirectoryHandler.cs" />
-    <Compile Include="ImageService\ImageService1.cs">
+    <Compile Include="ImageService\ImageService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ImageService\ImageService1.Designer.cs">
-      <DependentUpon>ImageService1.cs</DependentUpon>
+    <Compile Include="ImageService\ImageService.Designer.cs">
+      <DependentUpon>ImageService.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageService\Modal\Events\CommandRecievedEventArgs.cs" />
     <Compile Include="ImageService\Commands\ICommand.cs" />
@@ -100,8 +100,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ImageService\ImageService1.resx">
-      <DependentUpon>ImageService1.cs</DependentUpon>
+    <EmbeddedResource Include="ImageService\ImageService.resx">
+      <DependentUpon>ImageService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>

@@ -40,20 +40,23 @@ namespace ImageServiceGUI.Model
                 LogName = args[3];
                 int temp;
                 if (!Int32.TryParse(args[4], out temp))
-                {
                     Debug.WriteLine("Error parse thumbnail size in getAppConfig");
-                } else
-                {
+                else
                     ThumbNailsSize = temp;
-                }
-                
+                insertHandlersToList(handler);
             }
+        }
+
+        private void insertHandlersToList(string handler)
+        {
+            string[] handlers = handler.Split(';');
+            foreach (string handlerString in handlers)
+                Handlers.Add(handlerString);
         }
 
         protected void OnPropertyChanged(string name)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
 

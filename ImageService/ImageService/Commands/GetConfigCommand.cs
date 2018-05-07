@@ -4,7 +4,7 @@ using ImageService.Infrastructure.Enums;
 using System;
 using System.Configuration;
 
-namespace ImageService.ImageService.Commands
+namespace ImageService.Commands
 {
     class GetConfigCommand : ICommand
     {
