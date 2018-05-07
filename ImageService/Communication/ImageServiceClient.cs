@@ -6,14 +6,17 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using static ImageService.ImageService1;
 
 namespace ImageService.Communication
 {
-    class ImageServiceClient : IImageServiceClient
+    public class ImageServiceClient : IImageServiceClient
     {
         private TcpClient client;
         private bool stopped;
         private static ImageServiceClient instance;
+
+        public event UpdateResponseArrived UpdateAllClients;
 
         private ImageServiceClient() { }
 
@@ -64,15 +67,14 @@ namespace ImageService.Communication
         public void recieveCommand()
         {
             new Task(() =>
-            {
-                NetworkStream stream = client.GetStream();
-                BinaryReader reader = new BinaryReader(stream);
-                string response = reader.ReadString(); // Wait for response from server
-                MessageCommand msg = JsonConvert.DeserializeObject<MessageCommand>(response);
-                Debug.WriteLine($"Got message: {msg.CommandID}" + $" args: {msg.CommandArgs.ToString()} to Server");
-                if (msg.AwareAll)
-                    this.UpdateResponse?.Invoke(msg);
-            }).Start();
+           {
+               NetworkStream stream = client.GetStream();
+               BinaryReader reader = new BinaryReader(stream);
+               string response = reader.ReadString(); // Wait for response from server
+               MessageCommand msg = JsonConvert.DeserializeObject<MessageCommand>(response);
+               Debug.WriteLine($"Got message: {msg.CommandID}" + $" args: {msg.CommandArgs.ToString()} to Server");
+               UpdateAllClients?.Invoke(msg);
+           }).Start();
         }
 
         public void CloseClient()

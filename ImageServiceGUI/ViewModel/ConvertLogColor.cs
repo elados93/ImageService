@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace ImageServiceGUI.ViewModel
 {
-    class ConvertLogColor : IValueConverter
+    public class ConvertLogColor : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

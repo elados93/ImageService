@@ -1,5 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using ImageService.Communication;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System;
+using ImageService.Logging.Modal;
+using ImageService.Infrastructure.Enums;
+using System.Diagnostics;
 
 namespace ImageServiceGUI.Model
 {
@@ -14,13 +19,35 @@ namespace ImageServiceGUI.Model
 
         public ObservableCollection<string> Handlers { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
+        private IImageServiceClient imageServiceClient;
 
         public SettingsModel()
         {
             Handlers = new ObservableCollection<string>();
-            Handlers.Add("dafsdf");
-            Handlers.Add("HYHYHY");
-            Handlers.Add("shafar");
+            imageServiceClient = ImageServiceClient.Instance; // Image service client is a singelton
+            this.imageServiceClient.UpdateAllClients += getAppConfig;
+        }
+
+        private void getAppConfig(MessageCommand msg)
+        {
+            CommandEnum command = (CommandEnum)msg.CommandID;
+            if (command == CommandEnum.GetConfigCommand)
+            {
+                string[] args = msg.CommandArgs;
+                string handler = args[0];
+                OutputDir = args[1];
+                SourceName = args[2];
+                LogName = args[3];
+                int temp;
+                if (!Int32.TryParse(args[4], out temp))
+                {
+                    Debug.WriteLine("Error parse thumbnail size in getAppConfig");
+                } else
+                {
+                    ThumbNailsSize = temp;
+                }
+                
+            }
         }
 
         protected void OnPropertyChanged(string name)
