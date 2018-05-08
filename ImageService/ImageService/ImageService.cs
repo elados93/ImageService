@@ -105,12 +105,13 @@ namespace ImageService
                 type = EventLogEntryType.Warning;
             eventLog1.WriteEntry(args.Message, type); // Write in the log of the service
 
+            
             string []logArr = new string[2]; // Create array of strings represents the Log message
             logArr[0] = ((int)args.Status).ToString();
             logArr[1] = args.Message;
             MessageCommand msg = new MessageCommand((int)CommandEnum.UpdateNewLog, logArr, null);
             UpdateLogMessage?.Invoke(msg); // Notify the Tcp Server about the log command
-        }
+    }
 
         /// <summary>
         /// The function parse AppConfig using AppConfigParser.

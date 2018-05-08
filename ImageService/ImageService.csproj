@@ -53,9 +53,7 @@
   <ItemGroup>
     <Compile Include="Communication\ClientHandler.cs" />
     <Compile Include="Communication\IClientHandler.cs" />
-    <Compile Include="Communication\IImageServiceClient.cs" />
     <Compile Include="Communication\IServer.cs" />
-    <Compile Include="Communication\ImageServiceClient.cs" />
     <Compile Include="Communication\MessageCommand.cs" />
     <Compile Include="Communication\TcpServer.cs" />
     <Compile Include="IImageService.cs" />

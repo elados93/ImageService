@@ -74,6 +74,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Communication\IImageServiceClient.cs" />
+    <Compile Include="Communication\ImageServiceClient.cs" />
     <Compile Include="Infrastructure\Entry.cs" />
     <Compile Include="ViewModel\ConvertLogColor.cs" />
     <Compile Include="ViewModel\LogViewModel.cs" />
@@ -137,7 +139,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Communication\" />
     <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
