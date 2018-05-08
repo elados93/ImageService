@@ -25,7 +25,7 @@ namespace ImageServiceGUI.Model
             imageServiceClient.UpdateAllClients += parseToLog;
             getFirstLogs();
             stopped = false;
-            //standByForNewLogs();
+            standByForNewLogs();
         }
 
         private void standByForNewLogs()
@@ -40,6 +40,7 @@ namespace ImageServiceGUI.Model
         {
             MessageCommand msg = new MessageCommand((int)CommandEnum.LogCommand, null, null);
             imageServiceClient.sendCommand(msg);
+            MessageCommand recMessage = new MessageCommand();
             imageServiceClient.recieveCommand();
         }
 

@@ -9,7 +9,7 @@
         Title="MainWindow" Height="350" Width="525">
 
     <Grid>
-        <TabControl Height="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="Auto" Grid.ColumnSpan="3">
+        <TabControl Height="319" VerticalAlignment="Top" HorizontalAlignment="Left" Width="517" Grid.ColumnSpan="3">
             <TabItem x:Name="SettingsTab" Header="Settings">
                 <views:SettingsView/>
             </TabItem>

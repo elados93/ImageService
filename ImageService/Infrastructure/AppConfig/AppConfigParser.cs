@@ -7,7 +7,7 @@ namespace ImageService.Infrastructure.AppConfig
     /// <summary>
     /// The class is used in order to parse the AppConfig file.
     /// </summary>
-    public class AppConfigParser
+    class AppConfigParser
     {
         public string handler;
         public string outputDir;

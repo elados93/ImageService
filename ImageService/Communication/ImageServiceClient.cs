@@ -15,14 +15,13 @@ namespace ImageService.Communication
         private TcpClient client;
         private bool stopped;
         private static ImageServiceClient instance;
+
         public event UpdateResponseArrived UpdateAllClients;
 
         private static Mutex mutex = new Mutex();
-
-        public bool Stopped { get { return stopped; } }
-
-
-        private ImageServiceClient() { Start(); }
+        
+    
+        private ImageServiceClient() { }
 
         public static ImageServiceClient Instance
         {
@@ -66,7 +65,7 @@ namespace ImageService.Communication
                 mutex.WaitOne();
                 writer.Write(jsonCommand);
                 mutex.ReleaseMutex();
-                Debug.WriteLine($"Send command: {msg.CommandID}" + $" args: {msg.CommandArgs} to Server");
+                Debug.WriteLine($"Send command: {msg.CommandID}" + $" args: {msg.CommandArgs.ToString()} to Server");
             }).Start();
         }
 
@@ -86,7 +85,7 @@ namespace ImageService.Communication
         public void CloseClient()
         {
             client.Close();
-            stopped = true;
+            this.stopped = true;
         }
     }
 }

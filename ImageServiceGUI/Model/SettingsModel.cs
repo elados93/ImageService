@@ -25,7 +25,7 @@ namespace ImageServiceGUI.Model
         {
             Handlers = new ObservableCollection<string>();
             imageServiceClient = ImageServiceClient.Instance; // Image service client is a singelton
-            imageServiceClient.UpdateAllClients += getAppConfig;
+            this.imageServiceClient.UpdateAllClients += getAppConfig;
         }
 
         private void getAppConfig(MessageCommand msg)
