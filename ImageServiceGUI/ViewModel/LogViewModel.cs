@@ -12,9 +12,9 @@ namespace ImageServiceGUI.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public LogViewModel(ILogModel model)
+        public LogViewModel()
         {
-            this.logModel = model;
+            this.logModel = new LogModel();
 
             logModel.PropertyChanged +=
             delegate (Object sender, PropertyChangedEventArgs e)

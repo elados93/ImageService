@@ -21,11 +21,14 @@ namespace ImageServiceGUI.Model
         public LogModel()
         {
             m_LogMessages = new ObservableCollection<Entry>();
-            imageServiceClient = ImageServiceClient.Instance; // ImageServiceClient is a singelton
-            imageServiceClient.UpdateAllClients += parseToLog;
-            getFirstLogs();
+            //imageServiceClient = ImageServiceClient.Instance; // ImageServiceClient is a singelton
+            //imageServiceClient.UpdateAllClients += parseToLog;
+            //getFirstLogs();
             stopped = false;
-            standByForNewLogs();
+            m_LogMessages.Add(new Entry("kjsbjks", MessageTypeEnum.FAIL));
+            m_LogMessages.Add(new Entry("kjsbjks", MessageTypeEnum.WARNING));
+            m_LogMessages.Add(new Entry("kjsbjks", MessageTypeEnum.INFO));
+            //standByForNewLogs();
         }
 
         private void standByForNewLogs()

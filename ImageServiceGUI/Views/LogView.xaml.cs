@@ -10,7 +10,7 @@ namespace ImageServiceGUI.Views
         public LogView()
         {
             InitializeComponent();
-            logVm = new LogViewModel(new LogModel());
+            logVm = new LogViewModel();
             this.DataContext = logVm;
         }
     }

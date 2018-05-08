@@ -6,6 +6,10 @@
              xmlns:local="clr-namespace:ImageServiceGUI.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:ConvertLogColor x:Key="ConvertLogColor"/>
+    </UserControl.Resources>
+    
     <StackPanel Orientation="Vertical">
         <Label Content="Logs" FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Blue" RenderTransformOrigin="2.634,0.921" FontFamily="Narkisim"/>
         <DataGrid ItemsSource="{Binding vm_LogMessages}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False">
@@ -13,7 +17,7 @@
                 <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Type}" >
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                           
+                            <Setter Property="Background" Value="{Binding Path=Type, Converter={StaticResource ConvertLogColor}}"></Setter>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>

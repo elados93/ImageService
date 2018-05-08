@@ -9,11 +9,24 @@
         Title="MainWindow" Height="350" Width="525">
 
     <Grid>
-        <TabControl Height="319" VerticalAlignment="Top" HorizontalAlignment="Left" Width="517" Grid.ColumnSpan="3">
-            <TabItem x:Name="SettingsTab" Header="Settings">
+        <Button>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="White" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding vm_clientConnected}"
+                             Value="False">
+                            <Setter Property="Background" Value="Gray" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <TabControl VerticalAlignment="Stretch">
+            <TabItem x:Name="SettingsTab" Header="Settings" Height="Auto">
                 <views:SettingsView/>
             </TabItem>
-            <TabItem x:Name="LogsTab" Header="Logs" >
+            <TabItem x:Name="LogsTab" Header="Logs"  Height="Auto" >
                 <views:LogView/>
             </TabItem>
         </TabControl>
