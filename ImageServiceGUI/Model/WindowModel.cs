@@ -1,4 +1,5 @@
 ﻿using ImageService.Communication;
+using ImageServiceGUI.Communication;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,13 +11,13 @@ namespace ImageServiceGUI.Model
 {
     public class WindowModel : IWindowModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private bool m_clientConnected;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public bool ClientConnected
         {
-            get { return this.m_clientConnected; }
+            get { return TcpClient.ClientConnected; }
             set
             {
                 m_clientConnected = value;
@@ -28,18 +29,14 @@ namespace ImageServiceGUI.Model
 
         public WindowModel()
         {
-            //TODO
-            //m_clientConnected = TcpClient.ClientConnected;
             TcpClient = ImageServiceClient.Instance;
-
-
+            ClientConnected = TcpClient.ClientConnected;
         }
 
 
         protected void OnPropertyChanged(string name)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Linq;
 
-namespace ImageService.Communication
+namespace Communication
 {
+    public delegate void UpdateResponseArrived(MessageCommand responseObj);
+
     public class MessageCommand
     {
         public MessageCommand(int commandID, string[] args, string path)

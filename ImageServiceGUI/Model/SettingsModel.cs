@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System;
 using System.Diagnostics;
 using Infrastracture.Enums;
+using ImageServiceGUI.Communication;
+using Communication;
 
 namespace ImageServiceGUI.Model
 {

@@ -8,7 +8,8 @@ using System.IO;
 using ImageService.Modal.Events;
 using System.Threading;
 using Newtonsoft.Json;
-using Infrastructure.AppConfig;
+using ImageService.AppConfig;
+using Communication;
 
 namespace ImageService.Communication
 {

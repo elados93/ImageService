@@ -1,4 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Communication;
+using ImageService.AppConfig;
+using Infrastracture.Enums;
+using Infrastructure;
+using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -18,9 +22,9 @@ namespace ImageServiceGUI.Communication
         public event UpdateResponseArrived UpdateAllClients;
 
         private static Mutex mutex = new Mutex();
-        
-    
-        private ImageServiceClient() { Start(); }
+
+
+        private ImageServiceClient() { ClientConnected = Start(); }
 
         public static ImageServiceClient Instance
         {
@@ -32,7 +36,7 @@ namespace ImageServiceGUI.Communication
             }
         }
 
-        public void Start()
+        public bool Start()
         {
             try
             {
@@ -47,10 +51,12 @@ namespace ImageServiceGUI.Communication
                 client.Connect(ep);
                 Debug.WriteLine("Client connected");
                 this.stopped = false;
+                return true;
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
+                return false;
             }
         }
 
@@ -64,7 +70,7 @@ namespace ImageServiceGUI.Communication
                 mutex.WaitOne();
                 writer.Write(jsonCommand);
                 mutex.ReleaseMutex();
-                Debug.WriteLine($"Send command: {msg.CommandID}" + $" args: {msg.CommandArgs.ToString()} to Server");
+                Debug.WriteLine($"Send command: {(MessageTypeEnum)msg.CommandID} to Server");
             }).Start();
         }
 
@@ -72,12 +78,25 @@ namespace ImageServiceGUI.Communication
         {
             new Task(() =>
            {
-               NetworkStream stream = client.GetStream();
-               BinaryReader reader = new BinaryReader(stream);
-               string response = reader.ReadString(); // Wait for response from server
-               MessageCommand msg = JsonConvert.DeserializeObject<MessageCommand>(response);
-               Debug.WriteLine($"Got message: {msg.CommandID}" + $" args: {msg.CommandArgs.ToString()} to Server");
-               UpdateAllClients?.Invoke(msg);
+               try
+               {
+                   while (!stopped)
+                   {
+                       NetworkStream stream = client.GetStream();
+                       BinaryReader reader = new BinaryReader(stream);
+                       string response = reader.ReadString(); // Wait for response from server
+                       MessageCommand msg = JsonConvert.DeserializeObject<MessageCommand>(response);
+                       Debug.WriteLine($"Got message: {msg.CommandID} to Server");
+                       UpdateAllClients?.Invoke(msg);
+
+                       Thread.Sleep(1000); // Update information every 1 seconds
+                   }
+               }
+               catch (Exception e)
+               {
+                   Debug.WriteLine(e.Message);
+               }
+
            }).Start();
         }
 
@@ -85,6 +104,9 @@ namespace ImageServiceGUI.Communication
         {
             client.Close();
             this.stopped = true;
+            ClientConnected = false;
         }
+
+        public bool ClientConnected { get; set; }
     }
 }

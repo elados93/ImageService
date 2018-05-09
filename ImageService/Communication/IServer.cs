@@ -1,4 +1,5 @@
-﻿using ImageService.Modal.Events;
+﻿using Communication;
+using ImageService.Modal.Events;
 using System;
 
 namespace ImageService.Communication

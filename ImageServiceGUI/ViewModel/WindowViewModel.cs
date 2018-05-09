@@ -20,7 +20,6 @@ namespace ImageServiceGUI.ViewModel
 
         }
 
-
         public WindowViewModel()
         {
             this.windowModel = new WindowModel();
@@ -31,7 +30,6 @@ namespace ImageServiceGUI.ViewModel
             };
 
         }
-
 
         protected void NotifyPropertyChanged(string name)
         {

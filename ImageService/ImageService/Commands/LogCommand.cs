@@ -1,8 +1,8 @@
-﻿using ImageService.Commands;
+﻿using Communication;
+using ImageService.AppConfig;
 using ImageService.Communication;
 using Infrastracture.Enums;
 using Infrastructure;
-using Infrastructure.AppConfig;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

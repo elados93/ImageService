@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Text;
 
-namespace Infrastructure.AppConfig
+namespace ImageService.AppConfig
 {
     /// <summary>
     /// The class is used in order to parse the AppConfig file.

@@ -74,6 +74,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Communication\IImageServiceClient.cs" />
+    <Compile Include="Communication\ImageServiceClient.cs" />
     <Compile Include="Model\IWindowModel.cs" />
     <Compile Include="Model\WindowModel.cs" />
     <Compile Include="ViewModel\ConvertLogColor.cs" />
@@ -145,6 +147,10 @@
     <ProjectReference Include="..\Communication\Communication.csproj">
       <Project>{6fc6cf94-0dfe-4fd5-aa6a-e40e8549dec5}</Project>
       <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageService\ImageService.csproj">
+      <Project>{681FC390-26CD-4A91-8EEF-254F82E4AE90}</Project>
+      <Name>ImageService</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastracture\Infrastracture.csproj">
       <Project>{d8a169aa-c0ee-441f-8938-a75d2b10e52d}</Project>

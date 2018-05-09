@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppConfig\AppConfigParser.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Entry.cs" />
     <Compile Include="Enums\CommandEnum.cs" />

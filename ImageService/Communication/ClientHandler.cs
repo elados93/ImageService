@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Infrastracture.Enums;
+using Communication;
 
 namespace ImageService.Communication
 {

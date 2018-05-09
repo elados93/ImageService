@@ -6,6 +6,7 @@ using ImageService.Modal.Events;
 using System.IO;
 using ImageService.Communication;
 using Infrastracture.Enums;
+using Communication;
 
 namespace ImageService.Server
 {

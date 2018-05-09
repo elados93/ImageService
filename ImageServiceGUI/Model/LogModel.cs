@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using ImageService.Communication;
+using Communication;
 using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -9,6 +9,7 @@ using System.Threading;
 using System.Windows.Data;
 using Infrastructure;
 using Infrastracture.Enums;
+using ImageServiceGUI.Communication;
 
 namespace ImageServiceGUI.Model
 {
@@ -18,28 +19,21 @@ namespace ImageServiceGUI.Model
         private ObservableCollection<Entry> m_LogMessages;
 
         private IImageServiceClient imageServiceClient;
-        private bool stopped;
 
         public LogModel()
         {
             m_LogMessages = new ObservableCollection<Entry>();
-            Object locker = new Object(); 
+            Object locker = new Object();
             BindingOperations.EnableCollectionSynchronization(m_LogMessages, locker);
 
             imageServiceClient = ImageServiceClient.Instance; // ImageServiceClient is a singelton
             imageServiceClient.UpdateAllClients += parseToLog;
-            getFirstLogs();
-            stopped = false;
-            //standByForNewLogs();
-        }
-
-        private void standByForNewLogs()
-        {
-            while (!stopped)
+            if (imageServiceClient.ClientConnected)
             {
-                imageServiceClient.recieveCommand();
+                getFirstLogs();
             }
         }
+
 
         private void getFirstLogs()
         {
