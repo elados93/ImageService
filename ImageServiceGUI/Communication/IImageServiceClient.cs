@@ -9,7 +9,7 @@ namespace ImageServiceGUI.Communication
 {
     public interface IImageServiceClient
     {
-        event UpdateResponseArrived UpdateAllClients;
+        event UpdateResponseArrived UpdateAllModels;
         void sendCommand(MessageCommand commandRecievedEventArgs);
         void recieveCommand();
         void CloseClient();

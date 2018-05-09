@@ -79,8 +79,8 @@ namespace ImageService.Communication
             {
                 foreach (TcpClient client in clientsList)
                 {
-                    using (NetworkStream stream = client.GetStream())
-                    using (BinaryWriter writer = new BinaryWriter(stream))
+                    NetworkStream stream = client.GetStream();
+                    BinaryWriter writer = new BinaryWriter(stream);
                     {
                         string messageInString = JsonConvert.SerializeObject(message);
                         mutex.WaitOne();

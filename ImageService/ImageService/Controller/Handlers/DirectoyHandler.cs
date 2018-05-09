@@ -34,17 +34,6 @@ namespace ImageService.Controller.Handlers
         /// </summary>
         public void StartHandleDirectory()
         {
-            /**  OPTIONAL - READ FROM DIR AND HANDLE THE FILES FROM THE DIR
-            // Scan the given path and handle each relavant file.
-            string[] files = Directory.GetFiles(m_path);
-            foreach (string filepath in files)
-            {
-                string[] args = { filepath };
-                if (checkFileExtention(filepath))
-                    OnCommandRecieved(this, new CommandRecievedEventArgs(1, args, filepath));
-            }
-            */
-
             // sending a message to the event logger through the logging.
             m_logging.Log("Start to handle directory: " + m_path, MessageTypeEnum.INFO);
             // making sure the filesystem watcher litens to the specific directory if changes happens

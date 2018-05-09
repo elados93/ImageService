@@ -19,7 +19,7 @@ namespace ImageServiceGUI.Communication
         private bool stopped;
         private static ImageServiceClient instance;
 
-        public event UpdateResponseArrived UpdateAllClients;
+        public event UpdateResponseArrived UpdateAllModels;
 
         private static Mutex mutex = new Mutex();
 
@@ -79,26 +79,26 @@ namespace ImageServiceGUI.Communication
         {
             new Task(() =>
            {
-               try
-               {
+               
                    NetworkStream stream = client.GetStream();
                    BinaryReader reader = new BinaryReader(stream);
 
                    while (!stopped)
                    {
+                   try
+                   {
                        string response = reader.ReadString(); // Wait for response from server
                        MessageCommand msg = JsonConvert.DeserializeObject<MessageCommand>(response);
-                       Debug.WriteLine($"Got message: {msg.CommandID} to Server");
-                       UpdateAllClients?.Invoke(msg);
+                       Debug.WriteLine($"Got message: {msg.CommandID} from Server");
+                       UpdateAllModels?.Invoke(msg);
 
                        Thread.Sleep(1000); // Update information every 1 seconds
                    }
+                   catch (Exception e)
+                   {
+                       Debug.WriteLine(e.Message);
+                   }
                }
-               catch (Exception e)
-               {
-                   Debug.WriteLine(e.Message);
-               }
-
            }).Start();
         }
 

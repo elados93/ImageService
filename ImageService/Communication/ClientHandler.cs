@@ -31,9 +31,9 @@ namespace ImageService.Communication
         {
             new Task(() =>
             {
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryReader reader = new BinaryReader(stream))
-                using (BinaryWriter writer = new BinaryWriter(stream))
+                NetworkStream stream = client.GetStream();
+                BinaryReader reader = new BinaryReader(stream);
+                BinaryWriter writer = new BinaryWriter(stream);
                 {
 
                     while (true)
@@ -52,21 +52,23 @@ namespace ImageService.Communication
                                     CommandRecievedEventArgs c = new CommandRecievedEventArgs(command, commandArgs, path);
                                     CommandRecieved?.Invoke(this, c); // Invoke ImageServer to deal with handler command
                                 }
-
-                                // Not handler command
-                                bool result;
-                                string executionResult = c_controller.ExecuteCommand((CommandEnum)msg.CommandID, msg.CommandArgs, out result);
-
-                                /*
-                                if (result)
-                                    c_logging.Log($"Command: {command}" + " success", MessageTypeEnum.INFO);
                                 else
-                                    c_logging.Log($"Command: {command}" + " failed", MessageTypeEnum.FAIL);
-                                    */
+                                {
+                                    // Not handler command
+                                    bool result;
+                                    string executionResult = c_controller.ExecuteCommand((CommandEnum)msg.CommandID, msg.CommandArgs, out result);
+                                    Mutex.WaitOne();
+                                    writer.Write(executionResult);
+                                    Mutex.ReleaseMutex();
+                                    /*
+                                    if (result)
+                                        c_logging.Log($"Command: {command}" + " success", MessageTypeEnum.INFO);
+                                    else
+                                        c_logging.Log($"Command: {command}" + " failed", MessageTypeEnum.FAIL);
+                                        */
+                                }
 
-                                Mutex.WaitOne();
-                                writer.Write(executionResult);
-                                Mutex.ReleaseMutex();
+
                             }
                             else
                             { // When the server got null message

@@ -27,7 +27,7 @@ namespace ImageServiceGUI.Model
             BindingOperations.EnableCollectionSynchronization(m_LogMessages, locker);
 
             imageServiceClient = ImageServiceClient.Instance; // ImageServiceClient is a singelton
-            imageServiceClient.UpdateAllClients += parseToLog;
+            imageServiceClient.UpdateAllModels += parseToLog;
             if (imageServiceClient.ClientConnected)
                 getFirstLogs();
         }

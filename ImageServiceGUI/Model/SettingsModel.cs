@@ -29,7 +29,7 @@ namespace ImageServiceGUI.Model
             Object locker = new Object();
             BindingOperations.EnableCollectionSynchronization(Handlers, locker);
             imageServiceClient = ImageServiceClient.Instance; // Image service client is a singelton
-            this.imageServiceClient.UpdateAllClients += getAppConfig;
+            this.imageServiceClient.UpdateAllModels += getAppConfig;
             if (imageServiceClient.ClientConnected)
                 getInitialAppConfig();
         }
