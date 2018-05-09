@@ -9,10 +9,10 @@
     <UserControl.Resources>
         <local:ConvertLogColor x:Key="ConvertLogColor"/>
     </UserControl.Resources>
-    
-    <StackPanel Orientation="Vertical">
-        <Label Content="Logs" FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Blue" RenderTransformOrigin="2.634,0.921" FontFamily="Narkisim"/>
-        <DataGrid x:Name="logs" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
+
+    <DockPanel ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,10">
+        <Label Content="Logs" FontSize="25" HorizontalAlignment="Center" FontWeight="ExtraBold" Foreground="Blue" RenderTransformOrigin="2.634,0.921" FontFamily="Narkisim" DockPanel.Dock="Top"/>
+        <DataGrid x:Name="logs" 
                   ItemsSource="{Binding vm_LogMessages}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Type}" >
@@ -25,5 +25,5 @@
                 <DataGridTextColumn Header="Message" Width="*" IsReadOnly="True" Binding="{Binding Path=Message}" />
             </DataGrid.Columns>
         </DataGrid>
-    </StackPanel>
+    </DockPanel>
 </UserControl>
