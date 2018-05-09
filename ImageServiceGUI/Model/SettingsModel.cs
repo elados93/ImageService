@@ -6,6 +6,7 @@ using System.Diagnostics;
 using Infrastracture.Enums;
 using ImageServiceGUI.Communication;
 using Communication;
+using System.Windows.Data;
 
 namespace ImageServiceGUI.Model
 {
@@ -25,8 +26,21 @@ namespace ImageServiceGUI.Model
         public SettingsModel()
         {
             Handlers = new ObservableCollection<string>();
-          //  imageServiceClient = ImageServiceClient.Instance; // Image service client is a singelton
-           // this.imageServiceClient.UpdateAllClients += getAppConfig;
+            Object locker = new Object();
+            BindingOperations.EnableCollectionSynchronization(Handlers, locker);
+            imageServiceClient = ImageServiceClient.Instance; // Image service client is a singelton
+            this.imageServiceClient.UpdateAllClients += getAppConfig;
+            if (imageServiceClient.ClientConnected)
+            {
+                getInitialAppConfig();
+            }
+        }
+
+        private void getInitialAppConfig()
+        {
+            MessageCommand msg = new MessageCommand((int)CommandEnum.GetConfigCommand, null, null);
+            imageServiceClient.sendCommand(msg);
+            imageServiceClient.recieveCommand();
         }
 
         private void getAppConfig(MessageCommand msg)
@@ -43,7 +57,7 @@ namespace ImageServiceGUI.Model
                 if (!Int32.TryParse(args[4], out temp))
                     Debug.WriteLine("Error parse thumbnail size in getAppConfig");
                 else
-                    ThumbNailsSize = temp;
+                    ThumbnailsSize = temp;
                 insertHandlersToList(handler);
             }
         }
@@ -61,13 +75,13 @@ namespace ImageServiceGUI.Model
         }
 
 
-        public int ThumbNailsSize
+        public int ThumbnailsSize
         {
             get { return m_thumbNailsSize; }
             set
             {
                 m_thumbNailsSize = value;
-                OnPropertyChanged("ThumbNailsSize");
+                OnPropertyChanged("ThumbnailsSize");
             }
         }
         public string LogName

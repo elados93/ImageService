@@ -76,7 +76,7 @@ namespace ImageService.Communication
                     }
                     finally
                     {
-                        client.Close();
+                        //client.Close();
                     }
                 }
             }).Start();
