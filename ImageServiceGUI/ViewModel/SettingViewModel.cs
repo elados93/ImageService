@@ -81,9 +81,9 @@ namespace ImageServiceGUI.ViewModel
             get { return settingModel.LogName; }
         }
 
-        public int vm_ThumbnailSize
+        public int vm_ThumbnailsSize
         {
-            get { return settingModel.ThumbNailsSize; }
+            get { return settingModel.ThumbnailsSize; }
         }
 
     }

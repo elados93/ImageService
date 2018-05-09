@@ -28,7 +28,7 @@
             <TextBlock x:Name="logName" Grid.Row="2" Grid.Column="2" Text="{Binding vm_LogName}"></TextBlock>
             <TextBlock x:Name="sourceName" Grid.Row="1" Grid.Column="2" Text="{Binding vm_SourceName}"></TextBlock>
             <TextBlock Grid.Row="3">Thumbnails Size:</TextBlock>
-            <TextBlock x:Name="thumbnailsSize" Grid.Row="3" Grid.Column="2" Text="{Binding vm_ThumbnailSize}"></TextBlock>
+            <TextBlock x:Name="thumbnailsSize" Grid.Row="3" Grid.Column="2" Text="{Binding vm_ThumbnailsSize}"></TextBlock>
             <Button x:Name="removeHandlerButtton" Content="Remove" Command="{Binding RemoveHandlerCommand}" 
                  Grid.Row="4" HorizontalAlignment="Center" Width="290" 
                 Grid.ColumnSpan="2"/>
