@@ -10,8 +10,8 @@ namespace ImageServiceGUI.Views
         public SettingsView()
         {
             InitializeComponent();
-            //settingsVm = new SettingViewModel(new SettingsModel());
-            //this.DataContext = settingsVm;
+            settingsVm = new SettingViewModel();
+            this.DataContext = settingsVm;
             //handlersListBox.ItemsSource = settingsVm.vm_Handlers; // The list of the handlers.
         }
     }
