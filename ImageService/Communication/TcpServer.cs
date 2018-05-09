@@ -10,6 +10,8 @@ using System.Threading;
 using Newtonsoft.Json;
 using ImageService.AppConfig;
 using Communication;
+using ImageService.Logging;
+using Infrastracture.Enums;
 
 namespace ImageService.Communication
 {
@@ -17,11 +19,12 @@ namespace ImageService.Communication
     {
         private int port;
         private TcpListener listener;
+        private ILoggingService m_logger;
         private IClientHandler ch;
         private List<TcpClient> clientsList;
         private static Mutex mutex = new Mutex();
 
-        public TcpServer(IClientHandler clientHandler)
+        public TcpServer(IClientHandler clientHandler, ILoggingService logger)
         {
             int tempPort;
             bool result = AppConfigParser.getPort(out tempPort);
@@ -29,7 +32,7 @@ namespace ImageService.Communication
                 port = tempPort;
             else
                 throw new Exception("Can't parse port!");
-
+            m_logger = logger;
             this.ch = clientHandler;
             this.ch.Mutex = mutex;
             this.ch.ExcludeClient += excludeClientFromList;
@@ -95,6 +98,7 @@ namespace ImageService.Communication
 
         private void excludeClientFromList(TcpClient client)
         {
+            m_logger.Log("Closing Gui Client..", MessageTypeEnum.WARNING);
             clientsList.Remove(client);
         }
     }

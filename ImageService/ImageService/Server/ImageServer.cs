@@ -31,7 +31,7 @@ namespace ImageService.Server
             m_logging = logging;
             IClientHandler clientHandler = new ClientHandler(controller, logging);
             clientHandler.CommandRecieved += sendCommand;
-            this.tcpServer = new TcpServer(clientHandler);
+            this.tcpServer = new TcpServer(clientHandler, logging);
             this.UpdateResponse += tcpServer.notifyAllClients;
             this.tcpServer.Start();
         }

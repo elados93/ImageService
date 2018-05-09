@@ -8,7 +8,6 @@ using ImageService.Controller;
 using ImageService.Modal;
 using ImageService.Logging;
 using ImageService.Logging.Modal;
-using ImageService.Communication;
 using Infrastracture.Enums;
 using Communication;
 using ImageService.AppConfig;
@@ -85,7 +84,7 @@ namespace ImageService
 
             } catch (Exception e)
             {
-                //eventLog1.WriteEntry(e.Message);
+                eventLog1.WriteEntry(e.Message);
             }
         }
 
