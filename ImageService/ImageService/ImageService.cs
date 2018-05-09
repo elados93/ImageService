@@ -83,10 +83,9 @@ namespace ImageService
                 logger = new LoggingService();
                 logger.MessageRecieved += onMessage;
 
-                UpdateLogMessage += m_imageServer.notifyTcpServer;
             } catch (Exception e)
             {
-                eventLog1.WriteEntry(e.Message);
+                //eventLog1.WriteEntry(e.Message);
             }
         }
 
@@ -121,6 +120,7 @@ namespace ImageService
             modal = new ImageServiceModal(appConfigParser.outputDir, appConfigParser.thumbNailsSize);
             controller = new ImageController(modal);
             m_imageServer = new ImageServer(controller, logger);
+            UpdateLogMessage += m_imageServer.notifyTcpServer;
             string[] handlesPaths = appConfigParser.handler.Split(';');
             // Create all the handlers.
             foreach (string path in handlesPaths)
@@ -167,7 +167,7 @@ namespace ImageService
             eventLog1.WriteEntry("Image Service stopped.");
             
             //TODO handle tomarrow
-            //eventLog1.Clear();
+            eventLog1.Clear();
         }
 
         protected override void OnContinue()

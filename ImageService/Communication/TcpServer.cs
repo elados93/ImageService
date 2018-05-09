@@ -21,7 +21,7 @@ namespace ImageService.Communication
         private List<TcpClient> clientsList;
         private static Mutex mutex = new Mutex();
 
-        public TcpServer(IClientHandler ch)
+        public TcpServer(IClientHandler clientHandler)
         {
             int tempPort;
             bool result = AppConfigParser.getPort(out tempPort);
@@ -30,7 +30,7 @@ namespace ImageService.Communication
             else
                 throw new Exception("Can't parse port!");
 
-            this.ch = ch;
+            this.ch = clientHandler;
             this.ch.Mutex = mutex;
             clientsList = new List<TcpClient>();
         }
@@ -55,6 +55,7 @@ namespace ImageService.Communication
                     catch (SocketException e)
                     {
                         Debug.WriteLine("Tcp server was stopped Error: " + e.Message);
+                        Stop();
                         break;
                     }
                 }
@@ -65,12 +66,15 @@ namespace ImageService.Communication
         public void Stop()
         {
             listener.Stop();
+            foreach (TcpClient c in clientsList)
+                c.Close();
             clientsList.Clear();
             Debug.WriteLine("Tcp server was stopped");
         }
 
         public void notifyAllClients(MessageCommand message)
         {
+            
             new Task(() =>
             {
                 foreach (TcpClient client in clientsList)
@@ -86,6 +90,7 @@ namespace ImageService.Communication
                 }
 
             }).Start();
+            
         }
     }
 }

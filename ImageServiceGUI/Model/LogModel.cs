@@ -26,12 +26,10 @@ namespace ImageServiceGUI.Model
             Object locker = new Object();
             BindingOperations.EnableCollectionSynchronization(m_LogMessages, locker);
 
-            //imageServiceClient = ImageServiceClient.Instance; // ImageServiceClient is a singelton
-            //imageServiceClient.UpdateAllClients += parseToLog;
-            //if (imageServiceClient.ClientConnected)
-            //{
-            //    getFirstLogs();
-            //}
+            imageServiceClient = ImageServiceClient.Instance; // ImageServiceClient is a singelton
+            imageServiceClient.UpdateAllClients += parseToLog;
+            if (imageServiceClient.ClientConnected)
+                getFirstLogs();
         }
 
 
@@ -39,7 +37,6 @@ namespace ImageServiceGUI.Model
         {
             MessageCommand msg = new MessageCommand((int)CommandEnum.LogCommand, null, null);
             imageServiceClient.sendCommand(msg);
-            imageServiceClient.recieveCommand();
         }
 
         private void parseToLog(MessageCommand msg)
@@ -51,7 +48,7 @@ namespace ImageServiceGUI.Model
                 if (!Int32.TryParse(msg.CommandArgs[0], out result))
                     Debug.WriteLine("Error parsing command type in parseLog");
                 else
-                    m_LogMessages.Add(new Entry(msg.CommandArgs[1], (MessageTypeEnum)result));
+                    m_LogMessages.Insert(0, new Entry(msg.CommandArgs[1], (MessageTypeEnum)result));
             }
             else
             {

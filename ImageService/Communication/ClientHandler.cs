@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Infrastracture.Enums;
 using Communication;
+using System.Diagnostics;
 
 namespace ImageService.Communication
 {
@@ -34,50 +35,53 @@ namespace ImageService.Communication
                 using (BinaryReader reader = new BinaryReader(stream))
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 {
-                    try
-                    {
-                        string requset = reader.ReadString(); // Wait for command
-                        MessageCommand msg = JsonConvert.DeserializeObject<MessageCommand>(requset);
-                        if (msg != null)
-                        {
-                            CommandEnum command = (CommandEnum)msg.CommandID;
 
-                            if (msg.RequestedDirPath != null) // If the command related to handler
+                    while (true)
+                    {
+                        try
+                        {
+                            string requset = reader.ReadString(); // Wait for command
+                            MessageCommand msg = JsonConvert.DeserializeObject<MessageCommand>(requset);
+                            if (msg != null)
                             {
-                                string[] commandArgs = msg.CommandArgs;
-                                string path = msg.RequestedDirPath;
-                                CommandRecievedEventArgs c = new CommandRecievedEventArgs(command, commandArgs, path);
-                                CommandRecieved?.Invoke(this, c); // Invoke ImageServer to deal with handler command
+                                CommandEnum command = (CommandEnum)msg.CommandID;
+                                if (msg.RequestedDirPath != null) // If the command related to handler
+                                {
+                                    string[] commandArgs = msg.CommandArgs;
+                                    string path = msg.RequestedDirPath;
+                                    CommandRecievedEventArgs c = new CommandRecievedEventArgs(command, commandArgs, path);
+                                    CommandRecieved?.Invoke(this, c); // Invoke ImageServer to deal with handler command
+                                }
+
+                                // Not handler command
+                                bool result;
+                                string executionResult = c_controller.ExecuteCommand((CommandEnum)msg.CommandID, msg.CommandArgs, out result);
+
+                                /*
+                                if (result)
+                                    c_logging.Log($"Command: {command}" + " success", MessageTypeEnum.INFO);
+                                else
+                                    c_logging.Log($"Command: {command}" + " failed", MessageTypeEnum.FAIL);
+                                    */
+
+                                Mutex.WaitOne();
+                                writer.Write(executionResult);
+                                Mutex.ReleaseMutex();
                             }
-
-                            // Not handler command
-                            bool result;
-                            string executionResult = c_controller.ExecuteCommand((CommandEnum)msg.CommandID, msg.CommandArgs, out result);
-
-                            if (result)
-                                c_logging.Log($"Command: {command}" + " success", MessageTypeEnum.INFO);
                             else
-                                c_logging.Log($"Command: {command}" + " failed", MessageTypeEnum.FAIL);
-
-                            Mutex.WaitOne();
-                            writer.Write(executionResult);
-                            Mutex.ReleaseMutex();
+                            { // When the server got null message
+                                //Mutex.WaitOne();
+                                // TODO create jason for error message
+                                //writer.Write("Message validation failed"); 
+                                //Mutex.ReleaseMutex();
+                                Debug.WriteLine("Message validation failed");
+                            }
                         }
-                        else
+                        catch (Exception e)
                         {
-                            // When the server got null message
-                            writer.Write("Message validation failed"); // TODO create jason for error message
-                            c_logging.Log("Message validation failed", MessageTypeEnum.FAIL);
+                            Debug.WriteLine(e.Message);
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        c_logging.Log(e.Message, MessageTypeEnum.FAIL);
-                    }
-                    finally
-                    {
-                        //client.Close();
-                    }
+                    } // end while true
                 }
             }).Start();
         }

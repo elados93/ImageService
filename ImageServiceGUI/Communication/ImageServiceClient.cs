@@ -51,6 +51,7 @@ namespace ImageServiceGUI.Communication
                 client.Connect(ep);
                 Debug.WriteLine("Client connected");
                 this.stopped = false;
+                recieveCommand();   // Thread for recieving commands from server
                 return true;
             }
             catch (Exception e)
@@ -70,7 +71,7 @@ namespace ImageServiceGUI.Communication
                 mutex.WaitOne();
                 writer.Write(jsonCommand);
                 mutex.ReleaseMutex();
-                Debug.WriteLine($"Send command: {(MessageTypeEnum)msg.CommandID} to Server");
+                Debug.WriteLine($"Send command: {(CommandEnum)msg.CommandID} to Server");
             }).Start();
         }
 
@@ -80,10 +81,11 @@ namespace ImageServiceGUI.Communication
            {
                try
                {
+                   NetworkStream stream = client.GetStream();
+                   BinaryReader reader = new BinaryReader(stream);
+
                    while (!stopped)
                    {
-                       NetworkStream stream = client.GetStream();
-                       BinaryReader reader = new BinaryReader(stream);
                        string response = reader.ReadString(); // Wait for response from server
                        MessageCommand msg = JsonConvert.DeserializeObject<MessageCommand>(response);
                        Debug.WriteLine($"Got message: {msg.CommandID} to Server");

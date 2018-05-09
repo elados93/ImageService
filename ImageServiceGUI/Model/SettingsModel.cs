@@ -31,16 +31,13 @@ namespace ImageServiceGUI.Model
             imageServiceClient = ImageServiceClient.Instance; // Image service client is a singelton
             this.imageServiceClient.UpdateAllClients += getAppConfig;
             if (imageServiceClient.ClientConnected)
-            {
                 getInitialAppConfig();
-            }
         }
 
         private void getInitialAppConfig()
         {
             MessageCommand msg = new MessageCommand((int)CommandEnum.GetConfigCommand, null, null);
             imageServiceClient.sendCommand(msg);
-            imageServiceClient.recieveCommand();
         }
 
         private void getAppConfig(MessageCommand msg)
