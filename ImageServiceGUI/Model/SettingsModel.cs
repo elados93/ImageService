@@ -2,9 +2,8 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System;
-using ImageService.Logging.Modal;
-using ImageService.Infrastructure.Enums;
 using System.Diagnostics;
+using Infrastracture.Enums;
 
 namespace ImageServiceGUI.Model
 {

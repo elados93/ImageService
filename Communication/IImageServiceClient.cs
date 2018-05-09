@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace ImageService.Communication
 {
+    public delegate void UpdateResponseArrived(MessageCommand responseObj);
+
     public interface IImageServiceClient
     {
         event UpdateResponseArrived UpdateAllClients;

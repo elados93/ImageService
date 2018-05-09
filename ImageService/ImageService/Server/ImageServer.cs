@@ -4,9 +4,8 @@ using ImageService.Controller.Handlers;
 using ImageService.Logging;
 using ImageService.Modal.Events;
 using System.IO;
-using ImageService.Logging.Modal;
 using ImageService.Communication;
-using ImageService.Infrastructure.Enums;
+using Infrastracture.Enums;
 
 namespace ImageService.Server
 {
@@ -51,7 +50,7 @@ namespace ImageService.Server
 
                 // Start listening to events.
                 handler.StartHandleDirectory();
-                m_logging.Log("Created Handler for path: " + path + " Yu-Pi-Do!", Logging.Modal.MessageTypeEnum.INFO);
+                m_logging.Log("Created Handler for path: " + path + " Yu-Pi-Do!", MessageTypeEnum.INFO);
             }
             else
             {

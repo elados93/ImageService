@@ -1,15 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using ImageService.Logging.Modal;
 using ImageService.Communication;
 using System;
-using ImageService.Infrastructure;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using ImageService.Infrastructure.Enums;
 using System.Threading;
 using System.Windows.Data;
+using Infrastructure;
+using Infrastracture.Enums;
 
 namespace ImageServiceGUI.Model
 {

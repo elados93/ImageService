@@ -1,6 +1,6 @@
 ﻿using System;
 using ImageService.Commands;
-using ImageService.Infrastructure.AppConfig;
+using Infrastructure.AppConfig;
 
 namespace ImageService.Commands
 {

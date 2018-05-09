@@ -53,10 +53,7 @@
   <ItemGroup>
     <Compile Include="Communication\ClientHandler.cs" />
     <Compile Include="Communication\IClientHandler.cs" />
-    <Compile Include="Communication\IImageServiceClient.cs" />
     <Compile Include="Communication\IServer.cs" />
-    <Compile Include="Communication\ImageServiceClient.cs" />
-    <Compile Include="Communication\MessageCommand.cs" />
     <Compile Include="Communication\TcpServer.cs" />
     <Compile Include="IImageService.cs" />
     <Compile Include="ImageService\Commands\DeleteHandlerFromAppConfigCommand.cs" />
@@ -75,15 +72,11 @@
     <Compile Include="ImageService\Commands\NewFileCommand.cs" />
     <Compile Include="ImageService\Modal\Events\DirectoryCloseEventArgs.cs" />
     <Compile Include="ImageService\Controller\IImageController.cs" />
-    <Compile Include="Infrastructure\AppConfig\AppConfigParser.cs" />
-    <Compile Include="Infrastructure\Entry.cs" />
-    <Compile Include="Infrastructure\Enums\CommandEnum.cs" />
     <Compile Include="ImageService\Modal\IImageServiceModal.cs" />
     <Compile Include="ImageService\Controller\ImageController.cs" />
     <Compile Include="ImageService\Server\ImageServer.cs" />
     <Compile Include="ImageService\Modal\ImageServiceModal.cs" />
     <Compile Include="Logging\LoggingService.cs" />
-    <Compile Include="Logging\Modal\MessageTypeEnum.cs" />
     <Compile Include="Logging\Modal\MessageRecievedEventArgs.cs" />
     <Compile Include="Logging\ILoggingService.cs" />
     <Compile Include="Program.cs" />
@@ -108,7 +101,19 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{6fc6cf94-0dfe-4fd5-aa6a-e40e8549dec5}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastracture\Infrastracture.csproj">
+      <Project>{d8a169aa-c0ee-441f-8938-a75d2b10e52d}</Project>
+      <Name>Infrastracture</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AppConfig\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

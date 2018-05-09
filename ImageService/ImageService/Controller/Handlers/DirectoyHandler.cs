@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
-using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
 using ImageService.Logging.Modal;
 using ImageService.Modal.Events;
 using ImageService.Server;
+using Infrastracture.Enums;
 
 namespace ImageService.Controller.Handlers
 {

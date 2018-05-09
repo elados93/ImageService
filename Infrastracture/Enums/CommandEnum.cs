@@ -1,4 +1,4 @@
-﻿namespace ImageService.Infrastructure.Enums
+﻿namespace Infrastracture.Enums
 {
     public enum CommandEnum : int
     {

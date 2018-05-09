@@ -1,7 +1,7 @@
-﻿using ImageService.Logging.Modal;
+﻿using Infrastracture.Enums;
 using System.Diagnostics;
 
-namespace ImageService.Infrastructure
+namespace Infrastructure
 {
     public class Entry
     {

@@ -1,6 +1,6 @@
-﻿namespace ImageService.Logging.Modal
+﻿namespace Infrastracture.Enums
 {
-    public enum MessageTypeEnum
+    public enum MessageTypeEnum : int
     {
         INFO = 4,
         WARNING = 2,

@@ -8,13 +8,12 @@ using ImageService.Controller;
 using ImageService.Modal;
 using ImageService.Logging;
 using ImageService.Logging.Modal;
-using ImageService.Infrastructure.AppConfig;
+using Infrastructure.AppConfig;
 using ImageService.Communication;
-using ImageService.Infrastructure.Enums;
+using Infrastracture.Enums;
 
 namespace ImageService
 {
-    public delegate void UpdateResponseArrived(MessageCommand responseObj);
 
     public enum ServiceState
     {

@@ -1,10 +1,10 @@
 ﻿using ImageService.Commands;
-using ImageService.Infrastructure.Enums;
 using ImageService.Modal;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using Infrastracture.Enums;
 
 namespace ImageService.Controller
 {

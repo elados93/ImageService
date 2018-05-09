@@ -1,5 +1,6 @@
 ﻿using System;
 using ImageService.Logging.Modal;
+using Infrastracture.Enums;
 
 namespace ImageService.Logging
 {

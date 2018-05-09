@@ -1,4 +1,4 @@
-﻿using ImageService.Infrastructure.AppConfig;
+﻿using Infrastructure.AppConfig;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;

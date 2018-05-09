@@ -1,4 +1,4 @@
-﻿using ImageService.Infrastructure.Enums;
+﻿using Infrastracture.Enums;
 using System;
 
 namespace ImageService.Modal.Events

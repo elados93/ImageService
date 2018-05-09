@@ -1,5 +1,4 @@
-﻿using ImageService.Infrastructure.AppConfig;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
@@ -9,6 +8,7 @@ using System.IO;
 using ImageService.Modal.Events;
 using System.Threading;
 using Newtonsoft.Json;
+using Infrastructure.AppConfig;
 
 namespace ImageService.Communication
 {

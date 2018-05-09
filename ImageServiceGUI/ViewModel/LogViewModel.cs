@@ -1,4 +1,5 @@
-﻿using ImageServiceGUI.Model;
+﻿using Infrastructure;
+using ImageServiceGUI.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;

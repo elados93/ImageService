@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infrastracture.Enums;
+using System;
 
 namespace ImageService.Logging.Modal
 {

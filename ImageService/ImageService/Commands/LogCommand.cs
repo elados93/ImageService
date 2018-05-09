@@ -1,15 +1,12 @@
 ﻿using ImageService.Commands;
 using ImageService.Communication;
-using ImageService.Infrastructure;
-using ImageService.Infrastructure.AppConfig;
-using ImageService.Infrastructure.Enums;
+using Infrastracture.Enums;
+using Infrastructure;
+using Infrastructure.AppConfig;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImageService.Commands
 {
