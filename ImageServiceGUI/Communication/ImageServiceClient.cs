@@ -101,12 +101,18 @@ namespace ImageServiceGUI.Communication
                }
            }).Start();
         }
-
+        
         public void CloseClient()
         {
             client.Close();
             this.stopped = true;
             ClientConnected = false;
+        }
+
+        public void startClosingWindow()
+        {
+            MessageCommand closeWindow = new MessageCommand((int)CommandEnum.ClosedGuiNotify, null, null);
+            sendCommand(closeWindow);
         }
 
         public bool ClientConnected { get; set; }

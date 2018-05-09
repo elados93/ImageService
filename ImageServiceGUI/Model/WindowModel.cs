@@ -1,5 +1,7 @@
-﻿using ImageService.Communication;
+﻿using Communication;
+using ImageService.Communication;
 using ImageServiceGUI.Communication;
+using Infrastracture.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,8 +33,14 @@ namespace ImageServiceGUI.Model
         {
             TcpClient = ImageServiceClient.Instance;
             ClientConnected = TcpClient.ClientConnected;
+            TcpClient.UpdateAllModels += closeGui;
         }
 
+        private void closeGui(MessageCommand msg)
+        {
+            if (msg.CommandID == (int)CommandEnum.ApprovedCloseGui)
+                TcpClient.CloseClient();
+        }
 
         protected void OnPropertyChanged(string name)
         {

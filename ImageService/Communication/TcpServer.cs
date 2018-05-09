@@ -32,6 +32,7 @@ namespace ImageService.Communication
 
             this.ch = clientHandler;
             this.ch.Mutex = mutex;
+            this.ch.ExcludeClient += excludeClientFromList;
             clientsList = new List<TcpClient>();
         }
 
@@ -55,7 +56,6 @@ namespace ImageService.Communication
                     catch (SocketException e)
                     {
                         Debug.WriteLine("Tcp server was stopped Error: " + e.Message);
-                        Stop();
                         break;
                     }
                 }
@@ -91,6 +91,11 @@ namespace ImageService.Communication
 
             }).Start();
             
+        }
+
+        private void excludeClientFromList(TcpClient client)
+        {
+            clientsList.Remove(client);
         }
     }
 }

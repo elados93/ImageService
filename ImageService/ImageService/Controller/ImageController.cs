@@ -25,7 +25,6 @@ namespace ImageService.Controller
                 { CommandEnum.CloseCommand, new DeleteHandlerFromAppConfigCommand()},
                 { CommandEnum.LogCommand, new LogCommand() },
                 {CommandEnum.GetConfigCommand, new GetConfigCommand() }
-
             };
         }
 

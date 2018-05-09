@@ -16,6 +16,7 @@ namespace ImageService.Communication
     class ClientHandler : IClientHandler
     {
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;
+        public event TcpClientDelegate ExcludeClient;
 
         private IImageController c_controller;
         private ILoggingService c_logging;
@@ -45,33 +46,45 @@ namespace ImageService.Communication
                             if (msg != null)
                             {
                                 CommandEnum command = (CommandEnum)msg.CommandID;
-                                if (msg.RequestedDirPath != null) // If the command related to handler
+
+                                if (command == CommandEnum.ClosedGuiNotify)
                                 {
-                                    string[] commandArgs = msg.CommandArgs;
-                                    string path = msg.RequestedDirPath;
-                                    CommandRecievedEventArgs c = new CommandRecievedEventArgs(command, commandArgs, path);
-                                    CommandRecieved?.Invoke(this, c); // Invoke ImageServer to deal with handler command
+                                    ExcludeClient?.Invoke(client);
+                                    MessageCommand closeApproved = new MessageCommand((int)CommandEnum.ApprovedCloseGui, null, null);
+                                    string closeApprovedString = JsonConvert.SerializeObject(closeApproved);
+                                    Mutex.WaitOne();
+                                    writer.Write(closeApprovedString);
+                                    Mutex.ReleaseMutex();
                                 }
                                 else
                                 {
-                                    // Not handler command
-                                    bool result;
-                                    string executionResult = c_controller.ExecuteCommand((CommandEnum)msg.CommandID, msg.CommandArgs, out result);
-                                    Mutex.WaitOne();
-                                    writer.Write(executionResult);
-                                    Mutex.ReleaseMutex();
-                                    /*
-                                    if (result)
-                                        c_logging.Log($"Command: {command}" + " success", MessageTypeEnum.INFO);
+                                    if (msg.RequestedDirPath != null) // If the command related to handler
+                                    {
+                                        string[] commandArgs = msg.CommandArgs;
+                                        string path = msg.RequestedDirPath;
+                                        CommandRecievedEventArgs c = new CommandRecievedEventArgs(command, commandArgs, path);
+                                        CommandRecieved?.Invoke(this, c); // Invoke ImageServer to deal with handler command
+                                    }
                                     else
-                                        c_logging.Log($"Command: {command}" + " failed", MessageTypeEnum.FAIL);
-                                        */
+                                    {
+                                        // Not handler command
+                                        bool result;
+                                        string executionResult = c_controller.ExecuteCommand((CommandEnum)msg.CommandID, msg.CommandArgs, out result);
+                                        Mutex.WaitOne();
+                                        writer.Write(executionResult);
+                                        Mutex.ReleaseMutex();
+                                        /*
+                                        if (result)
+                                            c_logging.Log($"Command: {command}" + " success", MessageTypeEnum.INFO);
+                                        else
+                                            c_logging.Log($"Command: {command}" + " failed", MessageTypeEnum.FAIL);
+                                            */
+                                    }
+
                                 }
-
-
                             }
-                            else
-                            { // When the server got null message
+                            else // When the server got null message
+                            { 
                                 //Mutex.WaitOne();
                                 // TODO create jason for error message
                                 //writer.Write("Message validation failed"); 

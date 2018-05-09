@@ -1,4 +1,6 @@
-﻿using ImageServiceGUI.Model;
+﻿using Communication;
+using ImageServiceGUI.Model;
+using Infrastracture.Enums;
 using Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
@@ -12,6 +14,7 @@ namespace ImageServiceGUI.ViewModel
         private ISettingsModel settingModel;
         private string selectedItem;
 
+        public event SendCommandToServer SendCommand;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingViewModel()
@@ -25,6 +28,8 @@ namespace ImageServiceGUI.ViewModel
 
             this.RemoveHandlerCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
             PropertyChanged += RemoveSelectedHandlerCommand;
+
+            SendCommand += settingModel.SendByImageService;
         }
 
         private void RemoveSelectedHandlerCommand(object sender, PropertyChangedEventArgs e)
@@ -35,9 +40,12 @@ namespace ImageServiceGUI.ViewModel
 
         private void OnRemove(object obj)
         {
+            string handlerToRemove = selectedItem;
             settingModel.Handlers.Remove(SelectedItem);
             SelectedItem = null;
             Debug.WriteLine("In On Remove" + vm_Handlers.ToString());
+            MessageCommand removeHandler = new MessageCommand((int)CommandEnum.CloseCommand, null, handlerToRemove);
+            SendCommand?.Invoke(removeHandler);
         }
 
         private bool CanRemove(object obj)
@@ -63,7 +71,6 @@ namespace ImageServiceGUI.ViewModel
                 NotifyPropertyChanged("SelectedItem");
             }
         }
-
 
 
         public string vm_OutputDir

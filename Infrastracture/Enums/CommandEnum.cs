@@ -6,6 +6,8 @@
         GetConfigCommand,
         LogCommand,
         CloseCommand,
-        UpdateNewLog
+        UpdateNewLog,
+        ClosedGuiNotify,
+        ApprovedCloseGui
     }
 }

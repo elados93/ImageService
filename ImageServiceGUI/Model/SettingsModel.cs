@@ -21,6 +21,7 @@ namespace ImageServiceGUI.Model
 
         public ObservableCollection<string> Handlers { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
+
         private IImageServiceClient imageServiceClient;
 
         public SettingsModel()
@@ -71,6 +72,10 @@ namespace ImageServiceGUI.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        public void SendByImageService(MessageCommand msgToSend)
+        {
+            imageServiceClient.sendCommand(msgToSend);
+        }
 
         public int ThumbnailsSize
         {

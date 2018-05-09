@@ -14,5 +14,7 @@ namespace ImageServiceGUI.Communication
         void recieveCommand();
         void CloseClient();
         bool ClientConnected { get; set; }
+
+        void startClosingWindow();
     }
 }
