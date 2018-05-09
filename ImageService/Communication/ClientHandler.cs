@@ -3,6 +3,7 @@ using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
 using ImageService.Logging.Modal;
 using ImageService.Modal.Events;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net.Sockets;
@@ -36,7 +37,7 @@ namespace ImageService.Communication
                     try
                     {
                         string requset = reader.ReadString(); // Wait for command
-                        MessageCommand msg = MessageCommand.ParseJSON(requset);
+                        MessageCommand msg = JsonConvert.DeserializeObject<MessageCommand>(requset);
                         if (msg != null)
                         {
                             CommandEnum command = (CommandEnum)msg.CommandID;
@@ -57,6 +58,7 @@ namespace ImageService.Communication
                                 c_logging.Log($"Command: {command}" + " success", MessageTypeEnum.INFO);
                             else
                                 c_logging.Log($"Command: {command}" + " failed", MessageTypeEnum.FAIL);
+
                             Mutex.WaitOne();
                             writer.Write(executionResult);
                             Mutex.ReleaseMutex();

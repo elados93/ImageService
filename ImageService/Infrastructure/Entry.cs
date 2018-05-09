@@ -1,9 +1,9 @@
 ﻿using ImageService.Logging.Modal;
 using System.Diagnostics;
 
-namespace ImageServiceGUI.Model
+namespace ImageService.Infrastructure
 {
-    class Entry
+    public class Entry
     {
         public Entry(string message, MessageTypeEnum messageType)
         {

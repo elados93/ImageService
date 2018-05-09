@@ -74,6 +74,7 @@
     <Compile Include="ImageService\Modal\Events\DirectoryCloseEventArgs.cs" />
     <Compile Include="ImageService\Controller\IImageController.cs" />
     <Compile Include="Infrastructure\AppConfig\AppConfigParser.cs" />
+    <Compile Include="Infrastructure\Entry.cs" />
     <Compile Include="Infrastructure\Enums\CommandEnum.cs" />
     <Compile Include="ImageService\Modal\IImageServiceModal.cs" />
     <Compile Include="ImageService\Controller\ImageController.cs" />

@@ -4,9 +4,12 @@ using System.Diagnostics;
 using ImageService.Logging.Modal;
 using ImageService.Communication;
 using System;
-using ImageService.Infrastructure.Enums;
+using ImageService.Infrastructure;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using ImageService.Infrastructure.Enums;
+using System.Threading;
+using System.Windows.Data;
 
 namespace ImageServiceGUI.Model
 {
@@ -21,6 +24,9 @@ namespace ImageServiceGUI.Model
         public LogModel()
         {
             m_LogMessages = new ObservableCollection<Entry>();
+            Object locker = new Object(); 
+            BindingOperations.EnableCollectionSynchronization(m_LogMessages, locker);
+
             imageServiceClient = ImageServiceClient.Instance; // ImageServiceClient is a singelton
             imageServiceClient.UpdateAllClients += parseToLog;
             getFirstLogs();
@@ -46,7 +52,7 @@ namespace ImageServiceGUI.Model
         private void parseToLog(MessageCommand msg)
         {
             CommandEnum command = (CommandEnum)msg.CommandID;
-            if (command == CommandEnum.UpdateNewLog)
+            if (command == CommandEnum.UpdateNewLog) // Check if it's only one message log
             {
                 int result;
                 if (!Int32.TryParse(msg.CommandArgs[0], out result))
@@ -60,9 +66,9 @@ namespace ImageServiceGUI.Model
                 {
                     if (msg.CommandArgs[0] != null)
                     { // Logs transfered success
-                        EventLogEntryCollection recLog = JsonConvert.DeserializeObject<EventLogEntryCollection>(msg.CommandArgs[0]);
-                        foreach (EventLogEntry entry in recLog)
-                            m_LogMessages.Add(new Entry(entry.Message, Entry.toMessageTypeEnum(entry.EntryType)));
+                        List<Entry> recLog = JsonConvert.DeserializeObject<List<Entry>>(msg.CommandArgs[0]);
+                        foreach (Entry entry in recLog)
+                            m_LogMessages.Insert(0, entry); // Add the new entry first
                     }
                     else
                         Debug.WriteLine("Error get the first logs");
@@ -82,8 +88,7 @@ namespace ImageServiceGUI.Model
 
         protected void OnPropertyChanged(string name)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

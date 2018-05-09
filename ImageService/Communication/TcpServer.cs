@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using ImageService.Modal.Events;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace ImageService.Communication
 {
@@ -24,7 +25,7 @@ namespace ImageService.Communication
             int tempPort;
             bool result = AppConfigParser.getPort(out tempPort);
             if (result)
-                this.port = tempPort;
+                port = tempPort;
             else
                 throw new Exception("Can't parse port!");
 
@@ -38,7 +39,7 @@ namespace ImageService.Communication
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
             listener = new TcpListener(ep);
             listener.Start();
-            Debug.WriteLine("Singelton Server is waiting for connections...");
+            Debug.WriteLine("Tcp Server is waiting for connections...");
             Task task = new Task(() =>
             {
                 while (true)
@@ -74,10 +75,11 @@ namespace ImageService.Communication
                 foreach (TcpClient client in clientsList)
                 {
                     using (NetworkStream stream = client.GetStream())
-                    using (StreamWriter writer = new StreamWriter(stream))
+                    using (BinaryWriter writer = new BinaryWriter(stream))
                     {
+                        string messageInString = JsonConvert.SerializeObject(message);
                         mutex.WaitOne();
-                        writer.Write(message);
+                        writer.Write(messageInString);
                         mutex.ReleaseMutex();
                     }
                 }

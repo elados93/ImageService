@@ -143,11 +143,6 @@ namespace ImageService
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Interval = 60000; // 60 seconds  
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
-            timer.Start();
-
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
@@ -171,7 +166,9 @@ namespace ImageService
             m_imageServer.onCloseService();
 
             eventLog1.WriteEntry("Image Service stopped.");
-            eventLog1.Clear();
+            
+            //TODO handle tomarrow
+            //eventLog1.Clear();
         }
 
         protected override void OnContinue()
@@ -179,10 +176,5 @@ namespace ImageService
             eventLog1.WriteEntry("In OnContinue");
         }
 
-        public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
-        {
-            // TODO: Monitoring
-            eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
-        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 using ImageServiceGUI.ViewModel;
 using ImageServiceGUI.Model;
+using System.Threading;
 
 namespace ImageServiceGUI.Views
 {
@@ -12,6 +13,7 @@ namespace ImageServiceGUI.Views
             InitializeComponent();
             logVm = new LogViewModel(new LogModel());
             this.DataContext = logVm;
+            logs.ItemsSource = logVm.vm_LogMessages;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ImageServiceGUI.Model;
+﻿using ImageService.Infrastructure;
+using ImageServiceGUI.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,7 +15,7 @@ namespace ImageServiceGUI.ViewModel
 
         public LogViewModel(ILogModel model)
         {
-            this.logModel = model;
+            logModel = model;
 
             logModel.PropertyChanged +=
             delegate (Object sender, PropertyChangedEventArgs e)
@@ -24,14 +25,15 @@ namespace ImageServiceGUI.ViewModel
 
         }
 
-        public ObservableCollection<Entry> vm_LogMessages {
+        public ObservableCollection<Entry> vm_LogMessages
+        {
             get { return logModel.LogMessages; }
         }
 
         protected void NotifyPropertyChanged(string name)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
     }

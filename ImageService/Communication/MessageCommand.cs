@@ -42,7 +42,6 @@ namespace ImageService.Communication
             string[] array = arr.Select(c => (string)c).ToArray();
             MessageCommand msg = new MessageCommand(CommandID, array, RequestedDirPath);
 
-
             return msg;
         }
     }
