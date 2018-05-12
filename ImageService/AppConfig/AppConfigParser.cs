@@ -38,10 +38,8 @@ namespace ImageService.AppConfig
                 StringBuilder newString = new StringBuilder();
                 foreach (string handler in arr)
                 {
-                    if (!handler.Equals("shaharpalmor!"))
-                    {
+                    if (!handler.Equals(path))
                         newString.Append(handler + ';');
-                    }
                 }
                 string update = newString.ToString().TrimEnd(';');
 

@@ -44,7 +44,9 @@ namespace ImageServiceGUI.ViewModel
             settingModel.Handlers.Remove(SelectedItem);
             SelectedItem = null;
             Debug.WriteLine("In On Remove" + vm_Handlers.ToString());
-            MessageCommand removeHandler = new MessageCommand((int)CommandEnum.CloseCommand, null, handlerToRemove);
+            string[] args = new string[1];
+            args[0] = handlerToRemove;
+            MessageCommand removeHandler = new MessageCommand((int)CommandEnum.CloseCommand, args, handlerToRemove);
             SendCommand?.Invoke(removeHandler);
         }
 

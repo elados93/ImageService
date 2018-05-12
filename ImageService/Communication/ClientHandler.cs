@@ -73,12 +73,11 @@ namespace ImageService.Communication
                                         Mutex.WaitOne();
                                         writer.Write(executionResult);
                                         Mutex.ReleaseMutex();
-                                        /*
+                                        
                                         if (result)
                                             c_logging.Log($"Command: {command}" + " success", MessageTypeEnum.INFO);
                                         else
                                             c_logging.Log($"Command: {command}" + " failed", MessageTypeEnum.FAIL);
-                                            */
                                     }
 
                                 }

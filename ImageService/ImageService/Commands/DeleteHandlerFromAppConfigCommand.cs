@@ -12,9 +12,9 @@ namespace ImageService.Commands
         {
             result = AppConfigParser.removeHandler(args[0]); // Remove the wanted handler from AppConfig
             if (result)
-                return args[0] + "was remove from AppConfig";
+                return args[0] + " was removed from AppConfig";
             else
-                return args[0] + "was not remove from AppConfig";
+                return args[0] + " was not removed from AppConfig";
         }
     }
 }

@@ -98,7 +98,7 @@ namespace ImageService.Communication
 
         private void excludeClientFromList(TcpClient client)
         {
-            m_logger.Log("Closing Gui Client..", MessageTypeEnum.WARNING);
+            m_logger.Log("Gui Client closed..", MessageTypeEnum.WARNING);
             clientsList.Remove(client);
         }
     }
