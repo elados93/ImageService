@@ -27,6 +27,7 @@ namespace ImageService.Communication
         public TcpServer(IClientHandler clientHandler, ILoggingService logger)
         {
             int tempPort;
+            // getting the port from the app config.
             bool result = AppConfigParser.getPort(out tempPort);
             if (result)
                 port = tempPort;
@@ -51,6 +52,7 @@ namespace ImageService.Communication
                 {
                     try
                     {
+                        // accepting clients
                         TcpClient client = listener.AcceptTcpClient();
                         Debug.WriteLine("Tcp server got new connection");
                         clientsList.Add(client);
@@ -96,6 +98,11 @@ namespace ImageService.Communication
             
         }
 
+        /// <summary>
+        ///  a function that is being invoked and when some one activating it removes a specific
+        ///  client from the list
+        /// </summary>
+        /// <param name="client"></param> the client that needs to be removed from the list.
         private void excludeClientFromList(TcpClient client)
         {
             m_logger.Log("Gui Client closed..", MessageTypeEnum.WARNING);
