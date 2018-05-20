@@ -1,5 +1,4 @@
-﻿using ImageService.Communication;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System;
 using System.Diagnostics;
@@ -10,6 +9,9 @@ using System.Windows.Data;
 
 namespace ImageServiceGUI.Model
 {
+    /// <summary>
+    /// Settings model is used to handel all the settings in the mvvm. Communicate with the server as well with ImageServiceClient.
+    /// </summary>
     class SettingsModel : ISettingsModel
     {
         #region Members
@@ -24,6 +26,9 @@ namespace ImageServiceGUI.Model
 
         private IImageServiceClient imageServiceClient;
 
+        /// <summary>
+        /// Constructor for settings model, start to communicate after creating the instance.
+        /// </summary>
         public SettingsModel()
         {
             Handlers = new ObservableCollection<string>();
@@ -35,19 +40,26 @@ namespace ImageServiceGUI.Model
                 getInitialAppConfig();
         }
 
+        /// <summary>
+        /// Send the message that command the server to send the app config.
+        /// </summary>
         private void getInitialAppConfig()
         {
             MessageCommand msg = new MessageCommand((int)CommandEnum.GetConfigCommand, null, null);
             imageServiceClient.sendCommand(msg);
         }
 
+        /// <summary>
+        /// Gets the message with information about app config and saves it to the model.
+        /// </summary>
+        /// <param name="msg">The message with app config info.</param>
         private void getAppConfig(MessageCommand msg)
         {
             CommandEnum command = (CommandEnum)msg.CommandID;
             if (command == CommandEnum.GetConfigCommand)
             {
                 string[] args = msg.CommandArgs;
-                string handler = args[0];
+                string handler = args[0]; // The args order is a convetion, as written in AppConfig.
                 OutputDir = args[1];
                 SourceName = args[2];
                 LogName = args[3];
@@ -60,6 +72,10 @@ namespace ImageServiceGUI.Model
             }
         }
 
+        /// <summary>
+        /// Insert the string "handler" to the data, split them by ;
+        /// </summary>
+        /// <param name="handler">The string of all handlers.</param>
         private void insertHandlersToList(string handler)
         {
             string[] handlers = handler.Split(';');
@@ -67,11 +83,19 @@ namespace ImageServiceGUI.Model
                 Handlers.Add(handlerString);
         }
 
+        /// <summary>
+        /// Update the change of "name" was done.
+        /// </summary>
+        /// <param name="name">The property what changed.</param>
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        /// <summary>
+        /// Send the given message to server.
+        /// </summary>
+        /// <param name="msgToSend">The message to send.</param>
         public void SendByImageService(MessageCommand msgToSend)
         {
             imageServiceClient.sendCommand(msgToSend);

@@ -1,12 +1,10 @@
 ﻿using Communication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImageServiceGUI.Communication
 {
+    /// <summary>
+    /// Interface for every service client.
+    /// </summary>
     public interface IImageServiceClient
     {
         event UpdateResponseArrived UpdateAllModels;
@@ -14,7 +12,6 @@ namespace ImageServiceGUI.Communication
         void recieveCommand();
         void CloseClient();
         bool ClientConnected { get; set; }
-
         void startClosingWindow();
     }
 }

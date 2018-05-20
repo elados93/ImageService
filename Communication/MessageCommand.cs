@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Communication
 {
-    public delegate void UpdateResponseArrived(MessageCommand responseObj);
+    public delegate void UpdateResponseArrived(MessageCommand responseObj); // Represents the function that handle with the responed from server.
 
     public class MessageCommand
     {
@@ -24,6 +24,10 @@ namespace Communication
 
         public string RequestedDirPath { get; set; }
 
+        /// <summary>
+        /// Convert the MessageCommand object to Jason that can be sent to server.
+        /// </summary>
+        /// <returns></returns>
         public string toJason()
         {
             JObject cmdObj = new JObject();
@@ -34,6 +38,11 @@ namespace Communication
             return cmdObj.ToString();
         }
 
+        /// <summary>
+        /// Convert the jason given as string to a MessageCommand object. Function is static.
+        /// </summary>
+        /// <param name="str">The jason string to be converted.</param>
+        /// <returns></returns>
         public static MessageCommand ParseJSON(string str)
         {
 

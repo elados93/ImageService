@@ -3,10 +3,12 @@ using ImageServiceGUI.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace ImageServiceGUI.ViewModel
 {
+    /// <summary>
+    /// The log view model comunicate with the view and the model.
+    /// </summary>
     class LogViewModel : INotifyPropertyChanged
     {
         private ILogModel logModel;

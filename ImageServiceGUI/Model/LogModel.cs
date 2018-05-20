@@ -5,7 +5,6 @@ using Communication;
 using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Data;
 using Infrastructure;
 using Infrastracture.Enums;
@@ -13,13 +12,19 @@ using ImageServiceGUI.Communication;
 
 namespace ImageServiceGUI.Model
 {
+    /// <summary>
+    /// Log model is used to handel all the logs in the mvvm. Communicate with the server as well with ImageServiceClient.
+    /// </summary>
     class LogModel : ILogModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private ObservableCollection<Entry> m_LogMessages;
+        public event PropertyChangedEventHandler PropertyChanged; // The event that handels every change in the properties.
+        private ObservableCollection<Entry> m_LogMessages; // The list of every entry since the service got started.
 
-        private IImageServiceClient imageServiceClient;
+        private IImageServiceClient imageServiceClient; // Used to send and got messages from server.
 
+        /// <summary>
+        /// Constructor of Log Model, build the instance of log model and start communication with the server.
+        /// </summary>
         public LogModel()
         {
             m_LogMessages = new ObservableCollection<Entry>();
@@ -32,13 +37,19 @@ namespace ImageServiceGUI.Model
                 getFirstLogs();
         }
 
-
+        /// <summary>
+        /// Get the first logs from server, after that the server update each log separtley.
+        /// </summary>
         private void getFirstLogs()
         {
             MessageCommand msg = new MessageCommand((int)CommandEnum.LogCommand, null, null);
             imageServiceClient.sendCommand(msg);
         }
 
+        /// <summary>
+        /// Gets the message that got from server and parse it to log entries.
+        /// </summary>
+        /// <param name="msg">The message got from server.</param>
         private void parseToLog(MessageCommand msg)
         {
             CommandEnum command = (CommandEnum)msg.CommandID;
@@ -52,7 +63,7 @@ namespace ImageServiceGUI.Model
             }
             else
             {
-                if (command == CommandEnum.LogCommand)
+                if (command == CommandEnum.LogCommand) // Check if it's the first time and need to get every log entry.
                 {
                     if (msg.CommandArgs[0] != null)
                     { // Logs transfered success

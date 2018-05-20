@@ -17,15 +17,20 @@ namespace ImageServiceGUI.Communication
     {
         private TcpClient client;
         private bool stopped;
-        private static ImageServiceClient instance;
+        private static ImageServiceClient instance; // The instance of the singelton.
 
-        public event UpdateResponseArrived UpdateAllModels;
+        public event UpdateResponseArrived UpdateAllModels; // This event update all the models that a message command recieved.
 
-        private static Mutex mutex = new Mutex();
+        private static Mutex mutex = new Mutex(); // Mutex to handle sync problems.
 
-
+        /// <summary>
+        /// The private construtor of ImageServiceClient, for the first and only instance start the service.
+        /// </summary>
         private ImageServiceClient() { ClientConnected = Start(); }
 
+        /// <summary>
+        /// The public constructor of the service, The class is singelton.
+        /// </summary>
         public static ImageServiceClient Instance
         {
             get
@@ -36,6 +41,11 @@ namespace ImageServiceGUI.Communication
             }
         }
 
+        /// <summary>
+        /// Start the conecction with the server using the port from AppConfig. In the end
+        /// start listing to calls.
+        /// </summary>
+        /// <returns>True or false if the start went well.</returns>
         public bool Start()
         {
             try
@@ -61,6 +71,10 @@ namespace ImageServiceGUI.Communication
             }
         }
 
+        /// <summary>
+        /// Send command via the service to the server, the communication is by Jason strings.
+        /// </summary>
+        /// <param name="msg">The message to send to the server.</param>
         public void sendCommand(MessageCommand msg)
         {
             new Task(() =>
@@ -75,6 +89,9 @@ namespace ImageServiceGUI.Communication
             }).Start();
         }
 
+        /// <summary>
+        /// Start recieving messages from server, this is a thread running as long as isStopped is false.
+        /// </summary>
         public void recieveCommand()
         {
             new Task(() =>
@@ -102,6 +119,9 @@ namespace ImageServiceGUI.Communication
            }).Start();
         }
         
+        /// <summary>
+        /// Close the client propaly and set the right flags.
+        /// </summary>
         public void CloseClient()
         {
             client.Close();
@@ -109,6 +129,9 @@ namespace ImageServiceGUI.Communication
             ClientConnected = false;
         }
 
+        /// <summary>
+        /// The function that notify the server the window closed.
+        /// </summary>
         public void startClosingWindow()
         {
             MessageCommand closeWindow = new MessageCommand((int)CommandEnum.ClosedGuiNotify, null, null);

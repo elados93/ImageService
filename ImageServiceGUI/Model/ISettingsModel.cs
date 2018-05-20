@@ -4,8 +4,11 @@ using System.ComponentModel;
 
 namespace ImageServiceGUI.Model
 {
-    public delegate void SendCommandToServer(MessageCommand responseObj);
+    public delegate void SendCommandToServer(MessageCommand responseObj); // Represents the function that gets message and send it to the server.
 
+    /// <summary>
+    /// Interface for every settings model, handels the settings for the service.
+    /// </summary>
     public interface ISettingsModel : INotifyPropertyChanged
     {
         ObservableCollection<string> Handlers { get; set; }

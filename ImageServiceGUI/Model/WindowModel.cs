@@ -1,19 +1,16 @@
 ﻿using Communication;
-using ImageService.Communication;
 using ImageServiceGUI.Communication;
 using Infrastracture.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImageServiceGUI.Model
 {
+    /// <summary>
+    /// Window model handels when the window will be closed.
+    /// </summary>
     public class WindowModel : IWindowModel
     {
-        private bool m_clientConnected;
+        private bool m_clientConnected; // Instance of a communication with the server.
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -29,6 +26,9 @@ namespace ImageServiceGUI.Model
 
         public IImageServiceClient TcpClient { get; set; }
 
+        /// <summary>
+        /// Constructor of Window model, also start the communication with the server.
+        /// </summary>
         public WindowModel()
         {
             TcpClient = ImageServiceClient.Instance;
@@ -36,12 +36,20 @@ namespace ImageServiceGUI.Model
             TcpClient.UpdateAllModels += closeGui;
         }
 
+        /// <summary>
+        /// Funcion invoked by imageserviceclient, send command to the gui.
+        /// </summary>
+        /// <param name="msg">name of the message.</param>
         private void closeGui(MessageCommand msg)
         {
             if (msg.CommandID == (int)CommandEnum.ApprovedCloseGui)
                 TcpClient.CloseClient();
         }
 
+        /// <summary>
+        /// Update "name" proprety was changed.
+        /// </summary>
+        /// <param name="name">Name of the property that changed.</param>
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
