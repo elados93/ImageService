@@ -23,12 +23,26 @@ namespace ImageService.AppConfig
             logName = ConfigurationManager.AppSettings["LogName"];
             thumbNailsSize = Int32.Parse(ConfigurationManager.AppSettings["ThumbnailSize"]);
         }
-
+            
+        /// <summary>
+        /// gets the port number from the app Config.
+        /// </summary>
+        /// <param name="port"></param> is the number of the port that will be initialiesed during
+        /// the function.
+        /// <returns></returns>
         public static bool getPort(out int port)
         {
             return Int32.TryParse(ConfigurationManager.AppSettings["ServerPort"], out port);
         }
 
+        /// <summary>
+        /// this function gets a string of a handler that we have listened to, and now the client
+        /// asked to stop listenning and remove it. then, this function updates the app config.
+        /// after removing the specific handler it creates a "list" of the current
+        /// handlers we still want to listen to
+        /// </summary>
+        /// <param name="path"></param> is the handler that we want to remove.
+        /// <returns></returns>
         public static bool removeHandler(string path)
         {
             try

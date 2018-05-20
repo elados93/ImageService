@@ -59,6 +59,12 @@ namespace ImageService.Server
             }
         }
 
+        /// <summary>
+        /// this function gets the request and execute the relevent command. it checks if
+        /// the message is relavent to all the handlers.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param> is the massage to send with command request.
         public void sendCommand(object sender, CommandRecievedEventArgs args)
         {
             CommandRecieved?.Invoke(this, args);
@@ -106,6 +112,11 @@ namespace ImageService.Server
             tcpServer.Stop();
         }
 
+        /// <summary>
+        /// this function was registered to the update log message event in order to update tcp 
+        /// server about a new log message that was recieved. the tcp sever will update all the clients.
+        /// </summary>
+        /// <param name="msg"></param>
         public void notifyTcpServer(MessageCommand msg)
         {
             tcpServer.notifyAllClients(msg);

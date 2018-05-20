@@ -3,8 +3,13 @@ using System.Linq;
 
 namespace Communication
 {
-    public delegate void UpdateResponseArrived(MessageCommand responseObj); // Represents the function that handle with the responed from server.
+    // group of functions that updates when a response arrived.
+    public delegate void UpdateResponseArrived(MessageCommand responseObj);
 
+    /**
+     * this class is the package that stores all the information that comes and goes to the 
+     * tcp client, or to the client handler.
+    */
     public class MessageCommand
     {
         public MessageCommand(int commandID, string[] args, string path)
@@ -18,16 +23,18 @@ namespace Communication
         {
         }
 
+        //properties
         public int CommandID { get; set; }
 
         public string[] CommandArgs { get; set; }
 
         public string RequestedDirPath { get; set; }
 
-        /// <summary>
-        /// Convert the MessageCommand object to Jason that can be sent to server.
-        /// </summary>
-        /// <returns></returns>
+        /**
+         * this function creates a Json Object and takes each property of
+         * the class and turns it to a string so when it would be send it will be transfered 
+         * as a string.
+         */
         public string toJason()
         {
             JObject cmdObj = new JObject();
@@ -37,11 +44,12 @@ namespace Communication
             cmdObj["CommandArgs"] = args;
             return cmdObj.ToString();
         }
-
+        
         /// <summary>
-        /// Convert the jason given as string to a MessageCommand object. Function is static.
+        /// this function het a string and turns it into a Message Command Object
+        /// it transfer each part of the string using Json to the property of the package.
         /// </summary>
-        /// <param name="str">The jason string to be converted.</param>
+        /// <param name="str"></param> is the whole string
         /// <returns></returns>
         public static MessageCommand ParseJSON(string str)
         {

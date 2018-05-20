@@ -84,10 +84,6 @@ namespace ImageService.Communication
                             }
                             else // When the server got null message
                             { 
-                                //Mutex.WaitOne();
-                                // TODO create jason for error message
-                                //writer.Write("Message validation failed"); 
-                                //Mutex.ReleaseMutex();
                                 Debug.WriteLine("Message validation failed");
                             }
                         }
