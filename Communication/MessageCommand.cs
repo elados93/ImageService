@@ -30,11 +30,12 @@ namespace Communication
 
         public string RequestedDirPath { get; set; }
 
-        /**
-         * this function creates a Json Object and takes each property of
-         * the class and turns it to a string so when it would be send it will be transfered 
-         * as a string.
-         */
+        /// <summary>
+        /// This function creates a Json Object and takes each property of
+        /// the class and turns it to a string so when it would be send it will be transfered
+        /// as a string.
+        /// </summary>
+        /// <returns>The jason string.</returns>
         public string toJason()
         {
             JObject cmdObj = new JObject();
