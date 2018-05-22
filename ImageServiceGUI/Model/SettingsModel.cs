@@ -36,8 +36,21 @@ namespace ImageServiceGUI.Model
             BindingOperations.EnableCollectionSynchronization(Handlers, locker);
             imageServiceClient = ImageServiceClient.Instance; // Image service client is a singelton
             this.imageServiceClient.UpdateAllModels += getAppConfig;
+            this.imageServiceClient.UpdateAllModels += updateHandlerWasDeleted;
             if (imageServiceClient.ClientConnected)
                 getInitialAppConfig();
+        }
+
+        private void updateHandlerWasDeleted(MessageCommand deleteHandlerMessage)
+        {
+            // Do it only if the command is close command and a path was specified.
+            if (deleteHandlerMessage.CommandID == (int)CommandEnum.CloseCommand &&
+                deleteHandlerMessage.RequestedDirPath != null)
+            {
+                string pathToDelete = deleteHandlerMessage.RequestedDirPath;
+                Handlers.Remove(pathToDelete);
+            }
+
         }
 
         /// <summary>
