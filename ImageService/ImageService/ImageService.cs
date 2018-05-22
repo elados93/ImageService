@@ -11,6 +11,7 @@ using ImageService.Logging.Modal;
 using Infrastracture.Enums;
 using Communication;
 using ImageService.AppConfig;
+using System.Threading;
 
 namespace ImageService
 {
@@ -121,6 +122,7 @@ namespace ImageService
             m_imageServer = new ImageServer(controller, logger);
             UpdateLogMessage += m_imageServer.notifyTcpServer;
             string[] handlesPaths = appConfigParser.handler.Split(';');
+            //Thread.Sleep(1000 * 11);
             // Create all the handlers.
             foreach (string path in handlesPaths)
                 m_imageServer.createHandler(path);
