@@ -70,8 +70,17 @@ namespace ImageService.Communication
                                         // Not handler command
                                         bool result;
                                         string executionResult = c_controller.ExecuteCommand((CommandEnum)msg.CommandID, msg.CommandArgs, out result);
+
                                         Mutex.WaitOne();
-                                        writer.Write(executionResult);
+                                        try
+                                        {
+                                            writer.Write(executionResult);
+                                        } catch (Exception e)
+                                        {
+                                            // Can't send to client, remove the client from the list.
+                                            ExcludeClient?.Invoke(client);
+                                            Debug.WriteLine("Connection failded, client was excluded from list");
+                                        }
                                         Mutex.ReleaseMutex();
                                         
                                         if (result)

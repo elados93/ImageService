@@ -39,7 +39,7 @@
             // 
             // ImageService
             // 
-            this.ImageService.Description = "Image Service will bacup all of your photos! Patent pending..";
+            this.ImageService.Description = "Image Service will backup all of your photos! Patent pending..";
             this.ImageService.ServiceName = "ImageService";
             this.ImageService.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
