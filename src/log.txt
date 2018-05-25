@@ -1,0 +1,224 @@
+commit be2d1dfe04302a30891e548725c4a727c13574bb
+Merge: 5f537a1 9e5f3b8
+Author: אלעד <אלעד@ELAD>
+Date:   Sat Mar 31 08:27:14 2018 +0300
+
+    Merge branch 'master' of https://github.com/elados93/ImageService.git
+
+commit 5f537a12c4a7671529c86d0145553d358beb86c1
+Author: אלעד <אלעד@ELAD>
+Date:   Sat Mar 31 08:26:57 2018 +0300
+
+    Remove using and adding comments.
+
+commit 9e5f3b8d60f80d741c32158da11c2d36b5ec53e9
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sat Mar 31 08:26:56 2018 +0300
+
+    comments
+
+commit add708a57a0d6553d4a1565a2232ed8f561df4cd
+Author: אלעד <אלעד@ELAD>
+Date:   Sat Mar 31 07:56:15 2018 +0300
+
+    Fixed logging problems
+
+commit 6e41c3bd742a99a561cdff1d3c5e8efd4351562d
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sat Mar 31 07:17:08 2018 +0300
+
+    Fixed source and log name
+
+commit eb1bc0d4a56aedc546fd379042004ba36f557309
+Merge: f2315f4 525d6e3
+Author: אלעד <אלעד@ELAD>
+Date:   Tue Mar 27 15:48:58 2018 +0300
+
+    Merge branch 'master' of https://github.com/elados93/ImageService.git
+
+commit f2315f41bb893f795dea936f4ddb864efed530d9
+Author: אלעד <אלעד@ELAD>
+Date:   Tue Mar 27 15:48:08 2018 +0300
+
+    working!
+
+commit 525d6e3046d40283587c30cc9426974811d14214
+Merge: 2bce3cc acb13f6
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Tue Mar 27 15:11:58 2018 +0300
+
+    Merge branch 'master' of https://github.com/elados93/ImageService
+
+commit 2bce3cca64cec7fa3d8a765e1cfe40f11d551c75
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Tue Mar 27 15:11:26 2018 +0300
+
+    משהו שצריך לכמת
+
+commit acb13f6c461097e4b99ab0d0acfa602b2a66bfe2
+Author: אלעד <אלעד@ELAD>
+Date:   Tue Mar 27 14:09:21 2018 +0300
+
+    dance x4
+
+commit 208568c626a281cfabfba993d4948731a47b465b
+Author: אלעד <אלעד@ELAD>
+Date:   Tue Mar 27 12:12:49 2018 +0300
+
+    bugs fixed
+
+commit 9246917e755eb86b0729ddf534df44c8d7d80262
+Author: אלעד <אלעד@ELAD>
+Date:   Mon Mar 26 14:11:22 2018 +0300
+
+    Fix the handlers to handle the files that were before
+
+commit 1b727f4d46b57bce336f48e14eb5c290c0eac46f
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Mon Mar 26 14:38:20 2018 +0300
+
+    using the app config, and creating the app config parser
+
+commit a93f0a8414bf70f68ebff40f399adc8b578b31f5
+Author: אלעד <אלעד@ELAD>
+Date:   Mon Mar 26 11:01:14 2018 +0300
+
+    Fix Systemfilewatcher
+
+commit 7c2f6d1a3c48474a19792b55adfd88c23c2ac1cc
+Merge: a29ceba 0b18af2
+Author: אלעד <אלעד@ELAD>
+Date:   Sun Mar 25 21:40:29 2018 +0300
+
+    Merge branch 'master' of https://github.com/elados93/ImageService.git
+
+commit 0b18af28cc59d542859700ff3d0a638c88570b1d
+Merge: c996ee9 8077ae1
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sun Mar 25 21:59:16 2018 +0300
+
+    1
+
+commit c996ee94100598eccc4fc7eb002dd3aa98044f0d
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sun Mar 25 21:58:26 2018 +0300
+
+    1
+
+commit a29cebac8ed4daef924adb1c31432cb88cdb3df4
+Author: אלעד <אלעד@ELAD>
+Date:   Sun Mar 25 21:40:23 2018 +0300
+
+    Shimon
+
+commit 8077ae19b1d8a6a30fd852bc214308b5d170c184
+Author: אלעד <אלעד@ELAD>
+Date:   Sun Mar 25 20:49:49 2018 +0300
+
+    Lots of changes.
+
+commit c4262ca907940b39707fcca629d21faf3f1b051f
+Author: אלעד <אלעד@ELAD>
+Date:   Sat Mar 24 12:28:41 2018 +0300
+
+    2 bit or not 2 bit!
+
+commit ce664086ab79e0d26fe0890207f6e8b5f53b29db
+Author: אלעד <אלעד@ELAD>
+Date:   Sat Mar 24 10:17:52 2018 +0300
+
+    :(
+
+commit db12f7562b34aea675a3a1c15e3a65209a9a54a8
+Author: אלעד <אלעד@ELAD>
+Date:   Sat Mar 24 09:30:11 2018 +0300
+
+    Added Handlers
+
+commit 2bfd07a2e7415b4deeed81622373cdb7d92b4b7a
+Author: אלעד <אלעד@ELAD>
+Date:   Sat Mar 24 08:36:24 2018 +0300
+
+    Directories added
+
+commit baa10c76dd253b67d7cc058c266b0953136056e2
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sat Mar 24 10:32:11 2018 +0300
+
+    sfjv
+
+commit 04d0b9ff8c5bcedd8c83acdedd7a4dd599561e53
+Author: אלעד <אלעד@ELAD>
+Date:   Sat Mar 24 07:11:11 2018 +0300
+
+    Revert "sdcsd"
+    
+    This reverts commit bcac90ce6587c434d63d4fed8d3c0bc8ca75ddb4.
+
+commit 89a2f82286b539191be443d754b50cd163a415f4
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sat Mar 24 09:48:09 2018 +0300
+
+    sdcsd
+
+commit fa4514577af809b2419e7fe0b27661d070f2950b
+Merge: 8d67c56 96568d9
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sat Mar 24 10:06:12 2018 +0300
+
+    Merge branch 'master' of https://github.com/elados93/ImageService
+
+commit 8d67c56fa237bc616ab93154e2d3affb63011789
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sat Mar 24 10:06:03 2018 +0300
+
+    sad
+
+commit c7fe1b40d2d436be0c08b44e2ea02f76b98993fb
+Merge: bcac90c 5668252
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sat Mar 24 09:55:33 2018 +0300
+
+    merge
+
+commit bcac90ce6587c434d63d4fed8d3c0bc8ca75ddb4
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sat Mar 24 09:48:09 2018 +0300
+
+    sdcsd
+
+commit 96568d922641bce078264eb98a73aaad1cdb6d91
+Author: אלעד <אלעד@ELAD>
+Date:   Sat Mar 24 07:05:19 2018 +0300
+
+    d
+
+commit 5668252440b053bd4fea10f2d50cc67ada825bd0
+Author: אלעד <אלעד@ELAD>
+Date:   Sat Mar 24 06:46:48 2018 +0300
+
+    f
+
+commit 971ab50ff9b4235184e67de8de152059f042ae00
+Author: אלעד <אלעד@ELAD>
+Date:   Wed Mar 21 13:50:17 2018 +0200
+
+    added lots of stuff
+
+commit 6b83d862bf28065d820c4f8fe10647d9edee9a64
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Wed Mar 21 15:08:35 2018 +0200
+
+    add classes
+
+commit 88240b33be6963fd28e48f407f51c7ce55edbc05
+Author: אלעד <אלעד@ELAD>
+Date:   Wed Mar 21 08:38:43 2018 +0200
+
+    Add project files.
+
+commit d876f5f6469b1fc22dc063e799c5095ae578a1e5
+Author: אלעד <אלעד@ELAD>
+Date:   Wed Mar 21 08:38:39 2018 +0200
+
+    Add .gitignore and .gitattributes.

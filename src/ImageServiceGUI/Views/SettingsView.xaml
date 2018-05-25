@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="ImageServiceGUI.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ImageServiceGUI.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <DockPanel ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="-1,0,0,10">
+        <Label Content="Settings" FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Blue" RenderTransformOrigin="2.634,0.921" DockPanel.Dock="Top"/>
+        <Grid Background="White" TextBlock.FontSize="15" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0">Output Directory:</TextBlock>
+            <TextBlock Grid.Row="1">Source Name:</TextBlock>
+            <TextBlock x:Name="outputDir" Grid.Row="0" Grid.Column="2" Text="{Binding vm_OutputDir}"></TextBlock>
+            <TextBlock Grid.Row="2">Log Name:</TextBlock>
+            <TextBlock x:Name="logName" Grid.Row="2" Grid.Column="2" Text="{Binding vm_LogName}"></TextBlock>
+            <TextBlock x:Name="sourceName" Grid.Row="1" Grid.Column="2" Text="{Binding vm_SourceName}"></TextBlock>
+            <TextBlock Grid.Row="3">Thumbnails Size:</TextBlock>
+            <TextBlock x:Name="thumbnailsSize" Grid.Row="3" Grid.Column="2" Text="{Binding vm_ThumbnailsSize}"></TextBlock>
+            <Button x:Name="removeHandlerButtton" Content="Remove" Command="{Binding RemoveHandlerCommand}" 
+                 Grid.Row="4" HorizontalAlignment="Center" Width="290" 
+                Grid.ColumnSpan="2"/>
+            <ListBox x:Name="handlersListBox" Grid.Row="5" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch"  SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding vm_Handlers}"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
+            </ListBox>
+        </Grid>
+    </DockPanel>
+</UserControl>

@@ -79,7 +79,7 @@ namespace ImageService.Communication
                                         {
                                             // Can't send to client, remove the client from the list.
                                             ExcludeClient?.Invoke(client);
-                                            Debug.WriteLine("Connection failded, client was excluded from list, error msg: " + e.Message);
+                                            Debug.WriteLine("Connection failded, client was excluded from list");
                                         }
                                         Mutex.ReleaseMutex();
                                         
