@@ -12,6 +12,7 @@ using Infrastracture.Enums;
 using Communication;
 using ImageService.AppConfig;
 using System.Threading;
+using Infrastructure;
 
 namespace ImageService
 {
@@ -96,12 +97,7 @@ namespace ImageService
         /// <param name="args">The message to be wrriten.</param>
         public void onMessage(object sender, MessageRecievedEventArgs args)
         {
-            // TODO move Entry to a comman space
-            EventLogEntryType type = EventLogEntryType.Information;
-            if (args.Status == MessageTypeEnum.FAIL)
-                type = EventLogEntryType.Error;
-            else if (args.Status == MessageTypeEnum.WARNING)
-                type = EventLogEntryType.Warning;
+            EventLogEntryType type = Entry.toEventLogEntryType(args.Status);
             eventLog1.WriteEntry(args.Message, type); // Write in the log of the service
 
             string []logArr = new string[2]; // Create array of strings represents the Log message
@@ -122,7 +118,7 @@ namespace ImageService
             m_imageServer = new ImageServer(controller, logger);
             UpdateLogMessage += m_imageServer.notifyTcpServer;
             string[] handlesPaths = appConfigParser.handler.Split(';');
-            //Thread.Sleep(1000 * 11);
+
             // Create all the handlers.
             foreach (string path in handlesPaths)
                 m_imageServer.createHandler(path);
@@ -167,7 +163,6 @@ namespace ImageService
 
             eventLog1.WriteEntry("Image Service stopped.");
             
-            //TODO handle tomarrow
             eventLog1.Clear();
         }
 
