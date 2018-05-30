@@ -13,6 +13,7 @@ namespace ImageService.Logging.Modal
         /// <summary>
         /// Create a new MessageRecievedEventArgs object.
         /// </summary>
+        /// 
         /// <param name="stat">The type of the message.</param>
         /// <param name="str">The message, a string object.</param>
         public MessageRecievedEventArgs(MessageTypeEnum stat, String str)
