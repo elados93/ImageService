@@ -1,12 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using ImageServiceWebApplication.Models;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using WebApplication2.Models;
 
-namespace WebApplication2.Controllers
+namespace ImageServiceWebApplication.Controllers
 {
     public class FirstController : Controller
     {
@@ -15,10 +12,12 @@ namespace WebApplication2.Controllers
           new Employee  { FirstName = "Elad", LastName = "Aharon",  ID = 311200786},
           new Employee  { FirstName = "Shahar", LastName = "Palmor", ID = 307929927},
         };
+        static ConfigModel configModel = new ConfigModel();
+
         // GET: First
-        public ActionResult Index()
+        public ActionResult Config()
         {
-            return View();
+            return View(configModel);
         }
 
         [HttpGet]
@@ -41,11 +40,11 @@ namespace WebApplication2.Controllers
         {
             foreach (var student in students)
             {
-                    JObject data = new JObject();
-                    data["FirstName"] = student.FirstName;
-                    data["LastName"] = student.LastName;
-                    data["ID"] = student.ID;
-                    return data;
+                JObject data = new JObject();
+                data["FirstName"] = student.FirstName;
+                data["LastName"] = student.LastName;
+                data["ID"] = student.ID;
+                return data;
             }
             return null;
         }
@@ -81,8 +80,10 @@ namespace WebApplication2.Controllers
         // GET: First/Edit/5
         public ActionResult Edit(int id)
         {
-            foreach (Employee emp in students) {
-                if (emp.ID.Equals(id)) { 
+            foreach (Employee emp in students)
+            {
+                if (emp.ID.Equals(id))
+                {
                     return View(emp);
                 }
             }
@@ -100,11 +101,11 @@ namespace WebApplication2.Controllers
                     if (emp.ID.Equals(id))
                     {
                         emp.copy(empT);
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Config");
                     }
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Config");
             }
             catch
             {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApplication2.Models
+namespace ImageServiceWebApplication.Models
 {
     public class Employee
     {
