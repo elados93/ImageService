@@ -12,10 +12,8 @@ namespace ImageServiceWeb.Controllers
         private static ConfigModel configModel = new ConfigModel();
         private static string m_handlerToDelete;
 
-        public ConfigController()
-        {
+        public ConfigController() {}
 
-        }
         // GET: Config
         public ActionResult OnHandlerDeletion(string handlerToDelete)
         {

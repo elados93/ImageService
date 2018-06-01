@@ -50,12 +50,12 @@ namespace ImageServiceGUI.Communication
         {
             try
             {
-                int port;
-                bool portResult = AppConfigParser.getPort(out port);
-                if (!portResult)
-                {
-                    throw new Exception("Can't get port");
-                }
+                int port = 4444;
+                //bool portResult = AppConfigParser.getPort(out port);
+                //if (!portResult)
+                //{
+                //    throw new Exception("Can't get port");
+                //}
                 IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
                 client = new TcpClient();
                 client.Connect(ep);
