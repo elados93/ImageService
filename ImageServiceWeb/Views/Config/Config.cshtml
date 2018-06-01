@@ -5,6 +5,9 @@
 }
 
 <h2>Config</h2>
+
+
+
 <ul>
     <li>
         @Html.DisplayNameFor(model => model.OutputDirectory)
@@ -27,7 +30,7 @@
     </li>
 </ul>
 
-<table class="table">
+<table class="table" id="handlers">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Handlers)
@@ -37,8 +40,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item)
+                @Html.ActionLink(@item, "OnHandlerDeletion", new { handlerToDelete = item })
             </td>
         </tr>
     }
 </table>
+
+

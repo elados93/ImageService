@@ -19,7 +19,7 @@ namespace ImageServiceWeb.Controllers
         // GET: First
         public ActionResult Config()
         {
-            return View(new ConfigModel());
+            return View();
         }
 
         [HttpGet]

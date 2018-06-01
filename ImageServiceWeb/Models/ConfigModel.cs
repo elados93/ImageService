@@ -31,6 +31,11 @@ namespace ImageServiceWeb.Models
             Handlers = config.Handlers;
         }
 
+        public void RemoveHandler(string handler)
+        {
+            Handlers.Remove(handler);
+        }
+
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Output Directory: ")]
@@ -56,5 +61,7 @@ namespace ImageServiceWeb.Models
         [DataType(DataType.Text)]
         [Display(Name = "Handlers")]
         public ObservableCollection<string> Handlers { get; set; }
+
+        
     }
 }
