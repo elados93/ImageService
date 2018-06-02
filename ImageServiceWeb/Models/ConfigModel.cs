@@ -6,32 +6,30 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Web.Mvc;
 
 namespace ImageServiceWeb.Models
 {
     public class ConfigModel
     {
 
-        private IImageServiceClient imageServiceClient;
+        public IImageServiceClient imageServiceClient;
 
-        public delegate void UpdateChange();
-        public event UpdateChange Update;
+        public delegate ActionResult UpdateChange();
+        public event UpdateChange RefreshAfterUpdates;
 
         public ConfigModel()
         {
             imageServiceClient = ImageServiceClient.Instance;
             imageServiceClient.UpdateAllModels += updateConfig;
+            imageServiceClient.UpdateAllModels += updateHandlerWasDeleted;
 
-            OutputDirectory = "OutputDirectory!";
-            SourceName = "SourceName!";
-            LogName = "LogName!";
-            ThumbNailSize = 120;
-
+            OutputDirectory = "";
+            SourceName = "";
+            LogName = "";
+            ThumbNailSize = 0;
 
             Handlers = new ObservableCollection<string>();
-            //Handlers.Add("Chile");
-            //Handlers.Add("Brazil");
-            //Handlers.Add("Petach Tikva 2017");
 
             MessageCommand requestAppConfig = new MessageCommand((int)CommandEnum.GetConfigCommand, null, null);
             imageServiceClient.sendCommand(requestAppConfig);
@@ -57,8 +55,21 @@ namespace ImageServiceWeb.Models
                 else
                     ThumbNailSize = temp;
                 insertHandlersToList(handler);
+                RefreshAfterUpdates?.Invoke(); // Refresh the page to show the data from the service
             }
         }
+
+        private void updateHandlerWasDeleted(MessageCommand deleteHandlerMessage)
+        {
+            // Do it only if the command is close command and a path was specified.
+            if (deleteHandlerMessage.CommandID == (int)CommandEnum.CloseCommand &&
+                deleteHandlerMessage.RequestedDirPath != null)
+            {
+                string pathToDelete = deleteHandlerMessage.RequestedDirPath;
+                Handlers.Remove(pathToDelete);
+            }
+        }
+
 
         /// <summary>
         /// Insert the string "handler" to the data, split them by ;

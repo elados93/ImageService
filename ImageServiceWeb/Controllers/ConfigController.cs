@@ -1,4 +1,6 @@
-﻿using ImageServiceWeb.Models;
+﻿using Communication;
+using ImageServiceWeb.Models;
+using Infrastracture.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,12 @@ namespace ImageServiceWeb.Controllers
         private static ConfigModel configModel = new ConfigModel();
         private static string m_handlerToDelete;
 
-        public ConfigController() {}
+        public ConfigController()
+        {
+            configModel.RefreshAfterUpdates -= RefreshPage;
+
+            configModel.RefreshAfterUpdates += RefreshPage;
+        }
 
         // GET: Config
         public ActionResult OnHandlerDeletion(string handlerToDelete)
@@ -33,13 +40,22 @@ namespace ImageServiceWeb.Controllers
 
         public ActionResult DeleteOK()
         {
-            configModel.RemoveHandler(m_handlerToDelete);
+            //configModel.RemoveHandler(m_handlerToDelete);
+            string[] args = new string[1];
+            args[0] = m_handlerToDelete;
+            MessageCommand removeHandler = new MessageCommand((int)CommandEnum.CloseCommand, args, m_handlerToDelete);
+            configModel.imageServiceClient.sendCommand(removeHandler);
             return RedirectToAction("Config");
         }
 
         public ActionResult DeleteCancel()
         {
             return RedirectToAction("Config");
+        }
+
+        private ActionResult RefreshPage()
+        {
+            return View(configModel);
         }
     }
 }
