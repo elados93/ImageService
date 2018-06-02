@@ -10,12 +10,13 @@ using System.Web.Mvc;
 
 namespace ImageServiceWeb.Models
 {
+    public delegate ActionResult UpdateChange();
+
     public class ConfigModel
     {
 
         public IImageServiceClient imageServiceClient;
 
-        public delegate ActionResult UpdateChange();
         public event UpdateChange RefreshAfterUpdates;
 
         public ConfigModel()

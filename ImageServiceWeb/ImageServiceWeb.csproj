@@ -128,20 +128,23 @@
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Web.config" />
     <Content Include="Views\First\Photos.cshtml" />
-    <Content Include="Views\First\Logs.cshtml" />
+    <Content Include="Views\Logs\Logs.cshtml" />
     <Content Include="Views\Config\Config.cshtml" />
-    <Content Include="Views\First\ImageWeb.cshtml" />
+    <Content Include="Views\ImageWeb\ImageWeb.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ConfigController.cs" />
     <Compile Include="Controllers\FirstController.cs" />
+    <Compile Include="Controllers\ImageWebController.cs" />
+    <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ConfigModel.cs" />
     <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\LogModel.cs" />
+    <Compile Include="Models\ImageWebModelcs.cs" />
+    <Compile Include="Models\LogsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -11,13 +11,12 @@ namespace ImageServiceWeb.Controllers
 {
     public class ConfigController : Controller
     {
-        private static ConfigModel configModel = new ConfigModel();
+        private static ConfigModel configModel;
         private static string m_handlerToDelete;
 
         public ConfigController()
         {
-            configModel.RefreshAfterUpdates -= RefreshPage;
-
+            configModel = new ConfigModel();
             configModel.RefreshAfterUpdates += RefreshPage;
         }
 

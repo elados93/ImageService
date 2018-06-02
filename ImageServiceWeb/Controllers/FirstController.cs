@@ -56,7 +56,7 @@ namespace ImageServiceWeb.Controllers
         // GET: First/Details
         public ActionResult Logs()
         {
-            return View(new LogModel());
+            return View();
         }
 
         // GET: First/Create
