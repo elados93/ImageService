@@ -9,7 +9,8 @@ namespace ImageServiceWeb.Controllers
 {
     public class ImageWebController : Controller
     {
-        private static bool serviceConncted;
+        //private static bool serviceConncted;
+       // private static int numberOfPhotos;
         private static ImageWebModel imageWebModel;
 
         public ImageWebController()
@@ -17,10 +18,12 @@ namespace ImageServiceWeb.Controllers
             imageWebModel = new ImageWebModel();
         }
 
+
         // GET: ImageWeb
         public ActionResult ImageWeb()
         {
             ViewBag.ConnectedStat = ImageWebModel.ServiceConnected;
+            ViewBag.numberOfPhotos = imageWebModel.NumberOfPhotos;
             return View();
         }
     }

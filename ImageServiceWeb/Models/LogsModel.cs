@@ -11,12 +11,11 @@ using System.Diagnostics;
 
 namespace ImageServiceWeb.Models
 {
+    public delegate void VoidDelegate();
     public class LogsModel
     {
-
         public static IImageServiceClient imageServiceClient;
-
-        public event UpdateChange RefreshAfterUpdates;
+        public event VoidDelegate RefreshAfterUpdates;
 
         public LogsModel()
         {
@@ -24,9 +23,6 @@ namespace ImageServiceWeb.Models
             imageServiceClient.UpdateAllModels += updateLogs;
 
             Logs = new ObservableCollection<Entry>();
-            Logs.Add(new Entry("the output folder was created", MessageTypeEnum.INFO));
-            Logs.Add(new Entry("the output folder was fail", MessageTypeEnum.FAIL));
-            Logs.Add(new Entry("the output folder was wearing pants", MessageTypeEnum.WARNING));
 
             MessageCommand getFirstLosgs = new MessageCommand((int)CommandEnum.LogCommand, null, null);
             imageServiceClient.sendCommand(getFirstLosgs);

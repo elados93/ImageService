@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,19 +14,26 @@ namespace ImageServiceWeb.Controllers
 
         public LogsController()
         {
+            ifLogUpdate = false;
             logsModel = new LogsModel();
             logsModel.RefreshAfterUpdates += RefreshPage;
         }
 
-        private ActionResult RefreshPage()
+        private void RefreshPage()
         {
-            return View(logsModel);
+            ifLogUpdate = true;
         }
 
         // GET: Logs
         public ActionResult Logs()
         {
+           while(!ifLogUpdate)
+            {
+                Thread.Sleep(100);
+            }
             return View(logsModel);
         }
+
+        private bool ifLogUpdate;
     }
 }

@@ -4,6 +4,7 @@ using Infrastracture.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,6 +17,8 @@ namespace ImageServiceWeb.Controllers
 
         public ConfigController()
         {
+            ifGetAppConfig = false;
+
             configModel = new ConfigModel();
             configModel.RefreshAfterUpdates += RefreshPage;
         }
@@ -29,6 +32,11 @@ namespace ImageServiceWeb.Controllers
 
         public ActionResult Config()
         {
+            while (!ifGetAppConfig)
+            {
+                Thread.Sleep(100);
+            }
+
             return View(configModel);
         }
 
@@ -52,9 +60,11 @@ namespace ImageServiceWeb.Controllers
             return RedirectToAction("Config");
         }
 
-        private ActionResult RefreshPage()
+        private void RefreshPage()
         {
-            return View(configModel);
+            ifGetAppConfig = true;
         }
+
+        private bool ifGetAppConfig;
     }
 }

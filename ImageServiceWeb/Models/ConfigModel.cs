@@ -11,13 +11,15 @@ using System.Web.Mvc;
 namespace ImageServiceWeb.Models
 {
     public delegate ActionResult UpdateChange();
+    //
+    public delegate void UpdatePhotos();
 
     public class ConfigModel
     {
 
         public IImageServiceClient imageServiceClient;
 
-        public event UpdateChange RefreshAfterUpdates;
+        public event VoidDelegate RefreshAfterUpdates;
 
         public ConfigModel()
         {
@@ -120,7 +122,7 @@ namespace ImageServiceWeb.Models
         // TODO: handlers??
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Handlers")]
+        [Display(Name = "Handlers List")]
         public ObservableCollection<string> Handlers { get; set; }
 
 
