@@ -19,7 +19,7 @@
                         <p> Month: @item.PhotoMonth</p>
                         <p>
                             <a href="@Url.Action("PhotoView", new { photoView = item.RelPathWithoutThumb })" class="btn btn-info btn-xs" id="viewButton" name="@item.Name" role="button">View</a>
-                            <a href="@Url.Action("DeleteImage", new { photoView = item.RelPathWithoutThumb })" id="delete" class="btn btn-danger btn-xs" role="button">Delete</a>
+                            <a href="@Url.Action("DeletePhoto", new { photoView = item.RelPathWithoutThumb })" id="delete" class="btn btn-danger btn-xs" role="button">Delete</a>
                         </p>
                     </div>
                 </div>

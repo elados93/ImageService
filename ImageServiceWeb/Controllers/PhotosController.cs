@@ -1,6 +1,7 @@
 ﻿using ImageServiceWeb.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -36,7 +37,7 @@ namespace ImageServiceWeb.Controllers
             return View();
         }
 
-        public ActionResult DeleteImage(string photoView)
+        public ActionResult DeletePhoto(string photoView)
         {
             foreach (OnePhoto photo in photoModel.photos)
             {
@@ -47,5 +48,27 @@ namespace ImageServiceWeb.Controllers
             }
             return View();
         }
+
+        public ActionResult AcceptDeletion(string photoView)
+        {
+            foreach (OnePhoto photo in photoModel.photos)
+            {
+                if (photo.RelPathWithoutThumb == photoView)
+                {
+                    try
+                    {
+                        string thumbnailPhoto = photo.FullPathWithThumbnail;
+                        string pathPhoto = photo.FullPath;
+                        System.IO.File.Delete(pathPhoto);
+                        System.IO.File.Delete(thumbnailPhoto);
+                        photoModel.photos.Remove(photo);
+                    }
+                    catch (Exception e) { Debug.WriteLine(e.Message); }
+                    return RedirectToAction("Photos");
+                }
+            }
+            return RedirectToAction("Photos");
+        }
+
     }
 }

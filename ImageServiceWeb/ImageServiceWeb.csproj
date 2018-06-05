@@ -171,6 +171,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Config\CheckDeletion.cshtml" />
     <Content Include="Views\Photos\PhotoView.cshtml" />
+    <Content Include="Views\Photos\DeletePhoto.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
