@@ -39,7 +39,6 @@ namespace ImageServiceWeb.Controllers
 
         public ActionResult DeleteOK()
         {
-            //configModel.RemoveHandler(m_handlerToDelete);
             string[] args = new string[1];
             args[0] = m_handlerToDelete;
             MessageCommand removeHandler = new MessageCommand((int)CommandEnum.CloseCommand, args, m_handlerToDelete);

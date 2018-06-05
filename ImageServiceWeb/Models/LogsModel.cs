@@ -16,7 +16,6 @@ namespace ImageServiceWeb.Models
     public class LogsModel
     {
         public static IImageServiceClient imageServiceClient;
-        public event VoidDelegate RefreshAfterUpdates;
         private bool ifLogUpdate;
 
         public LogsModel()

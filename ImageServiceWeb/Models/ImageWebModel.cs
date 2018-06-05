@@ -15,18 +15,9 @@ namespace ImageServiceWeb.Models
 
     public class ImageWebModel
     {
-        private static ConfigModel configModel;
         public static IImageServiceClient imageServiceClient;
         private string m_outputDir;
 
-        //public event UpdatePhotos UpdatesAboutPhotos;
-
-        // public static bool ServiceConnected
-        // {
-        //    get { return imageServiceClient.ClientConnected; }
-        // }
-
-        //  public static int NumberOfPhotos;
 
         public ImageWebModel()
         {

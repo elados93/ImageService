@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ImageServiceWeb.Models.OnePhoto>
+
+@{
+    ViewBag.Title = "Photos";
+}
+
+<h2>Photos</h2>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            <div class="col-xs-18 col-sm-6 col-md-3">
+                <div class="thumbnail">
+                    <img src="@Url.Content(@item.RelPath)" class="img-circle" width="242" height="200">
+                    <div class="caption">
+                        <h4>@item.Name</h4>
+                        <p> Year: @item.PhotoYear</p>
+                        <p> Month: @item.PhotoMonth</p>
+                        <p>
+                            <a href="@Url.Action("PhotoView", new { photoView = item.RelPathWithoutThumb })" class="btn btn-info btn-xs" id="viewButton" name="@item.Name" role="button">View</a>
+                            <a href="@Url.Action("DeleteImage", new { photoView = item.RelPathWithoutThumb })" id="delete" class="btn btn-danger btn-xs" role="button">Delete</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+}

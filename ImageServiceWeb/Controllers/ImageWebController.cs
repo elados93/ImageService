@@ -9,8 +9,7 @@ namespace ImageServiceWeb.Controllers
 {
     public class ImageWebController : Controller
     {
-        //private static bool serviceConncted;
-       // private static int numberOfPhotos;
+
         private static ImageWebModel imageWebModel;
 
         public ImageWebController()

@@ -128,7 +128,7 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Web.config" />
-    <Content Include="Views\First\Photos.cshtml" />
+    <Content Include="Views\Photos\Photos.cshtml" />
     <Content Include="Views\Logs\Logs.cshtml" />
     <Content Include="Views\Config\Config.cshtml" />
     <Content Include="Views\ImageWeb\ImageWeb.cshtml" />
@@ -139,6 +139,7 @@
     <Compile Include="Controllers\FirstController.cs" />
     <Compile Include="Controllers\ImageWebController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
+    <Compile Include="Controllers\PhotosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -147,6 +148,8 @@
     <Compile Include="Models\EntryLog.cs" />
     <Compile Include="Models\ImageWebModel.cs" />
     <Compile Include="Models\LogsModel.cs" />
+    <Compile Include="Models\OnePhoto.cs" />
+    <Compile Include="Models\PhotosModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +170,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Config\CheckDeletion.cshtml" />
+    <Content Include="Views\Photos\PhotoView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -174,7 +178,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DorNissim\" />
+  </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
