@@ -18,7 +18,6 @@ namespace ImageServiceWeb.Models
         public static IImageServiceClient imageServiceClient;
         private string m_outputDir;
 
-
         public ImageWebModel()
         {
             NumberOfPhotos = -1;

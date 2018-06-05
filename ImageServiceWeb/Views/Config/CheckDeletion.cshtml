@@ -6,7 +6,10 @@
 
 <h2>Check Deletion of this handler</h2>
 
-@*<script>
+<button type="button" id="btnOK" style="margin:10px">OK</button>
+<button type="button" id="btnCancel" style="margin:10px">Cancel</button>
+
+<script>
     $("#buttonOk").click(function () {
         $.post("@Url.Action("DeleteOK")", function () {
             window.location.href = "Config";
@@ -18,8 +21,9 @@
         window.location.href = "Config";
 
     })
-</script>*@
-@Html.ActionLink("OK", "DeleteOK", "Config")
-@Html.ActionLink("Cancel", "DeleteCancel", "Config")
+</script>
+
+@*@Html.ActionLink("OK", "DeleteOK", "Config")
+    @Html.ActionLink("Cancel", "DeleteCancel", "Config")*@
 
 

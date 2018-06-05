@@ -3,19 +3,38 @@
     ViewBag.Title = "ImageWeb";
 }
 
-<h2>Image Service Web Application</h2>
+<h2>Image Service Web Application Details</h2>
 
-<div>
-    <h2>Details:</h2>
-    <table>
+<table class="table table-striped table-hover">
+    <tbody>
         <tr>
-            <td>Status:  @ViewBag.ConnectedStat</td>
+            <th>Service Status</th>
+            <td class="text-md-center">
+                @if (@ViewBag.ConnectedStat)
+                {
+                    <span style="font-weight: bold; font-size: large" class="badge badge-success">Connected</span>
+                }
+                else
+                {
+                    <span style="font-weight: bold; font-size: large" class="badge badge-warning">Not Connected</span>
+                }
+            </td>
         </tr>
         <tr>
-            <td>Number of Photos:  @ViewBag.numberOfPhotos</td>
-        </tr>
-    </table>
-</div>
+            <th>Number of Photos</th>
+            <td class="text-center">
+                @if (@ViewBag.numberOfPhotos > 0)
+                {
+                <span style="font-weight: normal; font-size: large">@ViewBag.numberOfPhotos</span>
+                }
+                else
+                {
+                    <span style="font-weight: normal; font-size: large">Not Connected</span>
+                }
+        </td>
+    </tr>
+</tbody>
+</table>
 
 <table class="table">
             <tr>
