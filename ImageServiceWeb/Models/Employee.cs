@@ -8,7 +8,13 @@ namespace ImageServiceWeb.Models
 {
     public class Employee
     {
-        public Employee() { }
+        public Employee(string firstName, string lastName, int iD)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            ID = iD;
+        }
+
         public void copy(Employee emp)
         {
             FirstName = emp.FirstName;

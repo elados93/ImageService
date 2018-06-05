@@ -14,26 +14,34 @@ namespace ImageServiceWeb.Controllers
 
         public LogsController()
         {
-            ifLogUpdate = false;
+
             logsModel = new LogsModel();
-            logsModel.RefreshAfterUpdates += RefreshPage;
         }
 
-        private void RefreshPage()
-        {
-            ifLogUpdate = true;
-        }
 
         // GET: Logs
         public ActionResult Logs()
         {
-           while(!ifLogUpdate)
-            {
-                Thread.Sleep(100);
-            }
-            return View(logsModel);
+            return View(logsModel.Logs);
         }
 
-        private bool ifLogUpdate;
+        [HttpPost]
+        public ActionResult Logs(FormCollection form)
+        {
+            string type = form["filterMessages"].ToString();
+            if (type == "")
+            {
+                return View(logsModel.Logs);
+            }
+            List<EntryLog> filteredLogsList = new List<EntryLog>();
+            foreach (EntryLog log in logsModel.Logs)
+            {
+                if (log.EntryType == type)
+                {
+                    filteredLogsList.Add(log);
+                }
+            }
+            return View(filteredLogsList);
+        }
     }
 }

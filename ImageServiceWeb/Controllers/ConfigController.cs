@@ -17,10 +17,7 @@ namespace ImageServiceWeb.Controllers
 
         public ConfigController()
         {
-            ifGetAppConfig = false;
-
             configModel = new ConfigModel();
-            configModel.RefreshAfterUpdates += RefreshPage;
         }
 
         // GET: Config
@@ -32,11 +29,6 @@ namespace ImageServiceWeb.Controllers
 
         public ActionResult Config()
         {
-            while (!ifGetAppConfig)
-            {
-                Thread.Sleep(100);
-            }
-
             return View(configModel);
         }
 
@@ -59,12 +51,5 @@ namespace ImageServiceWeb.Controllers
         {
             return RedirectToAction("Config");
         }
-
-        private void RefreshPage()
-        {
-            ifGetAppConfig = true;
-        }
-
-        private bool ifGetAppConfig;
     }
 }

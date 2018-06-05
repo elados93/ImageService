@@ -1,23 +1,52 @@
-﻿@model ImageServiceWeb.Models.LogsModel
+﻿@using ImageServiceWeb.Models;
+@model IEnumerable<ImageServiceWeb.Models.EntryLog>
+
 @{
     ViewBag.Title = "Logs";
 }
 
 <h2>Logs</h2>
 
+
+<div>
+    @using (Html.BeginForm("Logs", "Logs", FormMethod.Post))
+    {
+
+        <div>
+            <br />
+            @Html.DropDownList("filterMessages",
+                                            new SelectList(Enum.GetValues(typeof(EntryType))),
+                                            "Log entry type",
+                                            new { @class = "form-control" })
+            <br />
+            <input type="submit" id="submitId" value="Filter" class="btn-info" />
+
+        </div>
+
+    }
+
+</div>
+
+
 <table class="table">
 
-    @foreach (var item in Model.Logs)
+    <tr>
+        <td>
+            Message:
+        </td>
+        <td>
+            Type:
+        </td>
+    </tr>
+
+    @foreach (var item in Model)
     {
         <tr>
             <td>
-                <select name="type">
-                    <option value="">ALL</option>
-                    <option value="INFO">INFO</option>
-                    <option value="FAIL">FAILL</option>
-                    <option value="WARNING">WARNING</option>
-                </select>
-                @Html.DisplayFor(modelItem => item)
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryType)
             </td>
         </tr>
     }

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Threading;
 
 namespace ImageServiceWeb.Models
 {
@@ -16,16 +17,25 @@ namespace ImageServiceWeb.Models
     {
         public static IImageServiceClient imageServiceClient;
         public event VoidDelegate RefreshAfterUpdates;
+        private bool ifLogUpdate;
 
         public LogsModel()
         {
             imageServiceClient = ImageServiceClient.Instance;
             imageServiceClient.UpdateAllModels += updateLogs;
 
-            Logs = new ObservableCollection<Entry>();
+            Logs = new List<EntryLog>();
+            ifLogUpdate = false;
 
-            MessageCommand getFirstLosgs = new MessageCommand((int)CommandEnum.LogCommand, null, null);
-            imageServiceClient.sendCommand(getFirstLosgs);
+            if (imageServiceClient.ClientConnected)
+            {
+                MessageCommand getFirstLosgs = new MessageCommand((int)CommandEnum.LogCommand, null, null);
+                imageServiceClient.sendCommand(getFirstLosgs);
+                while (!ifLogUpdate)
+                {
+                    Thread.Sleep(100);
+                }
+            }
         }
 
         private void updateLogs(MessageCommand msg)
@@ -38,8 +48,14 @@ namespace ImageServiceWeb.Models
                 if (!Int32.TryParse(msg.CommandArgs[0], out result))
                     Debug.WriteLine("Error parsing command type in parseLog");
                 else
-                    Logs.Insert(0, new Entry(msg.CommandArgs[1], (MessageTypeEnum)result));
-                RefreshAfterUpdates?.Invoke();
+                {
+
+                    EntryLog log = new EntryLog();
+                    log.EntryType = ((MessageTypeEnum)result).ToString();
+                    log.Message = msg.CommandArgs[1];
+                    Logs.Insert(0, log);
+                }
+                ifLogUpdate = true;
             }
             else
             {
@@ -50,11 +66,16 @@ namespace ImageServiceWeb.Models
                     { // Logs transfered success
                         List<Entry> recLog = JsonConvert.DeserializeObject<List<Entry>>(msg.CommandArgs[0]);
                         foreach (Entry entry in recLog)
-                            Logs.Insert(0, entry); // Add the new entry first
+                        {
+                            EntryLog log = new EntryLog();
+                            log.EntryType = entry.Type.ToString();
+                            log.Message = entry.Message;
+                            Logs.Insert(0, log);
+                        }
                     }
                     else
                         Debug.WriteLine("Error get the first logs");
-                    RefreshAfterUpdates?.Invoke();
+                    ifLogUpdate = true;
                 }
             }
         }
@@ -67,6 +88,6 @@ namespace ImageServiceWeb.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Logs")]
-        public ObservableCollection<Entry> Logs { get; set; }
+        public List<EntryLog> Logs { get; set; }
     }
 }

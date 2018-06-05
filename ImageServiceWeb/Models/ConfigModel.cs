@@ -6,20 +6,19 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Threading;
 using System.Web.Mvc;
 
 namespace ImageServiceWeb.Models
 {
     public delegate ActionResult UpdateChange();
-    //
     public delegate void UpdatePhotos();
 
     public class ConfigModel
     {
-
+ 
         public IImageServiceClient imageServiceClient;
-
-        public event VoidDelegate RefreshAfterUpdates;
+        private bool ifGetAppConfig;
 
         public ConfigModel()
         {
@@ -33,9 +32,17 @@ namespace ImageServiceWeb.Models
             ThumbNailSize = 0;
 
             Handlers = new ObservableCollection<string>();
+            ifGetAppConfig = false;
 
-            MessageCommand requestAppConfig = new MessageCommand((int)CommandEnum.GetConfigCommand, null, null);
-            imageServiceClient.sendCommand(requestAppConfig);
+            if (imageServiceClient.ClientConnected)
+            {
+                MessageCommand requestAppConfig = new MessageCommand((int)CommandEnum.GetConfigCommand, null, null);
+                imageServiceClient.sendCommand(requestAppConfig);
+                while (!ifGetAppConfig)
+                {
+                    Thread.Sleep(100);
+                }
+            }
         }
 
         /// <summary>
@@ -58,7 +65,7 @@ namespace ImageServiceWeb.Models
                 else
                     ThumbNailSize = temp;
                 insertHandlersToList(handler);
-                RefreshAfterUpdates?.Invoke(); // Refresh the page to show the data from the service
+                ifGetAppConfig = true; // Update the output was arrived
             }
         }
 
@@ -119,12 +126,9 @@ namespace ImageServiceWeb.Models
         [Display(Name = "ThumbNail Size: ")]
         public int ThumbNailSize { get; set; }
 
-        // TODO: handlers??
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Handlers List")]
         public ObservableCollection<string> Handlers { get; set; }
-
-
     }
 }

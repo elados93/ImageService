@@ -24,7 +24,7 @@ namespace ImageServiceWeb.Controllers
         {
             ViewBag.ConnectedStat = ImageWebModel.ServiceConnected;
             ViewBag.numberOfPhotos = imageWebModel.NumberOfPhotos;
-            return View();
+            return View(ImageWebModel.getStudentsFromFile());
         }
     }
 }
