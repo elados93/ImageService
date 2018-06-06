@@ -22,7 +22,7 @@ namespace ImageServiceWeb.Controllers
         public ActionResult ImageWeb()
         {
             ViewBag.ConnectedStat = ImageWebModel.ServiceConnected;
-            ViewBag.numberOfPhotos = imageWebModel.NumberOfPhotos;
+            ViewBag.numberOfPhotos = ImageWebModel.NumberOfPhotos;
             return View(ImageWebModel.getStudentsFromFile());
         }
     }

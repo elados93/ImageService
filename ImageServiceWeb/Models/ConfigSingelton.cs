@@ -39,6 +39,8 @@ namespace ImageServiceWeb.Models
         {
             get
             {
+                if (gotUpdate)
+                    return m_Handlers;
                 getAppConfigFromServer();
                 return m_Handlers;
             }
@@ -49,6 +51,7 @@ namespace ImageServiceWeb.Models
         private ConfigSingelton()
         {
             imageServiceClient = ImageServiceClient.Instance;
+            imageServiceClient.UpdateAllModels += updateConfig;
             gotUpdate = false;
         }
 
@@ -64,7 +67,6 @@ namespace ImageServiceWeb.Models
        
         private void getAppConfigFromServer()
         {
-            imageServiceClient.UpdateAllModels += updateConfig;
             MessageCommand requestAppConfig = new MessageCommand((int)CommandEnum.GetConfigCommand, null, null);
             imageServiceClient.sendCommand(requestAppConfig);
             Monitor.Wait(locker); // waits for the response from the service
@@ -104,7 +106,7 @@ namespace ImageServiceWeb.Models
 
         public void RemoveHandler(string handler)
         {
-            Handlers.Remove(handler);
+            m_Handlers.Remove(handler);
         }
 
         private string getWantedMember(string member)

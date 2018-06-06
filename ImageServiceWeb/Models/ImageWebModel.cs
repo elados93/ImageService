@@ -18,21 +18,15 @@ namespace ImageServiceWeb.Models
         public static IImageServiceClient imageServiceClient;
         private string m_outputDir;
 
+        private ConfigSingelton configSingelton;
+        private static int m_numberOfPhotos;
+
         public ImageWebModel()
         {
             NumberOfPhotos = -1;
             imageServiceClient = ImageServiceClient.Instance;
-
-            imageServiceClient.UpdateAllModels += getOutputDirFromService;
-            if (!imageServiceClient.ClientConnected)
-            {
-                OutputDirectory = null;
-            }
-            else
-            {
-                MessageCommand requestAppConfig = new MessageCommand((int)CommandEnum.GetConfigCommand, null, null);
-                imageServiceClient.sendCommand(requestAppConfig);
-            }
+            configSingelton = ConfigSingelton.Instance;
+            OutputDirectory = configSingelton.OutputDirectory;
         }
 
         public static List<Employee> getStudentsFromFile()
@@ -63,14 +57,6 @@ namespace ImageServiceWeb.Models
 
         }
 
-        public void getOutputDirFromService(MessageCommand msg)
-        {
-            if (msg.CommandID == (int)CommandEnum.GetConfigCommand)
-            {
-                OutputDirectory = msg.CommandArgs[1]; // output Directory
-            }
-        }
-
         public static int getNumPhotos(string outputDirectory)
         {
             int countPhotos = 0;
@@ -78,12 +64,13 @@ namespace ImageServiceWeb.Models
                 return countPhotos;
             else
             {
+                outputDirectory = outputDirectory + "\\Thumbnails";
                 DirectoryInfo directoryName = new DirectoryInfo(outputDirectory);
                 countPhotos += directoryName.GetFiles("*.jpg", SearchOption.AllDirectories).Length;
                 countPhotos += directoryName.GetFiles("*.png", SearchOption.AllDirectories).Length;
                 countPhotos += directoryName.GetFiles("*.bmp", SearchOption.AllDirectories).Length;
                 countPhotos += directoryName.GetFiles("*.gif", SearchOption.AllDirectories).Length;
-                return countPhotos;
+                return countPhotos / 2;
             }
         }
 
@@ -96,7 +83,7 @@ namespace ImageServiceWeb.Models
 
         [Required]
         [Display(Name = "Number of Photos")]
-        public int NumberOfPhotos
+        public static int NumberOfPhotos
         {
             get
             {
@@ -108,8 +95,6 @@ namespace ImageServiceWeb.Models
             }
             set { m_numberOfPhotos = value; }
         }
-
-        private int m_numberOfPhotos;
 
         private string OutputDirectory
         {
