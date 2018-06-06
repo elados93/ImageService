@@ -1,3 +1,374 @@
+commit 0799d544f35eef2c63eb794096a077b77aab29e9
+Author: אלעד <אלעד@ELAD>
+Date:   Fri May 25 11:02:29 2018 +0300
+
+    Little things
+
+commit bd3ec9bfb348fb760b4245741eff7ff8f666d761
+Author: אלעד <אלעד@ELAD>
+Date:   Fri May 25 10:10:32 2018 +0300
+
+    Deal all TODOs
+
+commit 3ee0192d1e3e0a036c3b3e0d9d80f83f32d2cf42
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Tue May 22 10:14:03 2018 +0300
+
+    elad fix
+
+commit e73e5ae5842e766f68b4673e23e72290fd66f7d7
+Author: אלעד <אלעד@ELAD>
+Date:   Tue May 22 09:47:40 2018 +0300
+
+    We <3 Dor Nissim
+
+commit 1b3c390e205989259a359d26e9e2aa191d039c76
+Author: אלעד <אלעד@ELAD>
+Date:   Tue May 22 08:15:49 2018 +0300
+
+    Exclude client when connection is failed.
+
+commit fff0132b2377ac6da01ea2414cbd2abc9d98ff14
+Author: אלעד <אלעד@ELAD>
+Date:   Mon May 21 19:02:06 2018 +0300
+
+    Comments.
+
+commit 91ae1c2c256934b942f1c384607c930b748efdf4
+Merge: 7600b98 9fdd34a
+Author: אלעד <אלעד@ELAD>
+Date:   Sun May 20 21:00:00 2018 +0300
+
+    Co co comments
+
+commit 7600b9873dd34aaaa2d4a4b04e810a419b7c4400
+Author: אלעד <אלעד@ELAD>
+Date:   Sun May 20 20:59:06 2018 +0300
+
+    Elad's Comments
+
+commit 9fdd34a743e6d6a1629b33df2b60a361ca433045
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Tue May 15 06:58:10 2018 +0300
+
+    adding comments to the:
+    Infrastucture
+    ImageService
+    Communication
+
+commit 1acdcbbb8ba0a2ceddddb7056e1dc3bda8860604
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sat May 12 07:40:14 2018 +0300
+
+    Rock the casba
+
+commit 5c7040b8bf49c7021ca5ed2da9dd3e07233c3b71
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Wed May 9 20:25:35 2018 +0300
+
+    Can Close GUI!
+
+commit 9250e676c78fb3db2ba1c3d213bb65157a22a3a6
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Wed May 9 20:07:47 2018 +0300
+
+    Added exit window
+
+commit 9bee71aa054486c1b946ecb261790ea9d8312e34
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Wed May 9 17:59:32 2018 +0300
+
+    Fixed sync with server & client
+
+commit 8d6bda4a72d3daf9468bd1ea7b775ccaa233e6ac
+Author: אלעד <אלעד@ELAD>
+Date:   Wed May 9 18:17:33 2018 +0300
+
+    Fix rec message
+
+commit 31dc274f6fc54fcf14aaee25f5fdc291f4560532
+Merge: fb6bdd6 08f6852
+Author: אלעד <אלעד@ELAD>
+Date:   Wed May 9 15:19:32 2018 +0300
+
+    Mer mer merged!
+
+commit fb6bdd614ab34c01851d5160ebe1b5c54f19bbf8
+Author: אלעד <אלעד@ELAD>
+Date:   Wed May 9 15:18:24 2018 +0300
+
+    Elad's Commit
+
+commit 08f6852d504d98c8818284aceb30e1d0e08cbee3
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Wed May 9 12:18:20 2018 +0300
+
+    initial app config command works!
+
+commit 764be6edfb4a3d436fd66e1b256eb65ff053cd61
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Wed May 9 11:29:35 2018 +0300
+
+    scroll bar works
+
+commit 10151d4ee9b4c2e1633883806e4b0c20deef5814
+Author: אלעד <אלעד@ELAD>
+Date:   Wed May 9 10:37:41 2018 +0300
+
+    Try scrolling
+
+commit 69aac4082c1ed1c028477c9fbd2b63c33c344a72
+Author: אלעד <אלעד@ELAD>
+Date:   Wed May 9 09:20:39 2018 +0300
+
+    Splitting the project into coommunication and
+    Infrastracureeeee!!!
+
+commit f9a8b15b8e5310682bc9049773592c994812b737
+Merge: ac8ce6d cf92df7
+Author: אלעד <אלעד@ELAD>
+Date:   Wed May 9 08:24:31 2018 +0300
+
+    Merging?
+
+commit ac8ce6d8d2fa87c8120da005725d0b846845866b
+Author: אלעד <אלעד@ELAD>
+Date:   Wed May 9 08:20:59 2018 +0300
+
+    Fix logs!!
+
+commit cf92df70c784c1f242a25680f6bc925f9938591e
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Tue May 8 17:23:20 2018 +0300
+
+    adding mvvm to window+ making the window riseable
+
+commit 227ed01770c940349fddbb4b5f6144eaee62c173
+Author: אלעד <אלעד@ELAD>
+Date:   Tue May 8 12:43:03 2018 +0300
+
+    Fix Service bug
+
+commit 59df60bb1877d445156669dd31fbd30ea2e3ed74
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Tue May 8 10:47:53 2018 +0300
+
+    Revert "Fix Service bug"
+    
+    This reverts commit 227ed01770c940349fddbb4b5f6144eaee62c173.
+
+commit 3fefdd2cced7be2ff9d085cea9707e34e79eb11e
+Author: אלעד <אלעד@ELAD>
+Date:   Mon May 7 20:34:15 2018 +0300
+
+    Service Problems
+
+commit b121c89cc0eb3e5652d8eee2bff90aaa28ba0f85
+Merge: df72d8e 29d96ae
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Mon May 7 17:04:26 2018 +0300
+
+    Merge branch 'master' of https://github.com/elados93/ImageService
+
+commit 29d96ae2bb2c2393c2b4de8ac0553e6fa19f6a85
+Author: אלעד <אלעד@ELAD>
+Date:   Mon May 7 17:53:04 2018 +0300
+
+    Added GetLog command now working on getAppconfig
+
+commit df72d8eaeacec742a145d85ab1495bbbf51577e9
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Mon May 7 17:03:42 2018 +0300
+
+commit 20386b35c85ef63b256628ed55e3fb607e17adf4
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Mon May 7 06:52:20 2018 +0300
+
+    add convertor for the log color
+
+commit 571545a65d13c53fb433a686cc58d46c1881cdec
+Author: אלעד <אלעד@ELAD>
+Date:   Sun May 6 22:20:01 2018 +0300
+
+    Com com comunication!
+
+commit f812ca9e0cd22ac5e8b36e4f2d8c0d0c2ffa50f5
+Merge: a99e9a2 279195a
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sun May 6 12:45:20 2018 +0300
+
+    Merge branch 'master' of https://github.com/elados93/ImageService
+
+commit a99e9a2bf4df139d1341a8c859f79b468b6c2971
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sun May 6 12:44:05 2018 +0300
+
+    added log command
+
+commit 279195a9a4333a1de854122215eebf5cf17eab58
+Author: אלעד <אלעד@ELAD>
+Date:   Sat May 5 17:57:26 2018 +0300
+
+    Freaky Friday
+
+commit 76345aa2b89663ad1e501fe49328997f104737d7
+Author: אלעד <אלעד@ELAD>
+Date:   Sat May 5 14:48:04 2018 +0300
+
+    Added Communication!
+
+commit 7632dd44d6e367ca91224212608be39f6db35855
+Author: אלעד <אלעד@ELAD>
+Date:   Sat May 5 09:44:24 2018 +0300
+
+    ch ch ch changes!
+
+commit 031fdd360226a7c1b1b45ef3d4d4a284dc284630
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Sat May 5 10:22:18 2018 +0300
+
+    Working on close command
+
+commit 50ebfe5f40a19b359214b8d6ff5847899111e6d5
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Fri May 4 13:43:44 2018 +0300
+
+    dirctory close
+
+commit 59f076026c20cc16c61d9752e2f89454b6a36a27
+Merge: f66bb8c bb5fa3c
+Author: אלעד <אלעד@ELAD>
+Date:   Fri May 4 12:17:42 2018 +0300
+
+    Merge branch 'master' of https://github.com/elados93/ImageService.git
+
+commit bb5fa3c63956dcf60bfc7f9dc71cf6977e804ffe
+Merge: c5ed469 1bb9eaf
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Fri May 4 13:17:52 2018 +0300
+
+    צקרעק
+
+commit c5ed469fe0ec4aa28f9b2485c34dde0f70a57394
+Author: אלעד <אלעד@ELAD>
+Date:   Fri May 4 12:08:28 2018 +0300
+
+    ch ch changed
+
+commit f66bb8ca610e207b7e1f8cb8ff8abc4e3838e0bc
+Author: אלעד <אלעד@ELAD>
+Date:   Fri May 4 12:16:48 2018 +0300
+
+    Fix a lot
+
+commit 1bb9eaf630e54ffde825f14f826d8c6fc3fb19e3
+Author: אלעד <אלעד@ELAD>
+Date:   Fri May 4 12:09:38 2018 +0300
+
+    Revert "Revert "Happy Birthday Shahar! :)""
+    
+    This reverts commit 61ac79359b3a6a952d0a02ad64125dd06289bb53.
+
+commit d9371ba0f346286c52bcaef394ac6a3887bbd112
+Author: אלעד <אלעד@ELAD>
+Date:   Fri May 4 12:08:28 2018 +0300
+
+    ch ch changed
+
+commit ab10b104857e4e9fd54abf0be8de63d14446760e
+Merge: 61ac793 a155df5
+Author: אלעד <אלעד@ELAD>
+Date:   Fri May 4 12:05:55 2018 +0300
+
+    Merge branch 'master' of https://github.com/elados93/ImageService.git
+
+commit 61ac79359b3a6a952d0a02ad64125dd06289bb53
+Author: אלעד <אלעד@ELAD>
+Date:   Fri May 4 12:02:08 2018 +0300
+
+    Revert "Happy Birthday Shahar! :)"
+    
+    This reverts commit 7d3ac3bc949fd6c1f87e3706449876cce83a3ba8.
+
+commit 7d3ac3bc949fd6c1f87e3706449876cce83a3ba8
+Author: אלעד <אלעד@ELAD>
+Date:   Fri May 4 12:01:08 2018 +0300
+
+    Happy Birthday Shahar! :)
+
+commit a155df59543d2a9ea6820fd1a723619b7a8d90bb
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Fri May 4 09:19:32 2018 +0300
+
+    entry
+
+commit ec010d8d4c669ad6dba3eea062ab27966895d0d0
+Author: אלעד <אלעד@ELAD>
+Date:   Thu May 3 11:04:56 2018 +0300
+
+    Binding Log & Settings
+
+commit 2f3194b8285bb2bdba5b12a16c911aa5b5c42d6f
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Thu May 3 08:54:01 2018 +0300
+
+    hgchgh
+
+commit b9d86f754aec6006dff5a6b857729a108640de10
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Wed May 2 15:08:06 2018 +0300
+
+    starting the log view
+
+commit 84ca9d236ef04e06d2057243b2df5df047ef07ac
+Author: אלעד <אלעד@ELAD>
+Date:   Wed May 2 10:35:54 2018 +0300
+
+    Added Settings view, sort of...
+
+commit 7860fc6c9866cc68f870471bf5e13769f0c3faf2
+Merge: a21397d 44d757c
+Author: אלעד <אלעד@ELAD>
+Date:   Wed May 2 08:58:56 2018 +0300
+
+    fix
+
+commit 44d757c9a55d46dd7b2655bdbb64e0e140e08703
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Wed May 2 09:36:38 2018 +0300
+
+    sjhvb
+
+commit e5a307ec6a2e40ae2918b476badd755e94492964
+Author: shahar palmor <shaharpalmor@gmail.com>
+Date:   Wed May 2 09:17:53 2018 +0300
+
+    ImageSericeGui
+
+commit a21397decc62711940382b58b936748a6a04fb78
+Author: אלעד <אלעד@ELAD>
+Date:   Wed May 2 08:57:14 2018 +0300
+
+    Settings tab added
+
+commit a1f9defccc084392752145759ad770f962425731
+Author: אלעד <אלעד@ELAD>
+Date:   Fri Apr 13 14:55:31 2018 +0300
+
+    Fix image sync. between processes
+
+commit 556eca69972d571fe14c13f20fe68cadb2ad4257
+Author: אלעד <אלעד@ELAD>
+Date:   Mon Apr 9 07:59:31 2018 +0300
+
+    Changed File syswatcher from "changed" to "created". Also put comments for handling files that were already in the dir.
+
+commit b36b837787aea8220155dee8cfa7f4f03a0ac76f
+Author: אלעד <אלעד@ELAD>
+Date:   Sun Apr 8 08:45:21 2018 +0300
+
+    Fixed same name file problem
+
 commit be2d1dfe04302a30891e548725c4a727c13574bb
 Merge: 5f537a1 9e5f3b8
 Author: אלעד <אלעד@ELAD>

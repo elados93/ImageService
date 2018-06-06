@@ -1,5 +1,4 @@
-﻿
-using Communication;
+﻿using Communication;
 using ImageServiceGUI.Communication;
 using Infrastracture.Enums;
 using System;
