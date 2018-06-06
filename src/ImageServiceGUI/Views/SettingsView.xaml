@@ -7,9 +7,24 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="-1,0,0,10">
-        <Label Content="Settings" FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Blue" RenderTransformOrigin="2.634,0.921" DockPanel.Dock="Top"/>
+        <DockPanel.Resources>
+            <Style x:Key ="title">
+                <Setter Property="Label.FontSize" Value="25" />
+                <Setter Property="Label.HorizontalAlignment" Value="Center" />
+                <Setter Property="Label.FontWeight" Value="Bold" />
+                <Setter Property="Label.Foreground" Value="Blue" />
+                <Setter Property="Label.RenderTransformOrigin" Value="2.634,0.921" />
+                <Setter Property="DockPanel.Dock" Value="Top" />
+            </Style>
+        </DockPanel.Resources>
+
+        <Label Content="Setting" Grid.Row="0" Style="{StaticResource title}" />
+
         <Grid Background="White" TextBlock.FontSize="15" HorizontalAlignment="Center">
+            
+
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -21,18 +36,27 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0">Output Directory:</TextBlock>
-            <TextBlock Grid.Row="1">Source Name:</TextBlock>
-            <TextBlock x:Name="outputDir" Grid.Row="0" Grid.Column="2" Text="{Binding vm_OutputDir}"></TextBlock>
-            <TextBlock Grid.Row="2">Log Name:</TextBlock>
-            <TextBlock x:Name="logName" Grid.Row="2" Grid.Column="2" Text="{Binding vm_LogName}"></TextBlock>
-            <TextBlock x:Name="sourceName" Grid.Row="1" Grid.Column="2" Text="{Binding vm_SourceName}"></TextBlock>
-            <TextBlock Grid.Row="3">Thumbnails Size:</TextBlock>
-            <TextBlock x:Name="thumbnailsSize" Grid.Row="3" Grid.Column="2" Text="{Binding vm_ThumbnailsSize}"></TextBlock>
+
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Padding" Value="3"/>
+                    <Setter Property="Margin" Value="3"/>
+                    <Setter Property="FontSize" Value="20"/>
+                </Style>
+            </Grid.Resources>
+            
+            <TextBlock Grid.Row="1">Output Directory:</TextBlock>
+            <TextBlock Grid.Row="2">Source Name:</TextBlock>
+            <TextBlock x:Name="outputDir" Grid.Row="1" Grid.Column="2" Text="{Binding vm_OutputDir}"></TextBlock>
+            <TextBlock Grid.Row="3">Log Name:</TextBlock>
+            <TextBlock x:Name="logName" Grid.Row="3" Grid.Column="2" Text="{Binding vm_LogName}"></TextBlock>
+            <TextBlock x:Name="sourceName" Grid.Row="2" Grid.Column="2" Text="{Binding vm_SourceName}"></TextBlock>
+            <TextBlock Grid.Row="4">Thumbnails Size:</TextBlock>
+            <TextBlock x:Name="thumbnailsSize" Grid.Row="4" Grid.Column="2" Text="{Binding vm_ThumbnailsSize}"></TextBlock>
             <Button x:Name="removeHandlerButtton" Content="Remove" Command="{Binding RemoveHandlerCommand}" 
-                 Grid.Row="4" HorizontalAlignment="Center" Width="290" 
+                 Grid.Row="5" HorizontalAlignment="Center" Width="290" 
                 Grid.ColumnSpan="2"/>
-            <ListBox x:Name="handlersListBox" Grid.Row="5" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch"  SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding vm_Handlers}"
+            <ListBox x:Name="handlersListBox" Grid.Row="6" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch"  SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding vm_Handlers}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
             </ListBox>
         </Grid>
