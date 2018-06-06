@@ -56,27 +56,27 @@ namespace ImageServiceWeb.Models
                 string thumbnailDir = m_outputDirectory + "\\Thumbnails";
                 if (Directory.Exists(thumbnailDir))
                 {
-                    DirectoryInfo di = new DirectoryInfo(thumbnailDir);
+                    DirectoryInfo directory = new DirectoryInfo(thumbnailDir);
                     string[] validExtensions = { ".jpg", ".gif", ".png", ".bmp" };
-                    foreach (DirectoryInfo yearDirInfo in di.GetDirectories())
+                    foreach (DirectoryInfo yearDir in directory.GetDirectories())
                     {
-                        if (!Path.GetDirectoryName(yearDirInfo.FullName).EndsWith("Thumbnails"))
+                        if (!Path.GetDirectoryName(yearDir.FullName).EndsWith("Thumbnails"))
                         {
                             continue;
                         }
-                        foreach (DirectoryInfo monthDirInfo in yearDirInfo.GetDirectories())
+                        foreach (DirectoryInfo monthDir in yearDir.GetDirectories())
                         {
-                            foreach (FileInfo fileInfo in monthDirInfo.GetFiles())
+                            foreach (FileInfo fileInfo in monthDir.GetFiles())
                             {
                                 // Check if the extention is valid
                                 if (validExtensions.Contains(fileInfo.Extension.ToLower()))
                                 {
                                     photos.Add(new OnePhoto(
                                         fileInfo.Name,
-                                        Int32.Parse(monthDirInfo.Name),
-                                        Int32.Parse(yearDirInfo.Name),
-                                        "~/" + yearDirInfo.Parent.Parent.Name + "/" + yearDirInfo.Parent.Name + "/" + yearDirInfo.Name + "/" + monthDirInfo.Name + "/" + fileInfo.Name,
-                                        "~/" + yearDirInfo.Parent.Parent.Name + "/" + yearDirInfo.Name + "/" + monthDirInfo.Name + "/" + fileInfo.Name,
+                                        Int32.Parse(monthDir.Name),
+                                        Int32.Parse(yearDir.Name),
+                                        "~/" + yearDir.Parent.Parent.Name + "/" + yearDir.Parent.Name + "/" + yearDir.Name + "/" + monthDir.Name + "/" + fileInfo.Name,
+                                        "~/" + yearDir.Parent.Parent.Name + "/" + yearDir.Name + "/" + monthDir.Name + "/" + fileInfo.Name,
                                         fileInfo.FullName.Replace(@"Thumbnails\", String.Empty),
                                         fileInfo.FullName)
                                     );

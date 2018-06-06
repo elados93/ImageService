@@ -37,6 +37,7 @@ namespace ImageServiceWeb.Controllers
             return View(configModel);
         }
 
+        [HttpPost]
         public ActionResult DeleteOK()
         {
             string[] args = new string[1];
