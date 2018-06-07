@@ -14,12 +14,9 @@ namespace ImageServiceWeb.Controllers
 
         public LogsController()
         {
-
             logsModel = new LogsModel();
         }
 
-
-        // GET: Logs
         public ActionResult Logs()
         {
             return View(logsModel.Logs);

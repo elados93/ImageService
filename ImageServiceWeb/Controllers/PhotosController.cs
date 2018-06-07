@@ -68,6 +68,5 @@ namespace ImageServiceWeb.Controllers
             }
             return RedirectToAction("Photos");
         }
-
     }
 }

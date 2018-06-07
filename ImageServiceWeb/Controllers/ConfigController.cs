@@ -16,6 +16,11 @@ namespace ImageServiceWeb.Controllers
         }
 
         // GET: Config
+        /// <summary>
+        /// when a handler was pressed, it moves us to another page that asks if we want to delet the handler.
+        /// </summary>
+        /// <param name="handlerToDelete"></param>
+        /// <returns></returns>
         public ActionResult OnHandlerDeletion(string handlerToDelete)
         {
             m_handlerToDelete = handlerToDelete;
