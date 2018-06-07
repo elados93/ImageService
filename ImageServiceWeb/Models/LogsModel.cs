@@ -18,6 +18,10 @@ namespace ImageServiceWeb.Models
         public static IImageServiceClient imageServiceClient;
         private bool ifLogUpdate;
 
+
+        /// <summary>
+        /// constructor.
+        /// </summary>
         public LogsModel()
         {
             imageServiceClient = ImageServiceClient.Instance;
@@ -25,11 +29,12 @@ namespace ImageServiceWeb.Models
 
             Logs = new List<EntryLog>();
             ifLogUpdate = false;
-
+            //if the service is connected send the command that gets the first logs.
             if (imageServiceClient.ClientConnected)
             {
                 MessageCommand getFirstLosgs = new MessageCommand((int)CommandEnum.LogCommand, null, null);
                 imageServiceClient.sendCommand(getFirstLosgs);
+                //until the service didnt return an answer, and then update the view. 
                 while (!ifLogUpdate)
                 {
                     Thread.Sleep(100);
@@ -37,6 +42,11 @@ namespace ImageServiceWeb.Models
             }
         }
 
+
+        /// <summary>
+        /// Updates the logs according to the answer that returned from the service.
+        /// </summary>
+        /// <param name="msg">The MSG.</param>
         private void updateLogs(MessageCommand msg)
         {
             CommandEnum command = (CommandEnum)msg.CommandID;
@@ -54,8 +64,10 @@ namespace ImageServiceWeb.Models
                     log.Message = msg.CommandArgs[1];
                     Logs.Insert(0, log);
                 }
+                //to stop the sleep
                 ifLogUpdate = true;
             }
+            //gets all the logs
             else
             {
                 if (command == CommandEnum.LogCommand) 

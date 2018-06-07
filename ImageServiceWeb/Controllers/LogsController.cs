@@ -17,11 +17,21 @@ namespace ImageServiceWeb.Controllers
             logsModel = new LogsModel();
         }
 
+        /// <summary>
+        /// in case of chosing the Logs view,leads to the Logs page.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Logs()
         {
             return View(logsModel.Logs);
         }
 
+        /// <summary>
+        /// creates a list of logs according to the specific types chosen in the filter.
+        /// and return to the log view.
+        /// </summary>
+        /// <param name="form">The form.</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Logs(FormCollection form)
         {

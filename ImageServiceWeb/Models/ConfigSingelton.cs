@@ -59,6 +59,7 @@ namespace ImageServiceWeb.Models
             m_Handlers = new ObservableCollection<string>();
         }
 
+        //
         public static ConfigSingelton Instance
         {
             get
@@ -69,6 +70,11 @@ namespace ImageServiceWeb.Models
             }
         }
 
+
+        /// <summary>
+        /// Gets the application configuration from server. waits until the config 
+        /// arrived so the rest of the models could use the instance values.
+        /// </summary>
         private void getAppConfigFromServer()
         {
             MessageCommand requestAppConfig = new MessageCommand((int)CommandEnum.GetConfigCommand, null, null);
@@ -78,6 +84,13 @@ namespace ImageServiceWeb.Models
                 Monitor.Wait(locker); // waits for the response from the service
         }
 
+
+        /// <summary>
+        /// Updates the configuration.
+        /// after the update release all the locks, so the rest of the models 
+        /// couls use the information.
+        /// </summary>
+        /// <param name="msg">The MSG.</param>
         private void updateConfig(MessageCommand msg)
         {
             CommandEnum command = (CommandEnum)msg.CommandID;
@@ -113,6 +126,11 @@ namespace ImageServiceWeb.Models
                 m_Handlers.Add(handlerString);
         }
 
+        /// <summary>
+        /// Removes the handler, including sending the message to the service
+        /// so it would be removed also from it.
+        /// </summary>
+        /// <param name="handler">The handler.</param>
         public void RemoveHandler(string handler)
         {
             string[] args = new string[1];
@@ -122,6 +140,13 @@ namespace ImageServiceWeb.Models
             m_Handlers.Remove(handler);
         }
 
+
+        /// <summary>
+        /// Gets the wanted member for the config singelton. if the member is still not updated
+        /// it sends the command to the service so it wold be updated.
+        /// </summary>
+        /// <param name="member">The member.</param>
+        /// <returns></returns>
         private string getWantedMember(string member)
         {
             lock (locker)
@@ -135,6 +160,11 @@ namespace ImageServiceWeb.Models
             }
         }
 
+        /// <summary>
+        /// Gets the member from class.
+        /// </summary>
+        /// <param name="member">The member.</param>
+        /// <returns></returns>
         private string getMemberFromClass(string member)
         {
             switch (member)

@@ -1,4 +1,4 @@
-﻿using Communication;
+﻿   using Communication;
 using ImageServiceGUI.Communication;
 using Infrastracture.Enums;
 using System;
@@ -29,6 +29,11 @@ namespace ImageServiceWeb.Models
             addPhotosToList();
         }
 
+
+        /// <summary>
+        /// enters the tumbnails directory, enters each year directory, each month
+        /// directory, and creates a photo according to the OnePhoto class.
+        /// </summary>
         private void addPhotosToList()
         {
             if (photos != null)

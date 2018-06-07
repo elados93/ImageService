@@ -29,6 +29,10 @@ namespace ImageServiceWeb.Models
             OutputDirectory = configSingelton.OutputDirectory;
         }
 
+        /// <summary>
+        /// Gets the students from file during run time.
+        /// </summary>
+        /// <returns></returns>
         public static List<Employee> getStudentsFromFile()
         {
             List<Employee> students = new List<Employee>();
@@ -57,6 +61,13 @@ namespace ImageServiceWeb.Models
 
         }
 
+
+        /// <summary>
+        /// loop throught all the files of specific extentions in order to
+        /// count all the thumbnails photos.
+        /// </summary>
+        /// <param name="outputDirectory">The output directory.</param>
+        /// <returns></returns>
         public static int getNumPhotos(string outputDirectory)
         {
             int countPhotos = 0;
@@ -74,6 +85,12 @@ namespace ImageServiceWeb.Models
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether [service connected].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [service connected]; otherwise, <c>false</c>.
+        /// </value>
         [Required]
         [Display(Name = "Status")]
         public static bool ServiceConnected
@@ -81,6 +98,13 @@ namespace ImageServiceWeb.Models
             get { return imageServiceClient.ClientConnected; }
         }
 
+
+        /// <summary>
+        /// Gets or sets the number of photos.
+        /// </summary>
+        /// <value>
+        /// The number of photos.
+        /// </value>
         [Required]
         [Display(Name = "Number of Photos")]
         public static int NumberOfPhotos
@@ -96,6 +120,13 @@ namespace ImageServiceWeb.Models
             set { m_numberOfPhotos = value; }
         }
 
+
+        /// <summary>
+        /// Gets or sets the output directory.
+        /// </summary>
+        /// <value>
+        /// The output directory.
+        /// </value>
         private string OutputDirectory
         {
             get { return m_outputDir; }

@@ -18,7 +18,12 @@ namespace ImageServiceWeb.Controllers
         }
 
 
-        // GET: ImageWeb
+        /// <summary>
+        /// gets the information about the image web 
+        /// model, about the connection to the service and the number of photos
+        /// and get the information about the students.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ImageWeb()
         {
             ViewBag.ConnectedStat = ImageWebModel.ServiceConnected;
