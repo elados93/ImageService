@@ -109,7 +109,7 @@ namespace ImageServiceGUI.Communication
                        Debug.WriteLine($"Got message: {msg.CommandID} from Server");
                        UpdateAllModels?.Invoke(msg);
 
-                       Thread.Sleep(1000); // Update information every 1 seconds
+                       Thread.Sleep(100); // Update information every 0.1 seconds
                    }
                    catch (Exception e)
                    {

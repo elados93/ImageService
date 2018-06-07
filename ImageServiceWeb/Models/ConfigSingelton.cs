@@ -21,8 +21,8 @@ namespace ImageServiceWeb.Models
         private string m_logName;
         private int m_thumbnailsSize;
         private ObservableCollection<string> m_Handlers;
-        private bool gotUpdate;
-        private object locker; // Notify when updates from server recived, instand of busy waiting
+        private static bool gotUpdate;
+        private static readonly object locker = new object(); // Notify when updates from server recived, instand of busy waiting
         private IImageServiceClient imageServiceClient;
         #endregion
 
@@ -39,10 +39,13 @@ namespace ImageServiceWeb.Models
         {
             get
             {
-                if (gotUpdate)
+                lock (locker)
+                {
+                    if (gotUpdate)
+                        return m_Handlers;
+                    getAppConfigFromServer();
                     return m_Handlers;
-                getAppConfigFromServer();
-                return m_Handlers;
+                }
             }
             set { m_Handlers = value; }
         }
@@ -53,6 +56,7 @@ namespace ImageServiceWeb.Models
             imageServiceClient = ImageServiceClient.Instance;
             imageServiceClient.UpdateAllModels += updateConfig;
             gotUpdate = false;
+            m_Handlers = new ObservableCollection<string>();
         }
 
         public static ConfigSingelton Instance
@@ -64,12 +68,14 @@ namespace ImageServiceWeb.Models
                 return instance;
             }
         }
-       
+
         private void getAppConfigFromServer()
         {
             MessageCommand requestAppConfig = new MessageCommand((int)CommandEnum.GetConfigCommand, null, null);
             imageServiceClient.sendCommand(requestAppConfig);
-            Monitor.Wait(locker); // waits for the response from the service
+
+            while (!gotUpdate)
+                Monitor.Wait(locker); // waits for the response from the service
         }
 
         private void updateConfig(MessageCommand msg)
@@ -77,19 +83,22 @@ namespace ImageServiceWeb.Models
             CommandEnum command = (CommandEnum)msg.CommandID;
             if (command == CommandEnum.GetConfigCommand)
             {
-                string[] args = msg.CommandArgs;
-                string handler = args[0]; // The args order is a convetion, as written in AppConfig.
-                m_outputdir = args[1];
-                m_sourceName = args[2];
-                m_logName = args[3];
-                int temp;
-                if (!Int32.TryParse(args[4], out temp))
-                    Debug.WriteLine("Error parse thumbnail size in getAppConfig");
-                else
-                    m_thumbnailsSize = temp;
-                insertHandlersToList(handler);
-                gotUpdate = true; // Update the output was arrived
-                Monitor.PulseAll(locker); // Exit wait status
+                lock (locker)
+                {
+                    string[] args = msg.CommandArgs;
+                    string handler = args[0]; // The args order is a convetion, as written in AppConfig.
+                    m_outputdir = args[1];
+                    m_sourceName = args[2];
+                    m_logName = args[3];
+                    int temp;
+                    if (!Int32.TryParse(args[4], out temp))
+                        Debug.WriteLine("Error parse thumbnail size in getAppConfig");
+                    else
+                        m_thumbnailsSize = temp;
+                    insertHandlersToList(handler);
+                    gotUpdate = true; // Update the output was arrived
+                    Monitor.PulseAll(locker); // Exit wait status
+                }
             }
         }
 
@@ -101,22 +110,29 @@ namespace ImageServiceWeb.Models
         {
             string[] handlers = handler.Split(';');
             foreach (string handlerString in handlers)
-                Handlers.Add(handlerString);
+                m_Handlers.Add(handlerString);
         }
 
         public void RemoveHandler(string handler)
         {
+            string[] args = new string[1];
+            args[0] = handler;
+            MessageCommand removeHandler = new MessageCommand((int)CommandEnum.CloseCommand, args, handler);
+            imageServiceClient.sendCommand(removeHandler);
             m_Handlers.Remove(handler);
         }
 
         private string getWantedMember(string member)
         {
-            if (gotUpdate)
+            lock (locker)
             {
+                if (gotUpdate)
+                {
+                    return getMemberFromClass(member);
+                }
+                getAppConfigFromServer();
                 return getMemberFromClass(member);
             }
-            getAppConfigFromServer();
-            return getMemberFromClass(member);
         }
 
         private string getMemberFromClass(string member)

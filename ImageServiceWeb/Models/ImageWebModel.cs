@@ -70,7 +70,7 @@ namespace ImageServiceWeb.Models
                 countPhotos += directoryName.GetFiles("*.png", SearchOption.AllDirectories).Length;
                 countPhotos += directoryName.GetFiles("*.bmp", SearchOption.AllDirectories).Length;
                 countPhotos += directoryName.GetFiles("*.gif", SearchOption.AllDirectories).Length;
-                return countPhotos / 2;
+                return countPhotos;
             }
         }
 

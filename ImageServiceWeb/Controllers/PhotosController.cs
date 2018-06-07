@@ -18,7 +18,6 @@ namespace ImageServiceWeb.Controllers
             photoModel = new PhotosModel();
         }
 
-
         // GET: Photos
         public ActionResult Photos()
         {

@@ -13,47 +13,27 @@ namespace ImageServiceWeb.Models
 {
     public class PhotosModel
     {
-
+        #region Members
         private IImageServiceClient imageServiceClient;
-        public string OutputDirectory
-        {
-            get
-            {
-                return m_outputDirectory;
-            }
-            set
-            {
-                m_outputDirectory = value;
-                outputUpdate = true;
-            }
-        }
-        private string m_outputDirectory;
-        private bool outputUpdate;
+        private ConfigSingelton configSingelton;
+        #endregion
+
+        public string OutputDirectory { get; set; }
 
         public PhotosModel()
         {
             imageServiceClient = ImageServiceClient.Instance;
-            imageServiceClient.UpdateAllModels += getOutputDirFromService;
-            outputUpdate = false;
+            configSingelton = ConfigSingelton.Instance;
             photos = new List<OnePhoto>();
-
-            if (imageServiceClient.ClientConnected)
-            {
-                MessageCommand requestAppConfig = new MessageCommand((int)CommandEnum.GetConfigCommand, null, null);
-                imageServiceClient.sendCommand(requestAppConfig);
-                while (!outputUpdate)
-                {
-                    Thread.Sleep(100);
-                }
-                addPhotosToList();
-            }
+            OutputDirectory = configSingelton.OutputDirectory;
+            addPhotosToList();
         }
 
         private void addPhotosToList()
         {
-            if (outputUpdate && photos != null)
+            if (photos != null)
             {
-                string thumbnailDir = m_outputDirectory + "\\Thumbnails";
+                string thumbnailDir = OutputDirectory + "\\Thumbnails";
                 if (Directory.Exists(thumbnailDir))
                 {
                     DirectoryInfo directory = new DirectoryInfo(thumbnailDir);
@@ -89,14 +69,6 @@ namespace ImageServiceWeb.Models
                 {
                     return;
                 }
-            }
-        }
-
-        public void getOutputDirFromService(MessageCommand msg)
-        {
-            if (msg.CommandID == (int)CommandEnum.GetConfigCommand)
-            {
-                OutputDirectory = msg.CommandArgs[1]; // output Directory
             }
         }
 

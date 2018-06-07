@@ -20,7 +20,7 @@ namespace ImageServiceWeb.Models
         public OnePhoto(string name, int photoMonth, int photoYear, string relPath, string relPathWithoutThumb,
             string fullPath, string fullPathWithThumbnails)
         {
-            Name = name;
+            photoName = name;
             PhotoMonth = photoMonth;
             PhotoYear = photoYear;
             RelPath = relPath;
@@ -28,8 +28,5 @@ namespace ImageServiceWeb.Models
             FullPath = fullPath;
             FullPathWithThumbnail = fullPathWithThumbnails;
         }
-
-
-
     }
 }

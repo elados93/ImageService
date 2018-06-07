@@ -79,11 +79,6 @@ namespace ImageServiceWeb.Models
             }
         }
 
-        //public void copy(LogsModel log)
-        //{
-        //    Logs = log.Logs;
-        //}
-
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Logs")]

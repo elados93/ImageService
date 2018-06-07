@@ -18,6 +18,5 @@
         CloseCommand,
         UpdateNewLog,
         ClosedGuiNotify,
-        ApprovedCloseGui
-    }
+        ApprovedCloseGui    }
 }

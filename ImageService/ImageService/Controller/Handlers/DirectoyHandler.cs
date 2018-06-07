@@ -116,11 +116,11 @@ namespace ImageService.Controller.Handlers
                 // Making sure that when the service is closed the watcher will not listen anymore.
                 m_dirWatcher.EnableRaisingEvents = false;
                 m_dirWatcher.Dispose();
-                m_logging.Log("Handler for path: " + m_path + " was closed", MessageTypeEnum.INFO);
+                m_logging.Log("Handler for path: " + m_path + " was closed", MessageTypeEnum.WARNING);
             }
             catch
             {
-                m_logging.Log("Handler for path: " + m_path + " wasn't closed", MessageTypeEnum.WARNING);
+                m_logging.Log("Handler for path: " + m_path + " wasn't closed", MessageTypeEnum.FAIL);
             }
             finally
             {

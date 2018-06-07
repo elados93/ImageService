@@ -49,21 +49,13 @@ namespace ImageService.Communication
 
                                 if (command == CommandEnum.ClosedGuiNotify)
                                 {
-                                    ExcludeClient?.Invoke(client);
-                                    MessageCommand closeApproved = new MessageCommand((int)CommandEnum.ApprovedCloseGui, null, null);
-                                    string closeApprovedString = JsonConvert.SerializeObject(closeApproved);
-                                    Mutex.WaitOne();
-                                    writer.Write(closeApprovedString);
-                                    Mutex.ReleaseMutex();
+                                    closeGuiNotify(client, writer);
                                 }
                                 else
                                 {
                                     if (msg.RequestedDirPath != null) // If the command related to handler
                                     {
-                                        string[] commandArgs = msg.CommandArgs;
-                                        string path = msg.RequestedDirPath;
-                                        CommandRecievedEventArgs c = new CommandRecievedEventArgs(command, commandArgs, path);
-                                        CommandRecieved?.Invoke(this, c); // Invoke ImageServer to deal with handler command
+                                        handelHandlersRequrest(msg);
                                     }
                                     else
                                     {
@@ -103,6 +95,25 @@ namespace ImageService.Communication
                     } // end while true
                 }
             }).Start();
+        }
+
+        private void closeGuiNotify(TcpClient client, BinaryWriter writer)
+        {
+            ExcludeClient?.Invoke(client);
+            MessageCommand closeApproved = new MessageCommand((int)CommandEnum.ApprovedCloseGui, null, null);
+            string closeApprovedString = JsonConvert.SerializeObject(closeApproved);
+            Mutex.WaitOne();
+            writer.Write(closeApprovedString);
+            Mutex.ReleaseMutex();
+        }
+
+        private void handelHandlersRequrest(MessageCommand msg)
+        {
+            CommandEnum command = (CommandEnum)msg.CommandID;
+            string[] commandArgs = msg.CommandArgs;
+            string path = msg.RequestedDirPath;
+            CommandRecievedEventArgs c = new CommandRecievedEventArgs(command, commandArgs, path);
+            CommandRecieved?.Invoke(this, c); // Invoke ImageServer to deal with handler command
         }
     }
 }

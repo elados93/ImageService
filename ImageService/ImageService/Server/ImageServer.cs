@@ -79,7 +79,7 @@ namespace ImageService.Server
         public void deleteHandlerFromServer(object sender, DirectoryCloseEventArgs args)
         {
             String message = null;
-            MessageTypeEnum type = MessageTypeEnum.INFO;
+            MessageTypeEnum type = MessageTypeEnum.WARNING;
             IDirectoryHandler handler = (IDirectoryHandler)sender;
             try
             {
