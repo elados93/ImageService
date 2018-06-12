@@ -70,6 +70,7 @@
     <Compile Include="ImageService\ImageService.Designer.cs">
       <DependentUpon>ImageService.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageService\Modal\AndroidModal.cs" />
     <Compile Include="ImageService\Modal\Events\CommandRecievedEventArgs.cs" />
     <Compile Include="ImageService\Commands\ICommand.cs" />
     <Compile Include="ImageService\Commands\NewFileCommand.cs" />

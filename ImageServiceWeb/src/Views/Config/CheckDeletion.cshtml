@@ -1,0 +1,26 @@
+﻿@model ImageServiceWeb.Models.ConfigSingelton
+
+@{
+    ViewBag.Title = "CheckDeletion";
+}
+
+<h2>Check Deletion of this handler</h2>
+
+<button type="button" id="OK" style="margin:10px">OK</button>
+<button type="button" id="Cancel" style="margin:10px">Cancel</button>
+
+<script type="text/javascript">
+    document.getElementById("OK").onclick = function () {
+        document.getElementById("Cancel").disabled = true;
+        document.getElementById("OK").disabled = true;
+        location.href = "DeleteOK";
+    };
+</script>
+
+<script type="text/javascript">
+    document.getElementById("Cancel").onclick = function () {
+        document.getElementById("Cancel").disabled = true;
+        document.getElementById("OK").disabled = true;
+        location.href = "DeleteCancel";
+    };
+</script>

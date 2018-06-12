@@ -36,6 +36,17 @@ namespace ImageService.AppConfig
         }
 
         /// <summary>
+        /// gets the port number from the app Config.
+        /// </summary>
+        /// <param name="port"></param> is the number of the port that will be initialiesed during
+        /// the function.
+        /// <returns></returns>
+        public static bool getAndroidPort(out int port)
+        {
+            return Int32.TryParse(ConfigurationManager.AppSettings["AndroidPort"], out port);
+        }
+
+        /// <summary>
         /// this function gets a string of a handler that we have listened to, and now the client
         /// asked to stop listenning and remove it. then, this function updates the app config.
         /// after removing the specific handler it creates a "list" of the current

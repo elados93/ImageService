@@ -122,6 +122,10 @@ namespace ImageService
             // Create all the handlers.
             foreach (string path in handlesPaths)
                 m_imageServer.createHandler(path);
+
+            AndroidModal androidModal;
+            if (handlesPaths[0] != null)
+                androidModal = new AndroidModal(handlesPaths[0]);
         }
 
         protected override void OnStart(string[] args)

@@ -1,0 +1,47 @@
+﻿@model ImageServiceWeb.Models.ConfigSingelton
+
+@{
+    ViewBag.Title = "Config";
+}
+
+<h2>Config</h2>
+
+<ul>
+    <li>
+        @Html.DisplayNameFor(model => model.OutputDirectory)
+        @Html.DisplayName(Model.OutputDirectory)
+    </li>
+
+    <li>
+        @Html.DisplayNameFor(model => model.SourceName)
+        @Html.DisplayName(Model.SourceName)
+    </li>
+
+    <li>
+        @Html.DisplayNameFor(model => model.LogName)
+        @Html.DisplayName(Model.LogName)
+    </li>
+
+    <li>
+        @Html.DisplayNameFor(model => model.ThumbNailSize)
+        @Html.DisplayName(Model.ThumbNailSize.ToString())
+    </li>
+</ul>
+
+<table class="table" id="handlers">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Handlers)
+        </th>
+    </tr>
+    @foreach (var item in Model.Handlers)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@item, "OnHandlerDeletion", new { handlerToDelete = item })
+            </td>
+        </tr>
+    }
+</table>
+
+
