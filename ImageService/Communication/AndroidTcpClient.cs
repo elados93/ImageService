@@ -14,25 +14,45 @@ namespace ImageService.Communication
 {
     public class AndroidTcpClient : IImageServiceClient
     {
-        private AndroidTcpClient() { Start(); }
-
-        private void Start()
-        {
-            int port;
-            AppConfigParser.getAndroidPort(out port);
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("10.0.0.2"), port);
-            TcpClient client = new TcpClient(ep);
-            recieveCommand();
-        }
-
         #region Members
         private bool m_clientConnected;
         private bool stopped;
-        private TcpClient client;
         private static AndroidTcpClient instance;
         #endregion
 
-        public event MessageTransfer handelPicture;
+        public event PictureHandel handelPicture;
+
+        private AndroidTcpClient() { start(); }
+
+        private void start()
+        {
+            new Task(() =>
+            {
+                int port;
+                AppConfigParser.getAndroidPort(out port);
+                IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+                TcpListener listener = new TcpListener(ep);
+                listener.Start();
+                stopped = false;
+                while (!stopped)
+                {
+                    try
+                    {
+                        // accepting clients
+                        TcpClient client = listener.AcceptTcpClient();
+                        m_clientConnected = true;
+                        Debug.WriteLine("Tcp android server got new connection");
+                        recieveClient(client);
+                    }
+                    catch (SocketException e)
+                    {
+                        Debug.WriteLine("Tcp android server was stopped Error: " + e.Message);
+                    }
+                }
+            }).Start();
+
+        }
+
 
         public static AndroidTcpClient Instance
         {
@@ -50,34 +70,47 @@ namespace ImageService.Communication
 
         private const int BUFFER_SIZE = 1024;
 
-        public void recieveCommand()
+        private void recieveClient(TcpClient client)
         {
             new Task(() =>
             {
                 NetworkStream stream = client.GetStream();
-                BinaryReader reader = new BinaryReader(stream);
 
                 while (!stopped)
                 {
                     try
                     {
-                        //byte[] arrayOfBytes;
-                        //byte b;
+                        byte[] bytes = new byte[4096];
 
-                        //String s = reader.ReadString();
+                        // get the size of the picture
+                        int bytesTransfered = stream.Read(bytes, 0, bytes.Length);
+                        string picLen = Encoding.ASCII.GetString(bytes, 0, bytesTransfered);
 
-                        byte[] buffer = new byte[BUFFER_SIZE];
-                        int read = -1;
-                        
-                        while ((read = stream.Read(buffer, 0, BUFFER_SIZE)) > 0)
+                        if (picLen == "Stop Transfer\n")
                         {
-                                
+                            //client.Close();
+                            break;
+                        }
+                        bytes = new byte[int.Parse(picLen)];
+
+                        //get the picture after knowing the size
+
+                        bytesTransfered = stream.Read(bytes, 0, bytes.Length);
+                        string pictureName = Encoding.ASCII.GetString(bytes, 0, bytesTransfered);
+
+                        //gets the image.
+                        int bytesReadFirst = stream.Read(bytes, 0, bytes.Length);
+                        int tempBytes = bytesReadFirst;
+                        byte[] bytesCurrent;
+                        while (tempBytes < bytes.Length)
+                        {
+                            bytesCurrent = new byte[int.Parse(picLen)];
+                            bytesTransfered = stream.Read(bytesCurrent, 0, bytesCurrent.Length);
+                            transferBytes(bytes, bytesCurrent, tempBytes);
+                            tempBytes += bytesTransfered;
                         }
 
-                        //byte response = reader.ReadByte(); // Wait for response from server
-                        
-                        Debug.WriteLine($"Got message from Android: {buffer.ToString()} from Server");
-                        handelPicture?.Invoke(buffer);
+                        handelPicture?.Invoke(pictureName, bytes);
 
                         Thread.Sleep(100); // Update information every 0.1 seconds
                     }
@@ -87,6 +120,20 @@ namespace ImageService.Communication
                     }
                 }
             }).Start();
+        }
+
+        private void transferBytes(byte[] original, byte[] copy, int startPos)
+        {
+            for (int i = startPos; i < original.Length; i++)
+            {
+                original[i] = copy[i - startPos];
+            }
+        }
+
+        public void recieveCommand()
+        {
+            // TODO WHATTTTTT
+            throw new NotImplementedException();
         }
     }
 }

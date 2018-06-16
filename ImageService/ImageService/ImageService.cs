@@ -125,7 +125,7 @@ namespace ImageService
 
             AndroidModal androidModal;
             if (handlesPaths[0] != null)
-                androidModal = new AndroidModal(handlesPaths[0]);
+                androidModal = new AndroidModal(handlesPaths[0], appConfigParser.outputDir);
         }
 
         protected override void OnStart(string[] args)
@@ -150,6 +150,7 @@ namespace ImageService
 
         protected override void OnStop()
         {
+
             eventLog1.WriteEntry("In OnStop");
 
             // Update the service state to Stop Pending.  

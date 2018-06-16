@@ -2,14 +2,14 @@
 
 namespace ImageService.Communication
 {
-    public delegate void MessageTransfer(byte[] responseObj);
+    public delegate void PictureHandel(string picName, byte[] byteArray);
 
     /// <summary>
     /// Interface for every service client.
     /// </summary>
     public interface IImageServiceClient
     {
-        event MessageTransfer handelPicture;
+        event PictureHandel handelPicture;
         void recieveCommand();
         bool ClientConnected { get; set; }
     }
