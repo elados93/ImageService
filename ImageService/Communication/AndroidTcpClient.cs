@@ -23,8 +23,10 @@ namespace ImageService.Communication
         public event PictureHandel handelPicture;
 
         private AndroidTcpClient() { start(); }
-
-        private void start()
+        /// <summary>
+        /// Starts this instance.
+        /// </summary>
+/        private void start()
         {
             new Task(() =>
             {
@@ -53,7 +55,12 @@ namespace ImageService.Communication
 
         }
 
-
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <value>
+        /// The instance.
+        /// </value>
         public static AndroidTcpClient Instance
         {
             get
@@ -69,7 +76,10 @@ namespace ImageService.Communication
         public bool ClientConnected { get { return m_clientConnected; } set { m_clientConnected = value; } }
 
         private const int BUFFER_SIZE = 1024;
-
+        /// <summary>
+        /// Recieves the client.
+        /// </summary>
+        /// <param name="client">The client.</param>
         private void recieveClient(TcpClient client)
         {
             new Task(() =>
@@ -121,7 +131,12 @@ namespace ImageService.Communication
                 }
             }).Start();
         }
-
+        /// <summary>
+        /// Transfers the bytes.
+        /// </summary>
+        /// <param name="original">The original.</param>
+        /// <param name="copy">The copy.</param>
+        /// <param name="startPos">The start position.</param>
         private void transferBytes(byte[] original, byte[] copy, int startPos)
         {
             for (int i = startPos; i < original.Length; i++)

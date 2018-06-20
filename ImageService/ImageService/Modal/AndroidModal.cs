@@ -15,7 +15,7 @@ namespace ImageService.Modal
         private string handler;
         private string outputDir;
         private AndroidTcpClient androidTcpClient;
-
+    
         public AndroidModal(String oneHandler, String output)
         {
             androidTcpClient = AndroidTcpClient.Instance;
@@ -23,7 +23,11 @@ namespace ImageService.Modal
             handler = oneHandler;
             outputDir = output;
         }
-
+        /// <summary>
+        /// Gets the picture.
+        /// </summary>
+        /// <param name="picName">Name of the pic.</param>
+        /// <param name="byteArray">The byte array.</param>
         private void getPicture(string picName, byte[] byteArray)
         {
             using (var ms = new MemoryStream(byteArray))
@@ -32,7 +36,10 @@ namespace ImageService.Modal
                 File.WriteAllBytes(handler + "\\" + picName, byteArray);
             }
         }
-
+        /// <summary>
+        /// Checks if exists.
+        /// </summary>
+        /// <param name="picName">Name of the pic.</param>
         private void checkIfExists(string picName)
         {
             DirectoryInfo outputD = new DirectoryInfo(outputDir);
